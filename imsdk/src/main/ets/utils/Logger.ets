@@ -10,7 +10,7 @@ class Logger {
   }
 
   public info(t: string) {
-    hilog.info(this.domain, this.tag, "%s{public}s", t)
+    hilog.info(this.domain, this.tag, "%{public}s", t)
   }
 
   public error(t: string) {

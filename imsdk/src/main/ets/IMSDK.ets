@@ -1,9 +1,8 @@
-import { setMsgHandler } from "libimsdk.so";
 import { IBoolValue, LoginArgs, IMConfig, InitSDKArgs } from "./Interface";
 import { IConnListener } from "./Listener";
-import { DispatchMsg } from "./MessageHandle";
+import { dispatchMsg } from "./MessageHandle";
 import { APIKey } from "./native/APIKey";
-import { CallAPI, Redirect } from "./native/NativeSDK";
+import { CallAPI, Redirect, registerMsgCallBack } from "./native/NativeSDK";
 import { ToJson } from "./utils/Json";
 import logger from "./utils/Logger";
 
@@ -19,13 +18,18 @@ export function RedirectStdOut(dir: string) {
 }
 
 export function InitSDK(config: IMConfig, conn: IConnListener): boolean {
-  setMsgHandler(DispatchMsg);
+  registerMsgCallBack(dispatchMsg)
   let initSDKArgs: InitSDKArgs = {
     operationId: GetOperationId(),
     config: ToJson(config),
   }
   let res = CallAPI<IBoolValue>(APIKey.API_InitSDK, ToJson(initSDKArgs)) as IBoolValue
   return res.value;
+}
+
+
+export function UnInitSDK(): void {
+
 }
 
 export function Login(cb: (suc: boolean, errCode: number, errMsg: string) => void, uid: string, token: string): void {
@@ -35,8 +39,4 @@ export function Login(cb: (suc: boolean, errCode: number, errMsg: string) => voi
     token: token
   }
   CallAPI(APIKey.API_Login, ToJson(args))
-}
-
-export function UnInitSDK(): void {
-
 }

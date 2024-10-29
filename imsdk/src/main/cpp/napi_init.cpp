@@ -10,46 +10,65 @@
 #define LOG_DOMAIN 0x494d        // IM
 #define LOG_TAG "[IMSDK Native]" // Tag
 
-napi_env current_env = nullptr;
-napi_ref msgHandlerFunc = nullptr;
-static void msgHandler(int msgId, char *data) {
-    if (msgHandlerFunc == nullptr || current_env == nullptr) {
-        OH_LOG_INFO(LOG_APP, "%{public}s", "not setMsgHandler function");
+napi_threadsafe_function msgCallBack;
+
+struct Message {
+    int id;
+    char *data;
+};
+
+static void onRecvMsg(int msgId, char *data) {
+    printf("OnRecvMsg:%d->%s", msgId, data);
+    OH_LOG_INFO(LOG_APP, "RecvMsg:%{public}d->%{public}s", msgId, data);
+    Message *msg = new Message();
+    msg->id = msgId;
+    msg->data = data;
+    napi_call_threadsafe_function(msgCallBack, msg, napi_tsfn_blocking);
+}
+
+static void callCallBack(napi_env env, napi_value jsCb, void *context, void *message) {
+    if (env == nullptr) {
         return;
     }
-    napi_handle_scope scope;
-    napi_open_handle_scope(current_env, &scope);
-
-    napi_value global;
-    napi_get_global(current_env, &global);
-
-    napi_value callback;
-    napi_get_reference_value(current_env, msgHandlerFunc, &callback);
-
-    napi_value argc[2];
-    napi_create_int32(current_env, msgId, &argc[0]);
-    size_t datalen = strlen(data);
-    napi_create_string_utf8(current_env, data, datalen, &argc[1]);
-
-    napi_call_function(current_env, global, callback, 2, argc, nullptr);
-
-    napi_close_handle_scope(current_env, scope);
+    Message *msg = (Message *)message;
+    //     OH_LOG_INFO(LOG_APP, "%{public}d, %{public}s", msg->id, msg->data);
+    napi_value undefined = nullptr;
+    napi_get_undefined(env, &undefined);
+    napi_value argv[2];
+    napi_create_int32(env, msg->id, &argv[0]);
+    size_t length = strlen(msg->data);
+    napi_create_string_utf8(env, msg->data, length, &argv[1]);
+    napi_call_function(env, undefined, jsCb, 2, argv, nullptr);
 }
-// 设置sdk 统一回调
-static napi_value setMsgHandler(napi_env env, napi_callback_info info) {
-    size_t argc;
-    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
-    if (argc != 1) {
-        OH_LOG_INFO(LOG_APP, "%{public}s", "setMsgHandler args count error:need args count 1");
+
+// 注册消息处理函数
+static napi_value registerMsgCallBack(napi_env env, napi_callback_info info) {
+    OH_LOG_INFO(LOG_APP, "registerMsgCallBack------------");
+    set_msg_handler_func(onRecvMsg);
+    napi_status status;
+    size_t argc = 1;
+    napi_value jsCb = nullptr;
+    status = napi_get_cb_info(env, info, &argc, &jsCb, nullptr, nullptr);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "registerMsgCallBack call back error");
         return nullptr;
     }
-    current_env = env;
-    napi_value callback;
-    napi_get_cb_info(env, info, &argc, &callback, nullptr, nullptr);
-    napi_create_reference(env, callback, 1, &msgHandlerFunc);
-    set_msg_handler_func(msgHandler);
+    // 创建一个线程安全函数
+    napi_value resourceName = nullptr;
+    status = napi_create_string_utf8(env, "Thread-safe Callback", NAPI_AUTO_LENGTH, &resourceName);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "registerMsgCallBack create string error");
+        return nullptr;
+    }
+    status = napi_create_threadsafe_function(env, jsCb, nullptr, resourceName, 0, 1, nullptr, nullptr, nullptr,
+                                             callCallBack, &msgCallBack);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "registerMsgCallBack create_threadsafe_function error");
+        return nullptr;
+    }
     return nullptr;
 }
+
 // 调用sdk 函数
 static napi_value callAPI(napi_env env, napi_callback_info info) {
     size_t argc;
@@ -90,6 +109,7 @@ static napi_value callAPI(napi_env env, napi_callback_info info) {
     free_data(res);
     return result;
 }
+
 // 重定向C标准输出到文件
 static napi_value Redirect(napi_env env, napi_callback_info info) {
     // 获取函数的JS参数
@@ -134,9 +154,10 @@ static napi_value Redirect(napi_env env, napi_callback_info info) {
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports) {
     napi_property_descriptor desc[] = {
-        {"setMsgHandler", nullptr, setMsgHandler, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"registerMsgCallBack", nullptr, registerMsgCallBack, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"callAPI", nullptr, callAPI, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, napi_default, nullptr}};
+    };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
 }

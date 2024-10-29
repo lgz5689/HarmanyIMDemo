@@ -45,6 +45,15 @@
           }
         ],
       }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.STORE_PERSISTENT_DATA",
+        "reason": "$string:store_reason",
+        "usedScene": {
+          "when": "always"
+        }
+      },
     ]
   }
 }
