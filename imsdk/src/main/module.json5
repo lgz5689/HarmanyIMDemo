@@ -7,6 +7,15 @@
       "phone"
     ],
     "deliveryWithInstall": true,
-    "pages": "$profile:main_pages"
-  }
+    "pages": "$profile:main_pages",
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.STORE_PERSISTENT_DATA",
+        "reason": "$string:store_reason",
+        "usedScene": {
+          "when": "always"
+        }
+      }
+    ]
+  },
 }

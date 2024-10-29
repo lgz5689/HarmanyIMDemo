@@ -1,36 +1,142 @@
 #include "napi/native_api.h"
-
+#include "hilog/log.h"
 #include "openimsdk.h"
+#include <cstddef>
+#include <cstring>
+#include <fstream>
 
-static napi_value Add(napi_env env, napi_callback_info info) {
-    size_t argc = 2;
-    napi_value args[2] = {nullptr};
+#undef LOG_DOMAIN
+#undef LOG_TAG
+#define LOG_DOMAIN 0x494d        // IM
+#define LOG_TAG "[IMSDK Native]" // Tag
 
-    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+napi_env current_env = nullptr;
+napi_ref msgHandlerFunc = nullptr;
+static void msgHandler(int msgId, char *data) {
+    if (msgHandlerFunc == nullptr || current_env == nullptr) {
+        OH_LOG_INFO(LOG_APP, "%{public}s", "not setMsgHandler function");
+        return;
+    }
+    napi_handle_scope scope;
+    napi_open_handle_scope(current_env, &scope);
 
-    napi_valuetype valuetype0;
-    napi_typeof(env, args[0], &valuetype0);
+    napi_value global;
+    napi_get_global(current_env, &global);
 
-    napi_valuetype valuetype1;
-    napi_typeof(env, args[1], &valuetype1);
+    napi_value callback;
+    napi_get_reference_value(current_env, msgHandlerFunc, &callback);
 
-    double value0;
-    napi_get_value_double(env, args[0], &value0);
+    napi_value argc[2];
+    napi_create_int32(current_env, msgId, &argc[0]);
+    size_t datalen = strlen(data);
+    napi_create_string_utf8(current_env, data, datalen, &argc[1]);
 
-    double value1;
-    napi_get_value_double(env, args[1], &value1);
+    napi_call_function(current_env, global, callback, 2, argc, nullptr);
 
-    napi_value sum;
-    napi_create_double(env, value0 + value1 + 10, &sum);
-
-    call_api(0, "");
-
-    return sum;
+    napi_close_handle_scope(current_env, scope);
 }
+// 设置sdk 统一回调
+static napi_value setMsgHandler(napi_env env, napi_callback_info info) {
+    size_t argc;
+    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
+    if (argc != 1) {
+        OH_LOG_INFO(LOG_APP, "%{public}s", "setMsgHandler args count error:need args count 1");
+        return nullptr;
+    }
+    current_env = env;
+    napi_value callback;
+    napi_get_cb_info(env, info, &argc, &callback, nullptr, nullptr);
+    napi_create_reference(env, callback, 1, &msgHandlerFunc);
+    set_msg_handler_func(msgHandler);
+    return nullptr;
+}
+// 调用sdk 函数
+static napi_value callAPI(napi_env env, napi_callback_info info) {
+    size_t argc;
+    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
+    if (argc != 2) {
+        OH_LOG_ERROR(LOG_APP, "imsdk:%{public}s", "setMsgHandler args count error:need args count 2");
+        return nullptr;
+    }
+    napi_value argv[2];
+    napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
+    napi_status status;
+    int apiKey;
+    status = napi_get_value_int32(env, argv[0], &apiKey);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "imsdk:call api args 1 not a int");
+        return nullptr;
+    }
+    size_t length;
+    status = napi_get_value_string_utf8(env, argv[1], nullptr, 0, &length);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "imsdk:call api args not a string");
+        return nullptr;
+    }
+    char *buf = new char[length + 1];
+    std::memset(buf, 0, length + 1);
+    napi_get_value_string_utf8(env, argv[1], buf, length + 1, &length);
+    OH_LOG_INFO(LOG_APP, "Call [%{public}d]->%{public}s", apiKey, buf);
+    // 调用 C 函数
+    char *res = call_api(apiKey, buf);
+    OH_LOG_INFO(LOG_APP, "Call [%{public}d]<-%{public}s", apiKey, res);
+    napi_value result = nullptr;
+    size_t res_length = strlen(res);
+    status = napi_create_string_utf8(env, res, res_length, &result);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "imsdk:call api return value not a string");
+        return nullptr;
+    }
+    free_data(res);
+    return result;
+}
+// 重定向C标准输出到文件
+static napi_value Redirect(napi_env env, napi_callback_info info) {
+    // 获取函数的JS参数
+    size_t argc = 1;
+    napi_value argv[1] = {nullptr};
+    napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
+    // 解析参数1，保存文件的目标目录
+    size_t targetDirectoryNameSize;
+    char targetDirectoryNameBuf[512];
+    napi_get_value_string_utf8(env, argv[0], targetDirectoryNameBuf, sizeof(targetDirectoryNameBuf),
+                               &targetDirectoryNameSize);
+    std::string targetDirectoryName(targetDirectoryNameBuf, targetDirectoryNameSize); // 目标目录
+    std::string targetSandboxPath = targetDirectoryName + "/c_print_log.txt";         // 存入的文件路径
+    OH_LOG_INFO(LOG_APP, "重定向C输出到文件 === %{public}s", targetSandboxPath.c_str());
+
+    // 使用freopen函数把文件关联到标准输出
+    FILE *stdoutFile = NULL;
+    FILE *stderrFile = NULL;
+    stdoutFile = freopen(targetSandboxPath.c_str(), "a", stdout);
+    stderrFile = freopen(targetSandboxPath.c_str(), "a", stderr);
+    if (NULL == stdoutFile || NULL == stderrFile) {
+        OH_LOG_INFO(LOG_APP, "重创建！");
+        // 打开沙箱文件的文件输出流，会创建出一个文件
+        std::ofstream outputFile(targetSandboxPath, std::ios::binary);
+        if (!outputFile) {
+            OH_LOG_ERROR(LOG_APP, "无法创建目标文件!");
+            return nullptr;
+        }
+        stdoutFile = freopen(targetSandboxPath.c_str(), "a", stdout);
+        stderrFile = freopen(targetSandboxPath.c_str(), "a", stderr);
+        if (NULL == stdoutFile || NULL == stderrFile) {
+            OH_LOG_ERROR(LOG_APP, "失败!");
+            return nullptr;
+        }
+    }
+    OH_LOG_WARN(LOG_APP, "重定向输出成功!");
+    printf("start record...");
+    return 0;
+}
+
 
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports) {
-    napi_property_descriptor desc[] = {{"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr}};
+    napi_property_descriptor desc[] = {
+        {"setMsgHandler", nullptr, setMsgHandler, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"callAPI", nullptr, callAPI, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, napi_default, nullptr}};
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
 }
