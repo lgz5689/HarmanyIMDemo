@@ -1,4 +1,4 @@
-export enum MessageDef {
+export enum Message {
   Msg_Error,
 
   Msg_Connecting,

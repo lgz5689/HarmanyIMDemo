@@ -10,7 +10,7 @@
 #define LOG_DOMAIN 0x494d        // IM
 #define LOG_TAG "[IMSDK Native]" // Tag
 
-napi_threadsafe_function msgCallBack;
+nthreadsafe_function msgCallBack;
 
 struct Message {
     int id;
@@ -23,46 +23,46 @@ static void onRecvMsg(int msgId, char *data) {
     Message *msg = new Message();
     msg->id = msgId;
     msg->data = data;
-    napi_call_threadsafe_function(msgCallBack, msg, napi_tsfn_blocking);
+    ncall_threadsafe_function(msgCallBack, msg, ntsfn_blocking);
 }
 
-static void callCallBack(napi_env env, napi_value jsCb, void *context, void *message) {
+static void callCallBack(nenv env, nvalue jsCb, void *context, void *message) {
     if (env == nullptr) {
         return;
     }
     Message *msg = (Message *)message;
     //     OH_LOG_INFO(LOG_APP, "%{public}d, %{public}s", msg->id, msg->data);
-    napi_value undefined = nullptr;
-    napi_get_undefined(env, &undefined);
-    napi_value argv[2];
-    napi_create_int32(env, msg->id, &argv[0]);
+    nvalue undefined = nullptr;
+    nget_undefined(env, &undefined);
+    nvalue argv[2];
+    ncreate_int32(env, msg->id, &argv[0]);
     size_t length = strlen(msg->data);
-    napi_create_string_utf8(env, msg->data, length, &argv[1]);
-    napi_call_function(env, undefined, jsCb, 2, argv, nullptr);
+    ncreate_string_utf8(env, msg->data, length, &argv[1]);
+    ncall_function(env, undefined, jsCb, 2, argv, nullptr);
 }
 
 // 注册消息处理函数
-static napi_value registerMsgCallBack(napi_env env, napi_callback_info info) {
+static nvalue registerMsgCallBack(nenv env, ncallback_info info) {
     OH_LOG_INFO(LOG_APP, "registerMsgCallBack------------");
     set_msg_handler_func(onRecvMsg);
-    napi_status status;
+    nstatus status;
     size_t argc = 1;
-    napi_value jsCb = nullptr;
-    status = napi_get_cb_info(env, info, &argc, &jsCb, nullptr, nullptr);
-    if (status != napi_ok) {
+    nvalue jsCb = nullptr;
+    status = nget_cb_info(env, info, &argc, &jsCb, nullptr, nullptr);
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "registerMsgCallBack call back error");
         return nullptr;
     }
     // 创建一个线程安全函数
-    napi_value resourceName = nullptr;
-    status = napi_create_string_utf8(env, "Thread-safe Callback", NAPI_AUTO_LENGTH, &resourceName);
-    if (status != napi_ok) {
+    nvalue resourceName = nullptr;
+    status = ncreate_string_utf8(env, "Thread-safe Callback", NAUTO_LENGTH, &resourceName);
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "registerMsgCallBack create string error");
         return nullptr;
     }
-    status = napi_create_threadsafe_function(env, jsCb, nullptr, resourceName, 0, 1, nullptr, nullptr, nullptr,
+    status = ncreate_threadsafe_function(env, jsCb, nullptr, resourceName, 0, 1, nullptr, nullptr, nullptr,
                                              callCallBack, &msgCallBack);
-    if (status != napi_ok) {
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "registerMsgCallBack create_threadsafe_function error");
         return nullptr;
     }
@@ -70,39 +70,39 @@ static napi_value registerMsgCallBack(napi_env env, napi_callback_info info) {
 }
 
 // 调用sdk 函数
-static napi_value callAPI(napi_env env, napi_callback_info info) {
+static nvalue callAPI(nenv env, ncallback_info info) {
     size_t argc;
-    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
+    nget_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
     if (argc != 2) {
         OH_LOG_ERROR(LOG_APP, "imsdk:%{public}s", "setMsgHandler args count error:need args count 2");
         return nullptr;
     }
-    napi_value argv[2];
-    napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
-    napi_status status;
+    nvalue argv[2];
+    nget_cb_info(env, info, &argc, argv, nullptr, nullptr);
+    nstatus status;
     int apiKey;
-    status = napi_get_value_int32(env, argv[0], &apiKey);
-    if (status != napi_ok) {
+    status = nget_value_int32(env, argv[0], &apiKey);
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "imsdk:call api args 1 not a int");
         return nullptr;
     }
     size_t length;
-    status = napi_get_value_string_utf8(env, argv[1], nullptr, 0, &length);
-    if (status != napi_ok) {
+    status = nget_value_string_utf8(env, argv[1], nullptr, 0, &length);
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "imsdk:call api args not a string");
         return nullptr;
     }
     char *buf = new char[length + 1];
     std::memset(buf, 0, length + 1);
-    napi_get_value_string_utf8(env, argv[1], buf, length + 1, &length);
+    nget_value_string_utf8(env, argv[1], buf, length + 1, &length);
     OH_LOG_INFO(LOG_APP, "Call [%{public}d]->%{public}s", apiKey, buf);
     // 调用 C 函数
     char *res = call_api(apiKey, buf);
     OH_LOG_INFO(LOG_APP, "Call [%{public}d]<-%{public}s", apiKey, res);
-    napi_value result = nullptr;
+    nvalue result = nullptr;
     size_t res_length = strlen(res);
-    status = napi_create_string_utf8(env, res, res_length, &result);
-    if (status != napi_ok) {
+    status = ncreate_string_utf8(env, res, res_length, &result);
+    if (status != nok) {
         OH_LOG_ERROR(LOG_APP, "imsdk:call api return value not a string");
         return nullptr;
     }
@@ -111,15 +111,15 @@ static napi_value callAPI(napi_env env, napi_callback_info info) {
 }
 
 // 重定向C标准输出到文件
-static napi_value Redirect(napi_env env, napi_callback_info info) {
+static nvalue Redirect(nenv env, ncallback_info info) {
     // 获取函数的JS参数
     size_t argc = 1;
-    napi_value argv[1] = {nullptr};
-    napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
+    nvalue argv[1] = {nullptr};
+    nget_cb_info(env, info, &argc, argv, nullptr, nullptr);
     // 解析参数1，保存文件的目标目录
     size_t targetDirectoryNameSize;
     char targetDirectoryNameBuf[512];
-    napi_get_value_string_utf8(env, argv[0], targetDirectoryNameBuf, sizeof(targetDirectoryNameBuf),
+    nget_value_string_utf8(env, argv[0], targetDirectoryNameBuf, sizeof(targetDirectoryNameBuf),
                                &targetDirectoryNameSize);
     std::string targetDirectoryName(targetDirectoryNameBuf, targetDirectoryNameSize); // 目标目录
     std::string targetSandboxPath = targetDirectoryName + "/c_print_log.txt";         // 存入的文件路径
@@ -152,18 +152,18 @@ static napi_value Redirect(napi_env env, napi_callback_info info) {
 
 
 EXTERN_C_START
-static napi_value Init(napi_env env, napi_value exports) {
-    napi_property_descriptor desc[] = {
-        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"registerMsgCallBack", nullptr, registerMsgCallBack, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"callAPI", nullptr, callAPI, nullptr, nullptr, nullptr, napi_default, nullptr},
+static nvalue Init(nenv env, nvalue exports) {
+    nproperty_descriptor desc[] = {
+        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, ndefault, nullptr},
+        {"registerMsgCallBack", nullptr, registerMsgCallBack, nullptr, nullptr, nullptr, ndefault, nullptr},
+        {"callAPI", nullptr, callAPI, nullptr, nullptr, nullptr, ndefault, nullptr},
     };
-    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
+    ndefine_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
 }
 EXTERN_C_END
 
-static napi_module demoModule = {
+static nmodule demoModule = {
     .nm_version = 1,
     .nm_flags = 0,
     .nm_filename = nullptr,
@@ -173,4 +173,4 @@ static napi_module demoModule = {
     .reserved = {0},
 };
 
-extern "C" __attribute__((constructor)) void RegisterImsdkModule(void) { napi_module_register(&demoModule); }
+extern "C" __attribute__((constructor)) void RegisterImsdkModule(void) { nmodule_register(&demoModule); }

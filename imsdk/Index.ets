@@ -1,6 +1,6 @@
 export { PlatformID } from "./src/main/ets/Enum"
 
-export { IMConfig, LoginArgs } from "./src/main/ets/Interface"
+export { IMConfig, LoginArgs } from "./src/main/ets/Data"
 
 export { IConnListener } from "./src/main/ets/Listener"
 
