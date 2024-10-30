@@ -11,6 +11,6 @@ endif()
 include_directories(${NATIVERENDER_ROOT_PATH}
                     ${NATIVERENDER_ROOT_PATH}/include)
 
-add_library(imsdk SHARED ninit.cpp)
+add_library(imsdk SHARED napi_init.cpp)
 target_link_directories(imsdk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH})
 target_link_libraries(imsdk PUBLIC libace_napi.z.so libhilog_ndk.z.so libopenimsdk.so)

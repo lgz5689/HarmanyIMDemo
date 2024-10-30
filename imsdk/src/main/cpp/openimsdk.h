@@ -85,9 +85,6 @@ extern "C" {
 
 extern void set_msg_handler_func(MessageHandler handler);
 extern char* call_api(int _apiKey, char* jsonArgsStr);
-
-// Actively release functions with return values ​​to avoid memory leakage
-//
 extern void free_data(char* p);
 
 #ifdef __cplusplus
