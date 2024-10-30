@@ -213,7 +213,7 @@ export interface SearchGroupMembersParam {
   count: number;
 }
 
-export interface SetGroupMemberInfo {
+export interface GroupMemberInfoArgs {
   groupID: string;
   userID: string;
   nickname: StringValue;

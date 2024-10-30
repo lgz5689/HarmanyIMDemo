@@ -14,19 +14,19 @@ class Logger {
   }
 
   public error(t: string) {
-    hilog.error(this.domain, this.tag, "%s{public}s", t)
+    hilog.error(this.domain, this.tag, "%{public}s", t)
   }
 
   public debug(t: string) {
-    hilog.debug(this.domain, this.tag, "%s{public}s", t)
+    hilog.debug(this.domain, this.tag, "%{public}s", t)
   }
 
   public warn(t: string) {
-    hilog.warn(this.domain, this.tag, "%s{public}s", t)
+    hilog.warn(this.domain, this.tag, "%{public}s", t)
   }
 
   public fatal(t: string) {
-    hilog.fatal(this.domain, this.tag, "%s{public}s", t)
+    hilog.fatal(this.domain, this.tag, "%{public}s", t)
   }
 }
 

@@ -10,7 +10,11 @@ export function Redirect(dir: string) {
 
 export function registerMsgCallBack(handler: (id: number, data: string) => void) {
   native.registerMsgCallBack((msgId, data) => {
-    handler(msgId, data);
+    try {
+      handler(msgId, data);
+    } catch (e) {
+      logger.error(e.toString())
+    }
   })
 }
 

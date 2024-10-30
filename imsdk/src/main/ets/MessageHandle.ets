@@ -1,4 +1,25 @@
 import {
+  AdvancedMessageResult,
+  BlackInfo,
+  Conversation,
+  FindMessageResult,
+  FriendApplicationInfo,
+  FriendInfo,
+  GroupApplicationInfo,
+  GroupInfo,
+  GroupMember,
+  InputStatesChangedData,
+  Message,
+  MessageReceipt,
+  MessageRevoked,
+  OnlineStatus,
+  PublicUserInfo,
+  SearchFriendItem,
+  SearchMessageResult,
+  UserIDResult,
+  UserInfo
+} from "./Data";
+import {
   IAdvancedMsgListener,
   IBatchMsgListener,
   IConnListener,
@@ -7,17 +28,62 @@ import {
   IGroupListener,
   IUserListener
 } from "./Listener";
-import { Message } from "./native/Message";
+import { MessageDef } from "./native/Message";
 import logger from "./utils/Logger";
+import { JSON } from "@kit.ArkTS";
+import { DataTypeDef } from "./native/DATAType";
+import { parseJson } from "./utils/Json";
+
+export interface IMsgSendCallBack {
+  onError(code: number, errMsg: string): void
+
+  onSuccess(msg: Message): void
+
+  onProgress(progress: number): void
+}
+
+interface Error {
+  errCode: number;
+  errMsg: string;
+  operationId: string;
+}
+
+interface Success {
+  operationId: string;
+  dataType: number;
+  data: string;
+}
+
+interface ActiveCallResult {
+  operationId: string;
+  errCode: number;
+  errMsg: string;
+  dataType: number;
+  data: string;
+}
+
+interface Progress {
+  operationId: string;
+  progress: number;
+}
+
+interface MsgIDAndList {
+  msgId: string;
+  list: string;
+}
 
 
 type BaseCallBack<T> = (data: T, errCode: number, errMsg: string) => void;
 
-const baseCallBackMap = new Map<string, BaseCallBack<object>>();
-
+const activeCallCallBackMap = new Map<string, BaseCallBack<object | number | boolean | string | undefined>>();
+const msgCallBackMap = new Map<string, IMsgSendCallBack>();
 
 export function registerHandler<T>(operationId: string, callBack: BaseCallBack<T>) {
-  baseCallBackMap[operationId] = callBack
+  activeCallCallBackMap[operationId] = callBack
+}
+
+export function registerSendMsgHandler(operationId: string, callBack: IMsgSendCallBack) {
+  msgCallBackMap[operationId] = callBack
 }
 
 let connListener: IConnListener | null;
@@ -52,123 +118,315 @@ export function setBatchMsgListener(listener: IBatchMsgListener) {
   batchMsgListener = listener;
 }
 
-
-export function dispatchMsg(msgId: number, data: string): void {
-  logger.info(`dispatch msg -> ${msgId}->${data}`)
-  switch (msgId) {
-    case Message.Msg_Connecting:
+export function dispatchMsg(id: MessageDef, msg: string) {
+  logger.info(`dispatch msg -> ${id}->${msg}`)
+  switch (id) {
+    case MessageDef.Connecting:
+      connListener?.onConnecting();
       break;
-    case Message.Msg_ConnectSuccess:
+    case MessageDef.ConnectSuccess:
+      connListener?.onConnectSuccess();
       break;
-    case Message.Msg_ConnectFailed:
+    case MessageDef.ConnectFailed: {
+      const err = JSON.parse(msg) as Error;
+      connListener?.onConnectFailed(err.errCode, err.errMsg);
       break;
-    case Message.Msg_KickedOffline:
+    }
+    case MessageDef.KickedOffline:
+      connListener?.onKickedOffline();
       break;
-    case Message.Msg_UserTokenExpired:
+    case MessageDef.UserTokenExpired:
+      connListener?.onUserTokenExpired();
       break;
-    case Message.Msg_UserTokenInvalid:
+    case MessageDef.UserTokenInvalid: {
+      const err = JSON.parse(msg) as Error;
+      connListener?.onUserTokenInvalid(err.errMsg);
       break;
-    case Message.Msg_SyncServerStart:
+    }
+    case MessageDef.SyncServerStart:
+      conversationListener?.onSyncServerStart();
       break;
-    case Message.Msg_SyncServerFinish:
+    case MessageDef.SyncServerFinish:
+      conversationListener?.onSyncServerFinish();
       break;
-    case Message.Msg_SyncServerProgress:
+    case MessageDef.SyncServerProgress:
+      const progress = JSON.parse(msg) as Progress;
+      conversationListener?.onSyncServerProgress(progress.progress);
       break;
-    case Message.Msg_SyncServerFailed:
+    case MessageDef.SyncServerFailed:
+      conversationListener?.onSyncServerFailed();
       break;
-    case Message.Msg_NewConversation:
+    case MessageDef.NewConversation:
+      const conversation = JSON.parse(msg) as Conversation[];
+      conversationListener?.onNewConversation(conversation);
       break;
-    case Message.Msg_ConversationChanged:
+    case MessageDef.ConversationChanged:
+      const conversationList = JSON.parse(msg) as Conversation[];
+      conversationListener?.onConversationChanged(conversationList);
       break;
-    case Message.Msg_TotalUnreadMessageCountChanged:
+    case MessageDef.TotalUnreadMessageCountChanged:
+      const count = parseInt(msg, 10);
+      if (!isNaN(count)) {
+        conversationListener?.onTotalUnreadMessageCountChanged(count);
+      }
       break;
-    case Message.Msg_ConversationUserInputStatusChanged:
+    case MessageDef.ConversationUserInputStatusChanged:
+      const inputStatus = JSON.parse(msg) as InputStatesChangedData;
+      conversationListener?.onConversationUserInputStatusChanged(inputStatus);
       break;
-    case Message.Msg_Advanced_RecvNewMessage:
+    case MessageDef.Advanced_RecvNewMessage:
+      const newMsg = JSON.parse(msg) as Message;
+      advancedMsgListener?.onRecvNewMessage(newMsg);
       break;
-    case Message.Msg_Advanced_RecvC2CReadReceipt:
+    case MessageDef.Advanced_RecvC2CReadReceipt:
+      const c2cReceipt = JSON.parse(msg) as MessageReceipt[];
+      advancedMsgListener?.onRecvC2CReadReceipt(c2cReceipt);
       break;
-    case Message.Msg_Advanced_RecvGroupReadReceipt:
+    case MessageDef.Advanced_RecvGroupReadReceipt:
+      const groupReceipt = JSON.parse(msg) as MessageReceipt[];
+      advancedMsgListener?.onRecvGroupReadReceipt(groupReceipt);
       break;
-    case Message.Msg_Advanced_NewRecvMessageRevoked:
+    case MessageDef.Advanced_NewRecvMessageRevoked:
+      const revokedMsg = JSON.parse(msg) as MessageRevoked;
+      advancedMsgListener?.onNewRecvMessageRevoked(revokedMsg);
       break;
-    case Message.Msg_Advanced_RecvMessageExtensionsChanged:
+    case MessageDef.Advanced_RecvMessageExtensionsChanged: {
+      const res = JSON.parse(msg) as MsgIDAndList;
+      advancedMsgListener?.onRecvMessageExtensionsChanged(res.msgId, res.list);
       break;
-    case Message.Msg_Advanced_RecvMessageExtensionsDeleted:
+    }
+    case MessageDef.Advanced_RecvMessageExtensionsDeleted: {
+      const res = JSON.parse(msg) as MsgIDAndList;
+      advancedMsgListener?.onRecvMessageExtensionsDeleted(res.msgId, res.list);
       break;
-    case Message.Msg_Advanced_RecvMessageExtensionsAdded:
+    }
+    case MessageDef.Advanced_RecvMessageExtensionsAdded: {
+      const res = JSON.parse(msg) as MsgIDAndList;
+      advancedMsgListener?.onRecvMessageExtensionsAdded(res.msgId, res.list);
       break;
-    case Message.Msg_Advanced_RecvOfflineNewMessage:
+    }
+    case MessageDef.Advanced_RecvOfflineNewMessage:
+      const offlineNewMsg = JSON.parse(msg) as Message;
+      advancedMsgListener?.onRecvOfflineNewMessage(offlineNewMsg);
       break;
-    case Message.Msg_Advanced_MsgDeleted:
+    case MessageDef.Advanced_MsgDeleted:
+      const deletedMsg = JSON.parse(msg) as Message;
+      advancedMsgListener?.onMsgDeleted(deletedMsg);
       break;
-    case Message.Msg_Advanced_RecvOnlineOnlyMessage:
+    case MessageDef.Advanced_RecvOnlineOnlyMessage:
+      const onlineOnlyMsg = JSON.parse(msg) as Message;
+      advancedMsgListener?.onRecvOnlineOnlyMessage(onlineOnlyMsg);
       break;
-    case Message.Msg_Batch_RecvNewMessages:
+    case MessageDef.Batch_RecvNewMessages:
+      const batchNewMsgs = JSON.parse(msg) as Message[];
+      batchMsgListener?.onRecvNewMessages(batchNewMsgs);
       break;
-    case Message.Msg_Batch_RecvOfflineNewMessages:
+    case MessageDef.Batch_RecvOfflineNewMessages:
+      const batchOfflineMsgs = JSON.parse(msg) as Message[];
+      batchMsgListener?.onRecvOfflineNewMessages(batchOfflineMsgs);
       break;
-    case Message.Msg_FriendApplicationAdded:
+    case MessageDef.FriendApplicationAdded:
+      const friendAppAdded = JSON.parse(msg) as FriendApplicationInfo;
+      friendShipListener?.onFriendApplicationAdded(friendAppAdded);
       break;
-    case Message.Msg_FriendApplicationDeleted:
+    case MessageDef.FriendApplicationDeleted:
+      const friendAppDeleted = JSON.parse(msg) as FriendApplicationInfo;
+      friendShipListener?.onFriendApplicationDeleted(friendAppDeleted);
       break;
-    case Message.Msg_FriendApplicationAccepted:
+    case MessageDef.FriendApplicationAccepted:
+      const friendAppAccepted = JSON.parse(msg) as FriendApplicationInfo;
+      friendShipListener?.onFriendApplicationAccepted(friendAppAccepted);
       break;
-    case Message.Msg_FriendApplicationRejected:
+    case MessageDef.FriendApplicationRejected:
+      const friendAppRejected = JSON.parse(msg) as FriendApplicationInfo;
+      friendShipListener?.onFriendApplicationRejected(friendAppRejected);
       break;
-    case Message.Msg_FriendAdded:
+    case MessageDef.FriendAdded:
+      const friendAdded = JSON.parse(msg) as FriendInfo;
+      friendShipListener?.onFriendAdded(friendAdded);
       break;
-    case Message.Msg_FriendDeleted:
+    case MessageDef.FriendDeleted:
+      const friendDeleted = JSON.parse(msg) as FriendInfo;
+      friendShipListener?.onFriendDeleted(friendDeleted);
       break;
-    case Message.Msg_FriendInfoChanged:
+    case MessageDef.FriendInfoChanged:
+      const friendInfoChanged = JSON.parse(msg) as FriendInfo;
+      friendShipListener?.onFriendInfoChanged(friendInfoChanged);
       break;
-    case Message.Msg_BlackAdded:
+    case MessageDef.BlackAdded:
+      const blackAdded = JSON.parse(msg) as BlackInfo;
+      friendShipListener?.onBlackAdded(blackAdded);
       break;
-    case Message.Msg_BlackDeleted:
+    case MessageDef.BlackDeleted:
+      const blackDeleted = JSON.parse(msg) as BlackInfo;
+      friendShipListener?.onBlackDeleted(blackDeleted);
       break;
-    case Message.Msg_JoinedGroupAdded:
+    case MessageDef.JoinedGroupAdded:
+      const joinedGroupAdded = JSON.parse(msg) as GroupInfo;
+      groupListener?.onJoinedGroupAdded(joinedGroupAdded);
       break;
-    case Message.Msg_JoinedGroupDeleted:
+    case MessageDef.JoinedGroupDeleted:
+      const joinedGroupDeleted = JSON.parse(msg) as GroupInfo;
+      groupListener?.onJoinedGroupDeleted(joinedGroupDeleted);
       break;
-    case Message.Msg_GroupMemberAdded:
+    case MessageDef.GroupMemberAdded:
+      const groupMemberAdded = JSON.parse(msg) as GroupMember;
+      groupListener?.onGroupMemberAdded(groupMemberAdded);
       break;
-    case Message.Msg_GroupMemberDeleted:
+    case MessageDef.GroupMemberDeleted:
+      const groupMemberDeleted = JSON.parse(msg) as GroupMember;
+      groupListener?.onGroupMemberDeleted(groupMemberDeleted);
       break;
-    case Message.Msg_GroupApplicationAdded:
+    case MessageDef.GroupApplicationAdded:
+      const groupAppAdded = JSON.parse(msg) as GroupApplicationInfo;
+      groupListener?.onGroupApplicationAdded(groupAppAdded);
       break;
-    case Message.Msg_GroupApplicationDeleted:
+    case MessageDef.GroupApplicationDeleted:
+      const groupAppDeleted = JSON.parse(msg) as GroupApplicationInfo;
+      groupListener?.onGroupApplicationDeleted(groupAppDeleted);
       break;
-    case Message.Msg_GroupInfoChanged:
+    case MessageDef.GroupInfoChanged:
+      const groupInfoChanged = JSON.parse(msg) as GroupInfo;
+      groupListener?.onGroupInfoChanged(groupInfoChanged);
       break;
-    case Message.Msg_GroupDismissed:
+    case MessageDef.GroupDismissed:
+      const groupDismissed = JSON.parse(msg) as GroupInfo;
+      groupListener?.onGroupDismissed(groupDismissed);
       break;
-    case Message.Msg_GroupMemberInfoChanged:
+    case MessageDef.GroupMemberInfoChanged:
+      const groupMemberInfoChanged = JSON.parse(msg) as GroupMember;
+      groupListener?.onGroupMemberInfoChanged(groupMemberInfoChanged);
       break;
-    case Message.Msg_GroupApplicationAccepted:
+    case MessageDef.GroupApplicationAccepted:
+      const groupAppAccepted = JSON.parse(msg) as GroupApplicationInfo;
+      groupListener?.onGroupApplicationAccepted(groupAppAccepted);
       break;
-    case Message.Msg_GroupApplicationRejected:
+    case MessageDef.GroupApplicationRejected:
+      const groupAppRejected = JSON.parse(msg) as GroupApplicationInfo;
+      groupListener?.onGroupApplicationRejected(groupAppRejected);
       break;
-    case Message.Msg_RecvCustomBusinessMessage:
+    case MessageDef.RecvCustomBusinessMessage:
       break;
-    case Message.Msg_SelfInfoUpdated:
+    case MessageDef.SelfInfoUpdated:
+      const selfInfoUpdated = JSON.parse(msg) as UserInfo;
+      userListener?.onSelfInfoUpdated(selfInfoUpdated);
       break;
-    case Message.Msg_UserStatusChanged:
+    case MessageDef.UserStatusChanged:
+      const userStatusChanged = JSON.parse(msg) as OnlineStatus;
+      userListener?.onUserStatusChanged(userStatusChanged);
       break;
-    case Message.Msg_UserCommandAdd:
+    case MessageDef.UserCommandAdd:
+      userListener?.onUserCommandAdd(msg);
       break;
-    case Message.Msg_UserCommandDelete:
+    case MessageDef.UserCommandDelete:
+      userListener?.onUserCommandDelete(msg);
       break;
-    case Message.Msg_UserCommandUpdate:
+    case MessageDef.UserCommandUpdate:
+      userListener?.onUserCommandUpdate(msg);
       break;
-    case Message.Msg_SendMessage_Error:
+    case MessageDef.SendMessage_Error: {
+      const res = JSON.parse(msg) as Error;
+      if (msgCallBackMap.has(res.operationId)) {
+        msgCallBackMap.get(res.operationId)?.onError(res.errCode, res.errMsg)
+        msgCallBackMap.delete(res.operationId)
+      }
       break;
-    case Message.Msg_SendMessage_Success:
+    }
+    case MessageDef.SendMessage_Success: {
+      const res = JSON.parse(msg) as Success;
+      if (msgCallBackMap.has(res.operationId)) {
+        msgCallBackMap.get(res.operationId)?.onSuccess((JSON.parse(res.data) as Message))
+        msgCallBackMap.delete(res.operationId)
+      }
       break;
-    case Message.Msg_SendMessage_Progress:
+    }
+    case MessageDef.SendMessage_Progress: {
+      const res = JSON.parse(msg) as Progress;
+      if (msgCallBackMap.has(res.operationId)) {
+        msgCallBackMap.get(res.operationId)?.onProgress(res.progress)
+      }
       break;
-    case Message.Msg_ActiveCall:
+    }
+    case MessageDef.ActiveCall: {
+      const res = JSON.parse(msg) as ActiveCallResult;
+      if (activeCallCallBackMap.has(res.operationId)) {
+        const callBack = activeCallCallBackMap.get(res.operationId);
+        if (callBack != null) {
+          callBack(convertDataType(res.dataType, res.data), res.errCode, res.errMsg)
+        }
+        activeCallCallBackMap.delete(res.operationId)
+      }
       break;
-    default:
-      break;
+    }
   }
+}
+
+function convertDataType(type: number, msg: string): object | boolean | string | number | undefined {
+  switch (type) {
+    case DataTypeDef.Empty:
+      return "";
+    case DataTypeDef.Int:
+      return parseJson<number>(msg);
+    case DataTypeDef.Bool:
+      return parseJson<boolean>(msg);
+    case DataTypeDef.StringArray:
+      return parseJson<string[]>(msg);
+    case DataTypeDef.Conversation:
+      return parseJson<Conversation>(msg);
+    case DataTypeDef.Conversation_List:
+      return parseJson<Conversation[]>(msg);
+    case DataTypeDef.FindMessageResult:
+      return parseJson<FindMessageResult>(msg);
+    case DataTypeDef.AdvancedHistoryMessageResult:
+      return parseJson<AdvancedMessageResult>(msg);
+    case DataTypeDef.Message:
+      return parseJson<Message>(msg);
+    case DataTypeDef.SearchMessagesResult:
+      return parseJson<SearchMessageResult>(msg);
+    case DataTypeDef.UserInfo:
+      return parseJson<UserInfo>(msg);
+    case DataTypeDef.UserInfo_List:
+      return parseJson<UserInfo[]>(msg);
+    case DataTypeDef.PublicUserInfo:
+      return parseJson<PublicUserInfo>(msg);
+    case DataTypeDef.PublicUserInfo_List:
+      return parseJson<PublicUserInfo[]>(msg);
+    case DataTypeDef.OnlineStatus:
+      return parseJson<OnlineStatus>(msg);
+    case DataTypeDef.OnlineStatus_List:
+      return parseJson<OnlineStatus[]>(msg);
+    case DataTypeDef.SearchFriendItem:
+      return parseJson<SearchFriendItem>(msg);
+    case DataTypeDef.SearchFriendItem_List:
+      return parseJson<SearchFriendItem[]>(msg);
+    case DataTypeDef.UserIDResult:
+      return parseJson<UserIDResult>(msg);
+    case DataTypeDef.UserIDResult_List:
+      return parseJson<UserIDResult[]>(msg);
+    case DataTypeDef.FriendInfo:
+      return parseJson<FriendInfo>(msg);
+    case DataTypeDef.FriendInfo_List:
+      return parseJson<FriendInfo[]>(msg);
+    case DataTypeDef.FriendApplicationInfo:
+      return parseJson<FriendApplicationInfo>(msg);
+    case DataTypeDef.FriendApplicationInfo_List:
+      return parseJson<FriendApplicationInfo[]>(msg);
+    case DataTypeDef.BlackInfo:
+      return parseJson<BlackInfo>(msg);
+    case DataTypeDef.BlackInfo_List:
+      return parseJson<BlackInfo[]>(msg);
+    case DataTypeDef.GroupInfo:
+      return parseJson<GroupInfo>(msg);
+    case DataTypeDef.GroupInfo_List:
+      return parseJson<GroupInfo[]>(msg);
+    case DataTypeDef.GroupMember:
+      return parseJson<GroupMember>(msg);
+    case DataTypeDef.GroupMember_List:
+      return parseJson<GroupMember[]>(msg);
+    case DataTypeDef.GroupApplicationInfo:
+      return parseJson<GroupApplicationInfo>(msg);
+    case DataTypeDef.GroupApplicationInfo_List:
+      return parseJson<GroupApplicationInfo[]>(msg);
+  }
+  return undefined
 }

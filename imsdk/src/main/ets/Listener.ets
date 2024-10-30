@@ -129,3 +129,4 @@ export interface IBatchMsgListener {
 
   onRecvOfflineNewMessages(messageList: Message[]): void;
 }
+

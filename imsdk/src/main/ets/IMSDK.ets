@@ -1,4 +1,103 @@
-import { BaseArgs, InitSDKArgs, LoginArgs } from "./APIArgs";
+import {
+  AcceptFriendApplicationArgs,
+  AcceptGroupApplicationArgs,
+  AddBlackArgs,
+  AddFriendArgs,
+  BaseArgs,
+  ChangeGroupMemberMuteArgs,
+  ChangeGroupMuteArgs,
+  CheckFriendArgs,
+  ClearConversationAndDeleteAllMsgArgs,
+  CreateAdvancedQuoteMessageArgs,
+  CreateAdvancedTextMessageArgs,
+  CreateCardMessageArgs,
+  CreateCustomMessageArgs,
+  CreateFaceMessageArgs,
+  CreateFileMessageArgs,
+  CreateFileMessageByURLArgs,
+  CreateFileMessageFromFullPathArgs,
+  CreateForwardMessageArgs,
+  CreateGroupArgs,
+  CreateImageMessageArgs,
+  CreateImageMessageByURLArgs,
+  CreateImageMessageFromFullPathArgs,
+  CreateLocationMessageArgs,
+  CreateMergerMessageArgs,
+  CreateQuoteMessageArgs,
+  CreateSoundMessageByURLArgs,
+  CreateSoundMessageFromFullPathArgs,
+  CreateTextAtMessageArgs,
+  CreateTextMessageArgs,
+  CreateVideoMessageArgs,
+  CreateVideoMessageByURLArgs,
+  CreateVideoMessageFromFullPathArgs,
+  DeleteAllMsgFromLocalAndSVRArgs,
+  DeleteAllMsgFromLocalArgs,
+  DeleteConversationAndDeleteAllMsgArgs,
+  DeleteFriendArgs,
+  DeleteMessageArgs,
+  DeleteMessageFromLocalStorageArgs,
+  DismissGroupArgs,
+  FindMessageListArgs,
+  GetAdvancedHistoryMessageListArgs,
+  GetAdvancedHistoryMessageListReverseArgs,
+  GetBlackListArgs,
+  GetConversationIdBySessionTypeArgs,
+  GetConversationListSplitArgs,
+  GetFriendApplicationListAsApplicantArgs,
+  GetFriendApplicationListAsRecipientArgs,
+  GetFriendListArgs,
+  GetFriendListPageArgs,
+  GetGroupApplicationListAsApplicantArgs,
+  GetGroupApplicationListAsRecipientArgs,
+  GetGroupMemberListArgs,
+  GetGroupMemberListByJoinTimeFilterArgs,
+  GetGroupMemberOwnerAndAdminArgs,
+  GetJoinedGroupListArgs,
+  GetJoinedGroupListPageArgs,
+  GetMultipleConversationArgs,
+  GetOneConversationArgs,
+  GetSpecifiedFriendsInfoArgs,
+  GetSpecifiedGroupMembersInfoArgs,
+  GetSpecifiedGroupsInfoArgs,
+  GetUsersInfoArgs,
+  GetUsersInGroupArgs,
+  GetUserStatusArgs,
+  HideAllConversationsArgs,
+  HideConversationArgs,
+  InitSDKArgs,
+  InsertGroupMessageToLocalStorageArgs,
+  InsertSingleMessageToLocalStorageArgs,
+  InviteUserToGroupArgs,
+  IsJoinGroupArgs,
+  JoinGroupArgs,
+  KickGroupMemberArgs,
+  LoginArgs,
+  MarkConversationMessageAsReadArgs,
+  QuitGroupArgs,
+  RefuseFriendApplicationArgs,
+  RefuseGroupApplicationArgs,
+  RemoveBlackArgs,
+  RevokeMessageArgs,
+  SearchFriendsArgs,
+  SearchGroupMembersArgs,
+  SearchGroupsArgs,
+  SearchLocalMessagesArgs,
+  SendMessageArgs,
+  SendMessageNotOSSArgs,
+  SetAppBackgroundStatusArgs,
+  SetConversationArgs,
+  SetConversationDraftArgs,
+  SetGroupInfoArgs,
+  SetGroupMemberInfoArgs,
+  SetMessageLocalExArgs,
+  SetSelfInfoArgs,
+  SubscribeUsersStatusArgs,
+  TransferGroupOwnerArgs,
+  TypingStatusUpdateArgs,
+  UnsubscribeUsersStatusArgs,
+  UpdateFriendsArgs
+} from "./APIArgs";
 import {
   AdvancedMessageResult,
   ApplyToAddFriendReq,
@@ -39,11 +138,12 @@ import {
   UpdateFriendsReq,
   UserIDResult,
   UserInfo,
-  VideoElem
+  VideoElem,
+  GroupMemberInfoArgs
 } from "./Data";
 import { ConversationType, GroupMemberFilter, JoinSource, LoginStatus } from "./Enum";
 import { IConnListener } from "./Listener";
-import { dispatchMsg, registerHandler } from "./MessageHandle";
+import { dispatchMsg, IMsgSendCallBack, registerHandler, registerSendMsgHandler } from "./MessageHandle";
 import { APIKey } from "./native/APIKey";
 import { CallAPI, Redirect, registerMsgCallBack } from "./native/NativeSDK";
 import { ToJson } from "./utils/Json";
@@ -87,7 +187,7 @@ export function Login(cb: (suc: boolean, errCode: number, errMsg: string) => voi
 }
 
 export function Logout(cb: (suc: boolean, errCode: number, errMsg: string) => void): void {
-  const args: LogoutArgs = {
+  const args: BaseArgs = {
     operationId: GetOperationId(),
   };
   registerHandler<boolean>(args.operationId, cb);
@@ -105,7 +205,7 @@ export function SetAppBackGroundStatus(cb: (suc: boolean, errCode: number, errMs
 }
 
 export function NetworkStatusChanged(cb: (suc: boolean, errCode: number, errMsg: string) => void): void {
-  const args: NetworkStatusChangedArgs = {
+  const args: BaseArgs = {
     operationId: GetOperationId(),
   };
   registerHandler<boolean>(args.operationId, cb);
@@ -113,7 +213,7 @@ export function NetworkStatusChanged(cb: (suc: boolean, errCode: number, errMsg:
 }
 
 export function GetLoginStatus(): LoginStatus {
-  const args: GetLoginStatusArgs = {
+  const args: BaseArgs = {
     operationId: GetOperationId(),
   };
   const res = CallAPI<NumberValue>(APIKey.GetLoginStatus, args) as NumberValue;
@@ -133,7 +233,7 @@ export function CreateTextMessage(text: string): Message {
     operationId: GetOperationId(),
     text,
   };
-  return CallAPI<Message>(APIKey.CreateTextMessage, args);
+  return CallAPI<Message>(APIKey.CreateTextMessage, args) as Message;
 }
 
 export function CreateAdvancedTextMessage(text: string, messageEntityList: MessageEntity[]): Message {
@@ -142,7 +242,7 @@ export function CreateAdvancedTextMessage(text: string, messageEntityList: Messa
     text,
     messageEntityList: ToJson(messageEntityList),
   };
-  return CallAPI<Message>(APIKey.CreateAdvancedTextMessage, args);
+  return CallAPI<Message>(APIKey.CreateAdvancedTextMessage, args) as Message;
 }
 
 export function CreateTextAtMessage(text: string, atUserList: string[], atUsersInfo: AtInfo[],
@@ -154,7 +254,7 @@ export function CreateTextAtMessage(text: string, atUserList: string[], atUsersI
     atUsersInfo: ToJson(atUsersInfo),
     message: ToJson(message),
   };
-  return CallAPI<Message>(APIKey.CreateTextAtMessage, args);
+  return CallAPI<Message>(APIKey.CreateTextAtMessage, args) as Message;
 }
 
 export function CreateLocationMessage(description: string, longitude: number, latitude: number): Message {
@@ -164,7 +264,7 @@ export function CreateLocationMessage(description: string, longitude: number, la
     longitude,
     latitude,
   };
-  return CallAPI<Message>(APIKey.CreateLocationMessage, args);
+  return CallAPI<Message>(APIKey.CreateLocationMessage, args) as Message;
 }
 
 export function CreateCustomMessage(data: string, extension: string, description: string): Message {
@@ -174,7 +274,7 @@ export function CreateCustomMessage(data: string, extension: string, description
     extension,
     description,
   };
-  return CallAPI<Message>(APIKey.CreateCustomMessage, args);
+  return CallAPI<Message>(APIKey.CreateCustomMessage, args) as Message;
 }
 
 export function CreateQuoteMessage(text: string, message: Message): Message {
@@ -183,7 +283,7 @@ export function CreateQuoteMessage(text: string, message: Message): Message {
     text,
     message: ToJson(message),
   };
-  return CallAPI<Message>(APIKey.CreateQuoteMessage, args);
+  return CallAPI<Message>(APIKey.CreateQuoteMessage, args) as Message;
 }
 
 export function CreateAdvancedQuoteMessage(text: string, message: Message,
@@ -194,7 +294,7 @@ export function CreateAdvancedQuoteMessage(text: string, message: Message,
     message: ToJson(message),
     messageEntityList: ToJson(messageEntityList),
   };
-  return CallAPI<Message>(APIKey.CreateAdvancedQuoteMessage, args);
+  return CallAPI<Message>(APIKey.CreateAdvancedQuoteMessage, args) as Message;
 }
 
 export function CreateCardMessage(cardInfo: CardElem): Message {
@@ -202,7 +302,7 @@ export function CreateCardMessage(cardInfo: CardElem): Message {
     operationId: GetOperationId(),
     cardInfo: ToJson(cardInfo),
   };
-  return CallAPI<Message>(APIKey.CreateCardMessage, args);
+  return CallAPI<Message>(APIKey.CreateCardMessage, args) as Message;
 }
 
 export function CreateVideoMessageFromFullPath(videoFullPath: string, videoType: string, duration: number,
@@ -214,7 +314,7 @@ export function CreateVideoMessageFromFullPath(videoFullPath: string, videoType:
     duration,
     snapshotFullPath,
   };
-  return CallAPI<Message>(APIKey.CreateVideoMessageFromFullPath, args);
+  return CallAPI<Message>(APIKey.CreateVideoMessageFromFullPath, args) as Message;
 }
 
 export function CreateImageMessageFromFullPath(imageFullPath: string): Message {
@@ -222,7 +322,7 @@ export function CreateImageMessageFromFullPath(imageFullPath: string): Message {
     operationId: GetOperationId(),
     imageFullPath,
   };
-  return CallAPI<Message>(APIKey.CreateImageMessageFromFullPath, args);
+  return CallAPI<Message>(APIKey.CreateImageMessageFromFullPath, args) as Message;
 }
 
 export function CreateSoundMessageFromFullPath(soundPath: string, duration: number): Message {
@@ -231,7 +331,7 @@ export function CreateSoundMessageFromFullPath(soundPath: string, duration: numb
     soundPath,
     duration,
   };
-  return CallAPI<Message>(APIKey.CreateSoundMessageFromFullPath, args);
+  return CallAPI<Message>(APIKey.CreateSoundMessageFromFullPath, args) as Message;
 }
 
 export function CreateFileMessageFromFullPath(fileFullPath: string, fileName: string): Message {
@@ -240,7 +340,7 @@ export function CreateFileMessageFromFullPath(fileFullPath: string, fileName: st
     fileFullPath,
     fileName,
   };
-  return CallAPI<Message>(APIKey.CreateFileMessageFromFullPath, args);
+  return CallAPI<Message>(APIKey.CreateFileMessageFromFullPath, args) as Message;
 }
 
 export function CreateImageMessage(imagePath: string): Message {
@@ -248,7 +348,7 @@ export function CreateImageMessage(imagePath: string): Message {
     operationId: GetOperationId(),
     imagePath,
   };
-  return CallAPI<Message>(APIKey.CreateImageMessage, args);
+  return CallAPI<Message>(APIKey.CreateImageMessage, args) as Message;
 }
 
 export function CreateImageMessageByURL(sourcePath: string, sourcePicture: PictureBaseInfo, bigPicture: PictureBaseInfo,
@@ -260,7 +360,7 @@ export function CreateImageMessageByURL(sourcePath: string, sourcePicture: Pictu
     bigPicture: ToJson(bigPicture),
     snapshotPicture: ToJson(snapshotPicture),
   };
-  return CallAPI<Message>(APIKey.CreateImageMessageByURL, args);
+  return CallAPI<Message>(APIKey.CreateImageMessageByURL, args) as Message;
 }
 
 export function CreateSoundMessageByURL(soundBaseInfo: SoundElem): Message {
@@ -268,7 +368,7 @@ export function CreateSoundMessageByURL(soundBaseInfo: SoundElem): Message {
     operationId: GetOperationId(),
     soundBaseInfo: ToJson(soundBaseInfo),
   };
-  return CallAPI<Message>(APIKey.CreateSoundMessageByURL, args);
+  return CallAPI<Message>(APIKey.CreateSoundMessageByURL, args) as Message;
 }
 
 export function CreateVideoMessageByURL(videoBaseInfo: VideoElem): Message {
@@ -276,7 +376,7 @@ export function CreateVideoMessageByURL(videoBaseInfo: VideoElem): Message {
     operationId: GetOperationId(),
     videoBaseInfo: ToJson(videoBaseInfo),
   };
-  return CallAPI<Message>(APIKey.CreateVideoMessageByURL, args);
+  return CallAPI<Message>(APIKey.CreateVideoMessageByURL, args) as Message;
 }
 
 export function CreateVideoMessage(videoPath: string, videoType: string, duration: number,
@@ -288,7 +388,7 @@ export function CreateVideoMessage(videoPath: string, videoType: string, duratio
     duration,
     snapshotPath,
   };
-  return CallAPI<Message>(APIKey.CreateVideoMessage, args);
+  return CallAPI<Message>(APIKey.CreateVideoMessage, args) as Message;
 }
 
 export function CreateFileMessageByURL(fileBaseInfo: FileElem): Message {
@@ -296,7 +396,7 @@ export function CreateFileMessageByURL(fileBaseInfo: FileElem): Message {
     operationId: GetOperationId(),
     fileBaseInfo: ToJson(fileBaseInfo),
   };
-  return CallAPI<Message>(APIKey.CreateFileMessageByURL, args);
+  return CallAPI<Message>(APIKey.CreateFileMessageByURL, args) as Message;
 }
 
 export function CreateFileMessage(filePath: string, fileName: string): Message {
@@ -305,7 +405,7 @@ export function CreateFileMessage(filePath: string, fileName: string): Message {
     filePath,
     fileName,
   };
-  return CallAPI<Message>(APIKey.CreateFileMessage, args);
+  return CallAPI<Message>(APIKey.CreateFileMessage, args) as Message;
 }
 
 export function CreateMergerMessage(messageList: Message[], title: string, summaryList: string[]): Message {
@@ -315,7 +415,7 @@ export function CreateMergerMessage(messageList: Message[], title: string, summa
     title,
     summaryList: ToJson(summaryList),
   };
-  return CallAPI<Message>(APIKey.CreateMergerMessage, args);
+  return CallAPI<Message>(APIKey.CreateMergerMessage, args) as Message;
 }
 
 export function CreateFaceMessage(index: number, data: string): Message {
@@ -324,7 +424,7 @@ export function CreateFaceMessage(index: number, data: string): Message {
     index,
     data,
   };
-  return CallAPI<Message>(APIKey.CreateFaceMessage, args);
+  return CallAPI<Message>(APIKey.CreateFaceMessage, args) as Message;
 }
 
 export function CreateForwardMessage(message: Message): Message {
@@ -332,57 +432,61 @@ export function CreateForwardMessage(message: Message): Message {
     operationId: GetOperationId(),
     message: ToJson(message),
   };
-  return CallAPI<Message>(APIKey.CreateForwardMessage, args);
+  return CallAPI<Message>(APIKey.CreateForwardMessage, args) as Message;
 }
 
-export function GetAllConversationList(cb: (result: List<Conversation>, errCode: number,
+export function GetAllConversationList(cb: (result: Conversation[], errCode: number,
   errMsg: string) => void): void {
-  const args = {
+  const args: BaseArgs = {
     operationId: GetOperationId()
   };
-
-  registerHandler<List<Conversation>>(args.operationId, cb);
+  registerHandler<Conversation[]>(args.operationId, cb);
   CallAPI(APIKey.GetAllConversationList, args);
 }
 
-export function GetConversationListSplit(cb: (result: List<Conversation>, errCode: number, errMsg: string) => void,
+export function GetConversationListSplit(cb: (result: Conversation[], errCode: number, errMsg: string) => void,
   offset: number, count: number): void {
-  const args = {
+  const args: GetConversationListSplitArgs = {
     operationId: GetOperationId(),
     offset,
     count
   };
-
-  registerHandler<List<Conversation>>(args.operationId, cb);
+  registerHandler<Conversation[]>(args.operationId, cb);
   CallAPI(APIKey.GetConversationListSplit, args);
 }
 
-export function GetOneConversation(cb: (result: Conversation, errCode: number, errMsg: string) => void,
-  sessionType: ConversationType, sourceId: string): void {
-  const args = {
+export function GetOneConversation(
+  cb: (result: Conversation, errCode: number, errMsg: string) => void,
+  sessionType: ConversationType,
+  sourceId: string
+): void {
+  const args: GetOneConversationArgs = {
     operationId: GetOperationId(),
     sessionType,
     sourceId
   };
-
   registerHandler<Conversation>(args.operationId, cb);
   CallAPI(APIKey.GetOneConversation, args);
 }
 
-export function GetMultipleConversation(cb: (result: List<Conversation>, errCode: number, errMsg: string) => void,
-  conversationIdList: string[]): void {
-  const args = {
+export function GetMultipleConversation(
+  cb: (result: Conversation[], errCode: number, errMsg: string) => void,
+  conversationIdList: string[]
+): void {
+  const args: GetMultipleConversationArgs = {
     operationId: GetOperationId(),
-    conversationIdList: Utils.ToJson(conversationIdList)
+    conversationIdList: ToJson(conversationIdList)
   };
 
-  registerHandler<List<Conversation>>(args.operationId, cb);
+  registerHandler<Conversation[]>(args.operationId, cb);
   CallAPI(APIKey.GetMultipleConversation, args);
 }
 
-export function HideConversation(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string): void {
-  const args = {
+export function HideConversation(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string
+): void {
+  const args: HideConversationArgs = {
     operationId: GetOperationId(),
     conversationId
   };
@@ -391,21 +495,27 @@ export function HideConversation(cb: (result: boolean, errCode: number, errMsg: 
   CallAPI(APIKey.HideConversation, args);
 }
 
-export function SetConversation(cb: (result: boolean, errCode: number, errMsg: string) => void, conversationId: string,
-  req: ConversationReq): void {
-  const args = {
+export function SetConversation(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  req: ConversationReq
+): void {
+  const args: SetConversationArgs = {
     operationId: GetOperationId(),
     conversationId,
-    req: Utils.ToJson(req)
+    req: ToJson(req)
   };
 
   registerHandler<boolean>(args.operationId, cb);
   CallAPI(APIKey.SetConversation, args);
 }
 
-export function SetConversationDraft(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string, draftText: string): void {
-  const args = {
+export function SetConversationDraft(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  draftText: string
+): void {
+  const args: SetConversationDraftArgs = {
     operationId: GetOperationId(),
     conversationId,
     draftText
@@ -415,8 +525,10 @@ export function SetConversationDraft(cb: (result: boolean, errCode: number, errM
   CallAPI(APIKey.SetConversationDraft, args);
 }
 
-export function GetTotalUnreadMsgCount(cb: (result: number, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function GetTotalUnreadMsgCount(
+  cb: (result: number, errCode: number, errMsg: string) => void
+): void {
+  const args: BaseArgs = {
     operationId: GetOperationId()
   };
 
@@ -425,91 +537,98 @@ export function GetTotalUnreadMsgCount(cb: (result: number, errCode: number, err
 }
 
 export function GetAtAllTag(): string {
-  const args = {
+  const args: BaseArgs = {
     operationId: GetOperationId()
   };
 
-  const res = CallAPI<StringValue>(APIKey.GetAtAllTag, args);
+  const res = CallAPI<StringValue>(APIKey.GetAtAllTag, args) as StringValue;
   return res.value;
 }
 
 export function GetConversationIdBySessionType(sourceId: string, sessionType: number): string {
-  const args = {
+  const args: GetConversationIdBySessionTypeArgs = {
     operationId: GetOperationId(),
     sourceId,
     sessionType
   };
 
-  const res = CallAPI<StringValue>(APIKey.GetConversationIDBySessionType, args);
+  const res = CallAPI<StringValue>(APIKey.GetConversationIDBySessionType, args) as StringValue;
   return res.value;
 }
 
 export function SendMessage(cb: IMsgSendCallBack, message: Message, recvId: string, groupId: string,
   offlinePushInfo: OfflinePushInfo, isOnlineOnly: boolean): void {
-  const args = {
+  const args: SendMessageArgs = {
     operationId: GetOperationId(),
-    message: Utils.ToJson(message),
+    message: ToJson(message),
     recvId,
     groupId,
-    offlinePushInfo: Utils.ToJson(offlinePushInfo),
+    offlinePushInfo: ToJson(offlinePushInfo),
     isOnlineOnly
   };
-
-  msgSendCallBackDic[args.operationId] = cb;
+  registerSendMsgHandler(args.operationId, cb)
   CallAPI(APIKey.SendMessage, args);
 }
 
 export function SendMessageNotOSS(cb: IMsgSendCallBack, message: Message, recvId: string, groupId: string,
   offlinePushInfo: OfflinePushInfo, isOnlineOnly: boolean): void {
-  const args = {
+  const args: SendMessageNotOSSArgs = {
     operationId: GetOperationId(),
-    message: Utils.ToJson(message),
+    message: ToJson(message),
     recvId,
     groupId,
-    offlinePushInfo: Utils.ToJson(offlinePushInfo),
+    offlinePushInfo: ToJson(offlinePushInfo),
     isOnlineOnly
   };
-
-  msgSendCallBackDic[args.operationId] = cb;
+  registerSendMsgHandler(args.operationId, cb)
   CallAPI(APIKey.SendMessageNotOss, args);
 }
 
-export function FindMessageList(cb: (result: FindMessageResult, errCode: number, errMsg: string) => void,
-  findMessageOptions: ConversationArgs[]): void {
-  const args = {
+export function FindMessageList(
+  cb: (result: FindMessageResult, errCode: number, errMsg: string) => void,
+  findMessageOptions: ConversationArgs[]
+): void {
+  const args: FindMessageListArgs = {
     operationId: GetOperationId(),
-    findMessageOptions: Utils.ToJson(findMessageOptions)
+    findMessageOptions: ToJson(findMessageOptions)
   };
 
   registerHandler<FindMessageResult>(args.operationId, cb);
   CallAPI(APIKey.FindMessageList, args);
 }
 
-export function GetAdvancedHistoryMessageList(cb: (result: AdvancedMessageResult, errCode: number,
-  errMsg: string) => void, getMessageOptions: GetAdvancedHistoryMessageListParams): void {
-  const args = {
+export function GetAdvancedHistoryMessageList(
+  cb: (result: AdvancedMessageResult, errCode: number, errMsg: string) => void,
+  getMessageOptions: GetAdvancedHistoryMessageListParams
+): void {
+  const args: GetAdvancedHistoryMessageListArgs = {
     operationId: GetOperationId(),
-    getMessageOptions: Utils.ToJson(getMessageOptions)
+    getMessageOptions: ToJson(getMessageOptions)
   };
 
   registerHandler<AdvancedMessageResult>(args.operationId, cb);
   CallAPI(APIKey.GetAdvancedHistoryMessageList, args);
 }
 
-export function GetAdvancedHistoryMessageListReverse(cb: (result: AdvancedMessageResult, errCode: number,
-  errMsg: string) => void, getMessageOptions: GetAdvancedHistoryMessageListParams): void {
-  const args = {
+export function GetAdvancedHistoryMessageListReverse(
+  cb: (result: AdvancedMessageResult, errCode: number, errMsg: string) => void,
+  getMessageOptions: GetAdvancedHistoryMessageListParams
+): void {
+  const args: GetAdvancedHistoryMessageListReverseArgs = {
     operationId: GetOperationId(),
-    getMessageOptions: Utils.ToJson(getMessageOptions)
+    getMessageOptions: ToJson(getMessageOptions)
   };
 
   registerHandler<AdvancedMessageResult>(args.operationId, cb);
   CallAPI(APIKey.GetAdvancedHistoryMessageListReverse, args);
 }
 
-export function RevokeMessage(cb: (result: boolean, errCode: number, errMsg: string) => void, conversationId: string,
-  clientMsgId: string): void {
-  const args = {
+export function RevokeMessage(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  clientMsgId: string
+): void {
+  const args: RevokeMessageArgs = {
     operationId: GetOperationId(),
     conversationId,
     clientMsgId
@@ -519,9 +638,12 @@ export function RevokeMessage(cb: (result: boolean, errCode: number, errMsg: str
   CallAPI(APIKey.RevokeMessage, args);
 }
 
-export function TypingStatusUpdate(cb: (result: boolean, errCode: number, errMsg: string) => void, recvId: string,
-  msgTip: string): void {
-  const args = {
+export function TypingStatusUpdate(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  recvId: string,
+  msgTip: string
+): void {
+  const args: TypingStatusUpdateArgs = {
     operationId: GetOperationId(),
     recvId,
     msgTip
@@ -531,9 +653,11 @@ export function TypingStatusUpdate(cb: (result: boolean, errCode: number, errMsg
   CallAPI(APIKey.TypingStatusUpdate, args);
 }
 
-export function MarkConversationMessageAsRead(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string): void {
-  const args = {
+export function MarkConversationMessageAsRead(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string
+): void {
+  const args: MarkConversationMessageAsReadArgs = {
     operationId: GetOperationId(),
     conversationId
   };
@@ -542,9 +666,12 @@ export function MarkConversationMessageAsRead(cb: (result: boolean, errCode: num
   CallAPI(APIKey.MarkConversationMessageAsRead, args);
 }
 
-export function DeleteMessageFromLocalStorage(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string, clientMsgId: string): void {
-  const args = {
+export function DeleteMessageFromLocalStorage(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  clientMsgId: string
+): void {
+  const args: DeleteMessageFromLocalStorageArgs = {
     operationId: GetOperationId(),
     conversationId,
     clientMsgId
@@ -554,9 +681,12 @@ export function DeleteMessageFromLocalStorage(cb: (result: boolean, errCode: num
   CallAPI(APIKey.DeleteMessageFromLocalStorage, args);
 }
 
-export function DeleteMessage(cb: (result: boolean, errCode: number, errMsg: string) => void, conversationId: string,
-  clientMsgId: string): void {
-  const args = {
+export function DeleteMessage(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  clientMsgId: string
+): void {
+  const args: DeleteMessageArgs = {
     operationId: GetOperationId(),
     conversationId,
     clientMsgId
@@ -566,8 +696,10 @@ export function DeleteMessage(cb: (result: boolean, errCode: number, errMsg: str
   CallAPI(APIKey.DeleteMessage, args);
 }
 
-export function HideAllConversations(cb: (result: boolean, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function HideAllConversations(
+  cb: (result: boolean, errCode: number, errMsg: string) => void
+): void {
+  const args: HideAllConversationsArgs = {
     operationId: GetOperationId()
   };
 
@@ -575,8 +707,10 @@ export function HideAllConversations(cb: (result: boolean, errCode: number, errM
   CallAPI(APIKey.HideAllConversations, args);
 }
 
-export function DeleteAllMsgFromLocalAndSVR(cb: (result: boolean, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function DeleteAllMsgFromLocalAndSVR(
+  cb: (result: boolean, errCode: number, errMsg: string) => void
+): void {
+  const args: DeleteAllMsgFromLocalAndSVRArgs = {
     operationId: GetOperationId()
   };
 
@@ -584,8 +718,10 @@ export function DeleteAllMsgFromLocalAndSVR(cb: (result: boolean, errCode: numbe
   CallAPI(APIKey.DeleteAllMsgFromLocalAndSvr, args);
 }
 
-export function DeleteAllMsgFromLocal(cb: (result: boolean, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function DeleteAllMsgFromLocal(
+  cb: (result: boolean, errCode: number, errMsg: string) => void
+): void {
+  const args: DeleteAllMsgFromLocalArgs = {
     operationId: GetOperationId()
   };
 
@@ -593,9 +729,11 @@ export function DeleteAllMsgFromLocal(cb: (result: boolean, errCode: number, err
   CallAPI(APIKey.DeleteAllMsgFromLocal, args);
 }
 
-export function ClearConversationAndDeleteAllMsg(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string): void {
-  const args = {
+export function ClearConversationAndDeleteAllMsg(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string
+): void {
+  const args: ClearConversationAndDeleteAllMsgArgs = {
     operationId: GetOperationId(),
     conversationId
   };
@@ -604,9 +742,11 @@ export function ClearConversationAndDeleteAllMsg(cb: (result: boolean, errCode: 
   CallAPI(APIKey.ClearConversationAndDeleteAllMsg, args);
 }
 
-export function DeleteConversationAndDeleteAllMsg(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string): void {
-  const args = {
+export function DeleteConversationAndDeleteAllMsg(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string
+): void {
+  const args: DeleteConversationAndDeleteAllMsgArgs = {
     operationId: GetOperationId(),
     conversationId
   };
@@ -615,9 +755,13 @@ export function DeleteConversationAndDeleteAllMsg(cb: (result: boolean, errCode:
   CallAPI(APIKey.DeleteConversationAndDeleteAllMsg, args);
 }
 
-export function InsertSingleMessageToLocalStorage(cb: (result: Message, errCode: number, errMsg: string) => void,
-  message: Message, recvId: string, sendId: string): void {
-  const args = {
+export function InsertSingleMessageToLocalStorage(
+  cb: (result: Message, errCode: number, errMsg: string) => void,
+  message: Message,
+  recvId: string,
+  sendId: string
+): void {
+  const args: InsertSingleMessageToLocalStorageArgs = {
     operationId: GetOperationId(),
     message: JSON.stringify(message),
     recvId,
@@ -628,9 +772,13 @@ export function InsertSingleMessageToLocalStorage(cb: (result: Message, errCode:
   CallAPI(APIKey.InsertSingleMessageToLocalStorage, args);
 }
 
-export function InsertGroupMessageToLocalStorage(cb: (result: Message, errCode: number, errMsg: string) => void,
-  message: Message, groupId: string, sendId: string): void {
-  const args = {
+export function InsertGroupMessageToLocalStorage(
+  cb: (result: Message, errCode: number, errMsg: string) => void,
+  message: Message,
+  groupId: string,
+  sendId: string
+): void {
+  const args: InsertGroupMessageToLocalStorageArgs = {
     operationId: GetOperationId(),
     message: JSON.stringify(message),
     groupId,
@@ -641,9 +789,11 @@ export function InsertGroupMessageToLocalStorage(cb: (result: Message, errCode: 
   CallAPI(APIKey.InsertGroupMessageToLocalStorage, args);
 }
 
-export function SearchLocalMessages(cb: (result: SearchMessageResult, errCode: number, errMsg: string) => void,
-  searchParam: SearchMessagesParams): void {
-  const args = {
+export function SearchLocalMessages(
+  cb: (result: SearchMessageResult, errCode: number, errMsg: string) => void,
+  searchParam: SearchMessagesParams
+): void {
+  const args: SearchLocalMessagesArgs = {
     operationId: GetOperationId(),
     searchParam: JSON.stringify(searchParam)
   };
@@ -652,9 +802,13 @@ export function SearchLocalMessages(cb: (result: SearchMessageResult, errCode: n
   CallAPI(APIKey.SearchLocalMessages, args);
 }
 
-export function SetMessageLocalEx(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  conversationId: string, clientMsgId: string, localEx: string): void {
-  const args = {
+export function SetMessageLocalEx(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  conversationId: string,
+  clientMsgId: string,
+  localEx: string
+): void {
+  const args: SetMessageLocalExArgs = {
     operationId: GetOperationId(),
     conversationId,
     clientMsgId,
@@ -665,19 +819,24 @@ export function SetMessageLocalEx(cb: (result: boolean, errCode: number, errMsg:
   CallAPI(APIKey.SetMessageLocalEx, args);
 }
 
-export function GetUsersInfo(cb: (result: List<PublicUserInfo>, errCode: number, errMsg: string) => void,
-  userIds: string[]): void {
-  const args = {
+export function GetUsersInfo(
+  cb: (result: PublicUserInfo[], errCode: number, errMsg: string) => void,
+  userIds: string[]
+): void {
+  const args: GetUsersInfoArgs = {
     operationId: GetOperationId(),
     userIds: JSON.stringify(userIds)
   };
 
-  registerHandler<List<PublicUserInfo>>(args.operationId, cb);
+  registerHandler<PublicUserInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetUsersInfo, args);
 }
 
-export function SetSelfInfo(cb: (result: boolean, errCode: number, errMsg: string) => void, userInfo: UserInfo): void {
-  const args = {
+export function SetSelfInfo(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  userInfo: UserInfo
+): void {
+  const args: SetSelfInfoArgs = {
     operationId: GetOperationId(),
     userInfo: JSON.stringify(userInfo)
   };
@@ -686,8 +845,10 @@ export function SetSelfInfo(cb: (result: boolean, errCode: number, errMsg: strin
   CallAPI(APIKey.SetSelfInfo, args);
 }
 
-export function GetSelfUserInfo(cb: (result: UserInfo, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function GetSelfUserInfo(
+  cb: (result: UserInfo, errCode: number, errMsg: string) => void
+): void {
+  const args: BaseArgs = {
     operationId: GetOperationId(),
   };
 
@@ -695,20 +856,24 @@ export function GetSelfUserInfo(cb: (result: UserInfo, errCode: number, errMsg: 
   CallAPI(APIKey.GetSelfUserInfo, args);
 }
 
-export function SubscribeUsersStatus(cb: (result: List<OnlineStatus>, errCode: number, errMsg: string) => void,
-  userIds: string[]): void {
-  const args = {
+export function SubscribeUsersStatus(
+  cb: (result: OnlineStatus[], errCode: number, errMsg: string) => void,
+  userIds: string[]
+): void {
+  const args: SubscribeUsersStatusArgs = {
     operationId: GetOperationId(),
     userIds: JSON.stringify(userIds)
   };
 
-  registerHandler<List<OnlineStatus>>(args.operationId, cb);
+  registerHandler<OnlineStatus[]>(args.operationId, cb);
   CallAPI(APIKey.SubscribeUsersStatus, args);
 }
 
-export function UnsubscribeUsersStatus(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  userIds: string[]): void {
-  const args = {
+export function UnsubscribeUsersStatus(
+  cb: (result: boolean, errCode: number, errMsg: string) => void,
+  userIds: string[]
+): void {
+  const args: UnsubscribeUsersStatusArgs = {
     operationId: GetOperationId(),
     userIds: JSON.stringify(userIds)
   };
@@ -717,77 +882,78 @@ export function UnsubscribeUsersStatus(cb: (result: boolean, errCode: number, er
   CallAPI(APIKey.UnsubscribeUsersStatus, args);
 }
 
-export function GetSubscribeUsersStatus(cb: (result: List<OnlineStatus>, errCode: number,
-  errMsg: string) => void): void {
-  const args = {
+export function GetSubscribeUsersStatus(
+  cb: (result: OnlineStatus[], errCode: number, errMsg: string) => void
+): void {
+  const args: BaseArgs = {
     operationId: GetOperationId(),
   };
 
-  registerHandler<List<OnlineStatus>>(args.operationId, cb);
+  registerHandler<OnlineStatus[]>(args.operationId, cb);
   CallAPI(APIKey.GetSubscribeUsersStatus, args);
 }
 
-export function GetUserStatus(cb: (result: List<OnlineStatus>, errCode: number, errMsg: string) => void,
+export function GetUserStatus(cb: (result: OnlineStatus[], errCode: number, errMsg: string) => void,
   userIds: string[]): void {
-  const args = {
+  const args: GetUserStatusArgs = {
     operationId: GetOperationId(),
     userIds: JSON.stringify(userIds)
   };
 
-  registerHandler<List<OnlineStatus>>(args.operationId, cb);
+  registerHandler<OnlineStatus[]>(args.operationId, cb);
   CallAPI(APIKey.GetUserStatus, args);
 }
 
-export function GetSpecifiedFriendsInfo(cb: (result: List<FriendInfo>, errCode: number, errMsg: string) => void,
+export function GetSpecifiedFriendsInfo(cb: (result: FriendInfo[], errCode: number, errMsg: string) => void,
   userIdList: string[], filterBlack: boolean): void {
-  const args = {
+  const args: GetSpecifiedFriendsInfoArgs = {
     operationId: GetOperationId(),
     userIdList: JSON.stringify(userIdList),
     filterBlack
   };
 
-  registerHandler<List<FriendInfo>>(args.operationId, cb);
+  registerHandler<FriendInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetSpecifiedFriendsInfo, args);
 }
 
-export function GetFriendList(cb: (result: List<FriendInfo>, errCode: number, errMsg: string) => void,
+export function GetFriendList(cb: (result: FriendInfo[], errCode: number, errMsg: string) => void,
   filterBlack: boolean): void {
-  const args = {
+  const args: GetFriendListArgs = {
     operationId: GetOperationId(),
     filterBlack
   };
 
-  registerHandler<List<FriendInfo>>(args.operationId, cb);
+  registerHandler<FriendInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetFriendList, args);
 }
 
-export function GetFriendListPage(cb: (result: List<FriendInfo>, errCode: number, errMsg: string) => void,
+export function GetFriendListPage(cb: (result: FriendInfo[], errCode: number, errMsg: string) => void,
   offset: number, count: number, filterBlack: boolean): void {
-  const args = {
+  const args: GetFriendListPageArgs = {
     operationId: GetOperationId(),
     offset,
     count,
     filterBlack
   };
 
-  registerHandler<List<FriendInfo>>(args.operationId, cb);
+  registerHandler<FriendInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetFriendListPage, args);
 }
 
-export function SearchFriends(cb: (result: List<SearchFriendItem>, errCode: number, errMsg: string) => void,
+export function SearchFriends(cb: (result: SearchFriendItem[], errCode: number, errMsg: string) => void,
   searchParam: SearchFriendsParam): void {
-  const args = {
+  const args: SearchFriendsArgs = {
     operationId: GetOperationId(),
     searchParam: JSON.stringify(searchParam)
   };
 
-  registerHandler<List<SearchFriendItem>>(args.operationId, cb);
+  registerHandler<SearchFriendItem[]>(args.operationId, cb);
   CallAPI(APIKey.SearchFriends, args);
 }
 
 export function UpdateFriends(cb: (result: boolean, errCode: number, errMsg: string) => void,
   req: UpdateFriendsReq): void {
-  const args = {
+  const args: UpdateFriendsArgs = {
     operationId: GetOperationId(),
     req: JSON.stringify(req)
   };
@@ -796,20 +962,20 @@ export function UpdateFriends(cb: (result: boolean, errCode: number, errMsg: str
   CallAPI(APIKey.UpdateFriends, args);
 }
 
-export function CheckFriend(cb: (result: List<UserIDResult>, errCode: number, errMsg: string) => void,
+export function CheckFriend(cb: (result: UserIDResult[], errCode: number, errMsg: string) => void,
   userIdList: string[]): void {
-  const args = {
+  const args: CheckFriendArgs = {
     operationId: GetOperationId(),
     userIdList: JSON.stringify(userIdList)
   };
 
-  registerHandler<List<UserIDResult>>(args.operationId, cb);
+  registerHandler<UserIDResult[]>(args.operationId, cb);
   CallAPI(APIKey.CheckFriend, args);
 }
 
 export function AddFriend(cb: (result: boolean, errCode: number, errMsg: string) => void,
   userIdReqMsg: ApplyToAddFriendReq): void {
-  const args = {
+  const args: AddFriendArgs = {
     operationId: GetOperationId(),
     userIdReqMsg: JSON.stringify(userIdReqMsg)
   };
@@ -820,7 +986,7 @@ export function AddFriend(cb: (result: boolean, errCode: number, errMsg: string)
 
 export function DeleteFriend(cb: (result: boolean, errCode: number, errMsg: string) => void,
   friendUserId: string): void {
-  const args = {
+  const args: DeleteFriendArgs = {
     operationId: GetOperationId(),
     friendUserId
   };
@@ -829,29 +995,29 @@ export function DeleteFriend(cb: (result: boolean, errCode: number, errMsg: stri
   CallAPI(APIKey.DeleteFriend, args);
 }
 
-export function GetFriendApplicationListAsRecipient(cb: (result: List<FriendApplicationInfo>, errCode: number,
+export function GetFriendApplicationListAsRecipient(cb: (result: FriendApplicationInfo[], errCode: number,
   errMsg: string) => void): void {
-  const args = {
+  const args: GetFriendApplicationListAsRecipientArgs = {
     operationId: GetOperationId(),
   };
 
-  registerHandler<List<FriendApplicationInfo>>(args.operationId, cb);
+  registerHandler<FriendApplicationInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetFriendApplicationListAsRecipient, args);
 }
 
-export function GetFriendApplicationListAsApplicant(cb: (result: List<FriendApplicationInfo>, errCode: number,
+export function GetFriendApplicationListAsApplicant(cb: (result: FriendApplicationInfo[], errCode: number,
   errMsg: string) => void): void {
-  const args = {
+  const args: GetFriendApplicationListAsApplicantArgs = {
     operationId: GetOperationId(),
   };
 
-  registerHandler<List<FriendApplicationInfo>>(args.operationId, cb);
+  registerHandler<FriendApplicationInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetFriendApplicationListAsApplicant, args);
 }
 
 export function AcceptFriendApplication(cb: (result: boolean, errCode: number, errMsg: string) => void,
   userIdHandleMsg: ProcessFriendApplicationParams): void {
-  const args = {
+  const args: AcceptFriendApplicationArgs = {
     operationId: GetOperationId(),
     userIdHandleMsg: JSON.stringify(userIdHandleMsg)
   };
@@ -862,7 +1028,7 @@ export function AcceptFriendApplication(cb: (result: boolean, errCode: number, e
 
 export function RefuseFriendApplication(cb: (result: boolean, errCode: number, errMsg: string) => void,
   userIdHandleMsg: ProcessFriendApplicationParams): void {
-  const args = {
+  const args: RefuseFriendApplicationArgs = {
     operationId: GetOperationId(),
     userIdHandleMsg: JSON.stringify(userIdHandleMsg)
   };
@@ -873,7 +1039,7 @@ export function RefuseFriendApplication(cb: (result: boolean, errCode: number, e
 
 export function AddBlack(cb: (result: boolean, errCode: number, errMsg: string) => void, blackUserId: string,
   ex: string): void {
-  const args = {
+  const args: AddBlackArgs = {
     operationId: GetOperationId(),
     blackUserId,
     ex
@@ -883,18 +1049,18 @@ export function AddBlack(cb: (result: boolean, errCode: number, errMsg: string) 
   CallAPI(APIKey.AddBlack, args);
 }
 
-export function GetBlackList(cb: (result: List<BlackInfo>, errCode: number, errMsg: string) => void): void {
-  const args = {
+export function GetBlackList(cb: (result: BlackInfo[], errCode: number, errMsg: string) => void): void {
+  const args: GetBlackListArgs = {
     operationId: GetOperationId(),
   };
 
-  registerHandler<List<BlackInfo>>(args.operationId, cb);
+  registerHandler<BlackInfo[]>(args.operationId, cb);
   CallAPI(APIKey.GetBlackList, args);
 }
 
 export function RemoveBlack(cb: (result: boolean, errCode: number, errMsg: string) => void,
   removeUserId: string): void {
-  const args = {
+  const args: RemoveBlackArgs = {
     operationId: GetOperationId(),
     removeUserId
   };
@@ -905,18 +1071,18 @@ export function RemoveBlack(cb: (result: boolean, errCode: number, errMsg: strin
 
 export function CreateGroup(cb: (result: boolean, errCode: number, errMsg: string) => void,
   groupReqInfo: CreateGroupReq): void {
-  const args = {
+  const args: CreateGroupArgs = {
     operationId: GetOperationId(),
-    groupReqInfo: Utils.ToJson(groupReqInfo),
+    groupReqInfo: ToJson(groupReqInfo),
   };
 
   registerHandler<boolean>(args.operationId, cb);
   CallAPI(APIKey.CreateGroup, args);
 }
 
-export function JoinGroup(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
-  reqMsg: string, joinSource: JoinSource, ex: string): void {
-  const args = {
+export function JoinGroup(cb: (result: boolean, errCode: number, errMsg: string) => void,
+  groupId: string, reqMsg: string, joinSource: JoinSource, ex: string): void {
+  const args: JoinGroupArgs = {
     operationId: GetOperationId(),
     groupId,
     reqMsg,
@@ -928,8 +1094,9 @@ export function JoinGroup(cb: (result: boolean, errCode: number, errMsg: string)
   CallAPI(APIKey.JoinGroup, args);
 }
 
-export function QuitGroup(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string): void {
-  const args = {
+export function QuitGroup(cb: (result: boolean, errCode: number, errMsg: string) => void,
+  groupId: string): void {
+  const args: QuitGroupArgs = {
     operationId: GetOperationId(),
     groupId,
   };
@@ -938,8 +1105,9 @@ export function QuitGroup(cb: (result: boolean, errCode: number, errMsg: string)
   CallAPI(APIKey.QuitGroup, args);
 }
 
-export function DismissGroup(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string): void {
-  const args = {
+export function DismissGroup(cb: (result: boolean, errCode: number, errMsg: string) => void,
+  groupId: string): void {
+  const args: DismissGroupArgs = {
     operationId: GetOperationId(),
     groupId,
   };
@@ -948,9 +1116,9 @@ export function DismissGroup(cb: (result: boolean, errCode: number, errMsg: stri
   CallAPI(APIKey.DismissGroup, args);
 }
 
-export function ChangeGroupMute(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
-  isMute: boolean): void {
-  const args = {
+export function ChangeGroupMute(cb: (result: boolean, errCode: number, errMsg: string) => void,
+  groupId: string, isMute: boolean): void {
+  const args: ChangeGroupMuteArgs = {
     operationId: GetOperationId(),
     groupId,
     isMute,
@@ -960,9 +1128,9 @@ export function ChangeGroupMute(cb: (result: boolean, errCode: number, errMsg: s
   CallAPI(APIKey.ChangeGroupMute, args);
 }
 
-export function ChangeGroupMemberMute(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
-  userId: string, mutedSeconds: number): void {
-  const args = {
+export function ChangeGroupMemberMute(cb: (result: boolean, errCode: number, errMsg: string) => void,
+  groupId: string, userId: string, mutedSeconds: number): void {
+  const args: ChangeGroupMemberMuteArgs = {
     operationId: GetOperationId(),
     groupId,
     userId,
@@ -974,10 +1142,10 @@ export function ChangeGroupMemberMute(cb: (result: boolean, errCode: number, err
 }
 
 export function SetGroupMemberInfo(cb: (result: boolean, errCode: number, errMsg: string) => void,
-  groupMemberInfo: SetGroupMemberInfo): void {
-  const args = {
+  groupMemberInfo: GroupMemberInfoArgs): void {
+  const args: SetGroupMemberInfoArgs = {
     operationId: GetOperationId(),
-    groupMemberInfo: Utils.ToJson(groupMemberInfo),
+    groupMemberInfo: ToJson(groupMemberInfo),
   };
 
   registerHandler<boolean>(args.operationId, cb);
@@ -985,7 +1153,7 @@ export function SetGroupMemberInfo(cb: (result: boolean, errCode: number, errMsg
 }
 
 export function GetJoinedGroupList(cb: (result: GroupInfo[], errCode: number, errMsg: string) => void): void {
-  const args = {
+  const args: GetJoinedGroupListArgs = {
     operationId: GetOperationId(),
   };
 
@@ -995,7 +1163,7 @@ export function GetJoinedGroupList(cb: (result: GroupInfo[], errCode: number, er
 
 export function GetJoinedGroupListPage(cb: (result: GroupInfo[], errCode: number, errMsg: string) => void,
   offset: number, count: number): void {
-  const args = {
+  const args: GetJoinedGroupListPageArgs = {
     operationId: GetOperationId(),
     offset,
     count,
@@ -1007,9 +1175,9 @@ export function GetJoinedGroupListPage(cb: (result: GroupInfo[], errCode: number
 
 export function GetSpecifiedGroupsInfo(cb: (result: GroupInfo[], errCode: number, errMsg: string) => void,
   groupIdList: string[]): void {
-  const args = {
+  const args: GetSpecifiedGroupsInfoArgs = {
     operationId: GetOperationId(),
-    groupIdList: Utils.ToJson(groupIdList),
+    groupIdList: ToJson(groupIdList),
   };
 
   registerHandler<GroupInfo[]>(args.operationId, cb);
@@ -1018,9 +1186,9 @@ export function GetSpecifiedGroupsInfo(cb: (result: GroupInfo[], errCode: number
 
 export function SearchGroups(cb: (result: GroupInfo[], errCode: number, errMsg: string) => void,
   searchParam: SearchGroupsParam): void {
-  const args = {
+  const args: SearchGroupsArgs = {
     operationId: GetOperationId(),
-    searchParam: Utils.ToJson(searchParam),
+    searchParam: ToJson(searchParam),
   };
 
   registerHandler<GroupInfo[]>(args.operationId, cb);
@@ -1029,9 +1197,9 @@ export function SearchGroups(cb: (result: GroupInfo[], errCode: number, errMsg: 
 
 export function SetGroupInfo(cb: (result: boolean, errCode: number, errMsg: string) => void,
   groupInfo: GroupInfoForSet): void {
-  const args = {
+  const args: SetGroupInfoArgs = {
     operationId: GetOperationId(),
-    groupInfo: Utils.ToJson(groupInfo),
+    groupInfo: ToJson(groupInfo),
   };
 
   registerHandler<boolean>(args.operationId, cb);
@@ -1040,7 +1208,7 @@ export function SetGroupInfo(cb: (result: boolean, errCode: number, errMsg: stri
 
 export function GetGroupMemberList(cb: (result: GroupMember[], errCode: number, errMsg: string) => void,
   groupId: string, filter: GroupMemberFilter, offset: number, count: number): void {
-  const args = {
+  const args: GetGroupMemberListArgs = {
     operationId: GetOperationId(),
     groupId,
     filter,
@@ -1054,7 +1222,7 @@ export function GetGroupMemberList(cb: (result: GroupMember[], errCode: number, 
 
 export function GetGroupMemberOwnerAndAdmin(cb: (result: GroupMember[], errCode: number, errMsg: string) => void,
   groupId: string): void {
-  const args = {
+  const args: GetGroupMemberOwnerAndAdminArgs = {
     operationId: GetOperationId(),
     groupId,
   };
@@ -1066,14 +1234,14 @@ export function GetGroupMemberOwnerAndAdmin(cb: (result: GroupMember[], errCode:
 export function GetGroupMemberListByJoinTimeFilter(cb: (result: GroupMember[], errCode: number, errMsg: string) => void,
   groupId: string, offset: number, count: number, joinTimeBegin: number, joinTimeEnd: number,
   filterUserIDList: string[]): void {
-  const args = {
+  const args: GetGroupMemberListByJoinTimeFilterArgs = {
     operationId: GetOperationId(),
     groupId,
     offset,
     count,
     joinTimeBegin,
     joinTimeEnd,
-    filterUserIdList: Utils.ToJson(filterUserIDList),
+    filterUserIdList: ToJson(filterUserIDList),
   };
 
   registerHandler<GroupMember[]>(args.operationId, cb);
@@ -1082,10 +1250,10 @@ export function GetGroupMemberListByJoinTimeFilter(cb: (result: GroupMember[], e
 
 export function GetSpecifiedGroupMembersInfo(cb: (result: GroupMember[], errCode: number, errMsg: string) => void,
   groupId: string, userIdList: string[]): void {
-  const args = {
+  const args: GetSpecifiedGroupMembersInfoArgs = {
     operationId: GetOperationId(),
     groupId,
-    userIdList: Utils.ToJson(userIdList),
+    userIdList: ToJson(userIdList),
   };
 
   registerHandler<GroupMember[]>(args.operationId, cb);
@@ -1094,11 +1262,11 @@ export function GetSpecifiedGroupMembersInfo(cb: (result: GroupMember[], errCode
 
 export function KickGroupMember(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
   reason: string, userIdList: string[]): void {
-  const args = {
+  const args: KickGroupMemberArgs = {
     operationId: GetOperationId(),
     groupId,
     reason,
-    userIdList: Utils.ToJson(userIdList),
+    userIdList: ToJson(userIdList),
   };
 
   registerHandler<boolean>(args.operationId, cb);
@@ -1107,7 +1275,7 @@ export function KickGroupMember(cb: (result: boolean, errCode: number, errMsg: s
 
 export function TransferGroupOwner(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
   newOwnerUserId: string): void {
-  const args = {
+  const args: TransferGroupOwnerArgs = {
     operationId: GetOperationId(),
     groupId,
     newOwnerUserId,
@@ -1119,11 +1287,11 @@ export function TransferGroupOwner(cb: (result: boolean, errCode: number, errMsg
 
 export function InviteUserToGroup(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
   reason: string, userIdList: string[]): void {
-  const args = {
+  const args: InviteUserToGroupArgs = {
     operationId: GetOperationId(),
     groupId,
     reason,
-    userIdList: Utils.ToJson(userIdList),
+    userIdList: ToJson(userIdList),
   };
 
   registerHandler<boolean>(args.operationId, cb);
@@ -1132,7 +1300,7 @@ export function InviteUserToGroup(cb: (result: boolean, errCode: number, errMsg:
 
 export function GetGroupApplicationListAsRecipient(cb: (result: GroupApplicationInfo[], errCode: number,
   errMsg: string) => void): void {
-  const args = {
+  const args: GetGroupApplicationListAsRecipientArgs = {
     operationId: GetOperationId(),
   };
 
@@ -1142,7 +1310,7 @@ export function GetGroupApplicationListAsRecipient(cb: (result: GroupApplication
 
 export function GetGroupApplicationListAsApplicant(cb: (result: GroupApplicationInfo[], errCode: number,
   errMsg: string) => void): void {
-  const args = {
+  const args: GetGroupApplicationListAsApplicantArgs = {
     operationId: GetOperationId(),
   };
 
@@ -1152,7 +1320,7 @@ export function GetGroupApplicationListAsApplicant(cb: (result: GroupApplication
 
 export function AcceptGroupApplication(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
   fromUserId: string, handleMsg: string): void {
-  const args = {
+  const args: AcceptGroupApplicationArgs = {
     operationId: GetOperationId(),
     groupId,
     fromUserId,
@@ -1165,7 +1333,7 @@ export function AcceptGroupApplication(cb: (result: boolean, errCode: number, er
 
 export function RefuseGroupApplication(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string,
   fromUserId: string, handleMsg: string): void {
-  const args = {
+  const args: RefuseGroupApplicationArgs = {
     operationId: GetOperationId(),
     groupId,
     fromUserId,
@@ -1178,9 +1346,9 @@ export function RefuseGroupApplication(cb: (result: boolean, errCode: number, er
 
 export function SearchGroupMembers(cb: (result: GroupMember[], errCode: number, errMsg: string) => void,
   searchParam: SearchGroupMembersParam): void {
-  const args = {
+  const args: SearchGroupMembersArgs = {
     operationId: GetOperationId(),
-    searchParam: Utils.ToJson(searchParam),
+    searchParam: ToJson(searchParam),
   };
 
   registerHandler<GroupMember[]>(args.operationId, cb);
@@ -1188,7 +1356,7 @@ export function SearchGroupMembers(cb: (result: GroupMember[], errCode: number, 
 }
 
 export function IsJoinGroup(cb: (result: boolean, errCode: number, errMsg: string) => void, groupId: string): void {
-  const args = {
+  const args: IsJoinGroupArgs = {
     operationId: GetOperationId(),
     groupId,
   };
@@ -1199,7 +1367,7 @@ export function IsJoinGroup(cb: (result: boolean, errCode: number, errMsg: strin
 
 export function GetUsersInGroup(cb: (result: string[], errCode: number, errMsg: string) => void, groupId: string,
   userIdList: string[]): void {
-  const args = {
+  const args: GetUsersInGroupArgs = {
     operationId: GetOperationId(),
     groupId,
     userIdList,
@@ -1208,7 +1376,6 @@ export function GetUsersInGroup(cb: (result: string[], errCode: number, errMsg: 
   registerHandler<string[]>(args.operationId, cb);
   CallAPI(APIKey.GetUsersInGroup, args);
 }
-
 
 
 
