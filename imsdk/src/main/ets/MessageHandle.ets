@@ -73,7 +73,7 @@ interface MsgIDAndList {
 }
 
 
-type AllowedDataType = object | boolean | number | string
+type AllowedDataType = object | boolean | number | string | null
 
 export type BaseCallBack<T extends AllowedDataType> = (data: T, errCode: number, errMsg: string) => void;
 
@@ -356,7 +356,7 @@ export function dispatchMsg(id: MessageDef, msg: string) {
       if (activeCallCallBackMap.has(res.operationId)) {
         const callBack = activeCallCallBackMap.get(res.operationId);
         if (callBack != null) {
-          let data = convertDataType(res.dataType, res.data)
+          let data = convertDataType(res)
           callBack(data, res.errCode, res.errMsg)
         }
         activeCallCallBackMap.delete(res.operationId)
@@ -366,73 +366,89 @@ export function dispatchMsg(id: MessageDef, msg: string) {
   }
 }
 
-function convertDataType(type: number, msg: string): AllowedDataType {
-  switch (type) {
-    case DataTypeDef.Empty:
-      return "";
-    case DataTypeDef.Int:
-      return parseJson<number>(msg);
-    case DataTypeDef.Bool:
-      return parseJson<boolean>(msg);
-    case DataTypeDef.StringArray:
-      return parseJson<string[]>(msg);
-    case DataTypeDef.Conversation:
-      return parseJson<Conversation>(msg);
-    case DataTypeDef.Conversation_List:
-      return parseJson<Conversation[]>(msg);
-    case DataTypeDef.FindMessageResult:
-      return parseJson<FindMessageResult>(msg);
-    case DataTypeDef.AdvancedHistoryMessageResult:
-      return parseJson<AdvancedMessageResult>(msg);
-    case DataTypeDef.Message:
-      return parseJson<Message>(msg);
-    case DataTypeDef.SearchMessagesResult:
-      return parseJson<SearchMessageResult>(msg);
-    case DataTypeDef.UserInfo:
-      return parseJson<UserInfo>(msg);
-    case DataTypeDef.UserInfo_List:
-      return parseJson<UserInfo[]>(msg);
-    case DataTypeDef.PublicUserInfo:
-      return parseJson<PublicUserInfo>(msg);
-    case DataTypeDef.PublicUserInfo_List:
-      return parseJson<PublicUserInfo[]>(msg);
-    case DataTypeDef.OnlineStatus:
-      return parseJson<OnlineStatus>(msg);
-    case DataTypeDef.OnlineStatus_List:
-      return parseJson<OnlineStatus[]>(msg);
-    case DataTypeDef.SearchFriendItem:
-      return parseJson<SearchFriendItem>(msg);
-    case DataTypeDef.SearchFriendItem_List:
-      return parseJson<SearchFriendItem[]>(msg);
-    case DataTypeDef.UserIDResult:
-      return parseJson<UserIDResult>(msg);
-    case DataTypeDef.UserIDResult_List:
-      return parseJson<UserIDResult[]>(msg);
-    case DataTypeDef.FriendInfo:
-      return parseJson<FriendInfo>(msg);
-    case DataTypeDef.FriendInfo_List:
-      return parseJson<FriendInfo[]>(msg);
-    case DataTypeDef.FriendApplicationInfo:
-      return parseJson<FriendApplicationInfo>(msg);
-    case DataTypeDef.FriendApplicationInfo_List:
-      return parseJson<FriendApplicationInfo[]>(msg);
-    case DataTypeDef.BlackInfo:
-      return parseJson<BlackInfo>(msg);
-    case DataTypeDef.BlackInfo_List:
-      return parseJson<BlackInfo[]>(msg);
-    case DataTypeDef.GroupInfo:
-      return parseJson<GroupInfo>(msg);
-    case DataTypeDef.GroupInfo_List:
-      return parseJson<GroupInfo[]>(msg);
-    case DataTypeDef.GroupMember:
-      return parseJson<GroupMember>(msg);
-    case DataTypeDef.GroupMember_List:
-      return parseJson<GroupMember[]>(msg);
-    case DataTypeDef.GroupApplicationInfo:
-      return parseJson<GroupApplicationInfo>(msg);
-    case DataTypeDef.GroupApplicationInfo_List:
-      return parseJson<GroupApplicationInfo[]>(msg);
-    default:
-      return ""
+function convertDataType(res: ActiveCallResult): AllowedDataType {
+  let type = res.dataType
+  let msg = res.data
+  if (res.errCode > 0) {
+    // 操作失败
+    if (type == DataTypeDef.Empty) {
+      return false
+    } else if (type == DataTypeDef.Int) {
+      return 0;
+    } else if (type == DataTypeDef.Bool) {
+      return false
+    } else {
+      return null
+    }
+  } else {
+    // 操作成功
+    switch (type) {
+      case DataTypeDef.Empty:
+        return true;
+      case DataTypeDef.Int:
+        return parseJson<number>(msg);
+      case DataTypeDef.Bool:
+        return parseJson<boolean>(msg);
+      case DataTypeDef.StringArray:
+        return parseJson<string[]>(msg);
+      case DataTypeDef.Conversation:
+        return parseJson<Conversation>(msg);
+      case DataTypeDef.Conversation_List:
+        return parseJson<Conversation[]>(msg);
+      case DataTypeDef.FindMessageResult:
+        return parseJson<FindMessageResult>(msg);
+      case DataTypeDef.AdvancedHistoryMessageResult:
+        return parseJson<AdvancedMessageResult>(msg);
+      case DataTypeDef.Message:
+        return parseJson<Message>(msg);
+      case DataTypeDef.SearchMessagesResult:
+        return parseJson<SearchMessageResult>(msg);
+      case DataTypeDef.UserInfo:
+        return parseJson<UserInfo>(msg);
+      case DataTypeDef.UserInfo_List:
+        return parseJson<UserInfo[]>(msg);
+      case DataTypeDef.PublicUserInfo:
+        return parseJson<PublicUserInfo>(msg);
+      case DataTypeDef.PublicUserInfo_List:
+        return parseJson<PublicUserInfo[]>(msg);
+      case DataTypeDef.OnlineStatus:
+        return parseJson<OnlineStatus>(msg);
+      case DataTypeDef.OnlineStatus_List:
+        return parseJson<OnlineStatus[]>(msg);
+      case DataTypeDef.SearchFriendItem:
+        return parseJson<SearchFriendItem>(msg);
+      case DataTypeDef.SearchFriendItem_List:
+        return parseJson<SearchFriendItem[]>(msg);
+      case DataTypeDef.UserIDResult:
+        return parseJson<UserIDResult>(msg);
+      case DataTypeDef.UserIDResult_List:
+        return parseJson<UserIDResult[]>(msg);
+      case DataTypeDef.FriendInfo:
+        return parseJson<FriendInfo>(msg);
+      case DataTypeDef.FriendInfo_List:
+        return parseJson<FriendInfo[]>(msg);
+      case DataTypeDef.FriendApplicationInfo:
+        return parseJson<FriendApplicationInfo>(msg);
+      case DataTypeDef.FriendApplicationInfo_List:
+        return parseJson<FriendApplicationInfo[]>(msg);
+      case DataTypeDef.BlackInfo:
+        return parseJson<BlackInfo>(msg);
+      case DataTypeDef.BlackInfo_List:
+        return parseJson<BlackInfo[]>(msg);
+      case DataTypeDef.GroupInfo:
+        return parseJson<GroupInfo>(msg);
+      case DataTypeDef.GroupInfo_List:
+        return parseJson<GroupInfo[]>(msg);
+      case DataTypeDef.GroupMember:
+        return parseJson<GroupMember>(msg);
+      case DataTypeDef.GroupMember_List:
+        return parseJson<GroupMember[]>(msg);
+      case DataTypeDef.GroupApplicationInfo:
+        return parseJson<GroupApplicationInfo>(msg);
+      case DataTypeDef.GroupApplicationInfo_List:
+        return parseJson<GroupApplicationInfo[]>(msg);
+      default:
+        return ""
+    }
   }
 }
