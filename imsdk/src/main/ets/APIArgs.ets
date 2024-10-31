@@ -114,6 +114,12 @@ export interface CreateSoundMessageByURLArgs {
   soundBaseInfo: string;
 }
 
+export interface CreateSoundMessageArgs {
+  operationId: string;
+  soundPath: string;
+  duration: number
+}
+
 export interface CreateVideoMessageByURLArgs {
   operationId: string;
   videoBaseInfo: string;

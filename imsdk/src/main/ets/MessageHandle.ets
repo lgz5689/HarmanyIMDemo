@@ -73,13 +73,17 @@ interface MsgIDAndList {
 }
 
 
-type BaseCallBack<T> = (data: T, errCode: number, errMsg: string) => void;
+type AllowedDataType = object | boolean | number | string
 
-const activeCallCallBackMap = new Map<string, BaseCallBack<object | number | boolean | string | undefined>>();
+export type BaseCallBack<T extends AllowedDataType> = (data: T, errCode: number, errMsg: string) => void;
+
+const activeCallCallBackMap = new Map<string, BaseCallBack<AllowedDataType>>();
 const msgCallBackMap = new Map<string, IMsgSendCallBack>();
 
-export function registerHandler<T>(operationId: string, callBack: BaseCallBack<T>) {
-  activeCallCallBackMap[operationId] = callBack
+export function registerHandler<T extends AllowedDataType>(operationId: string,
+  callBack: BaseCallBack<T>) {
+  activeCallCallBackMap.set(operationId, callBack as BaseCallBack<AllowedDataType>)
+  logger.info(`register handler ${operationId} -> ${activeCallCallBackMap.has(operationId)}`)
 }
 
 export function registerSendMsgHandler(operationId: string, callBack: IMsgSendCallBack) {
@@ -119,7 +123,7 @@ export function setBatchMsgListener(listener: IBatchMsgListener) {
 }
 
 export function dispatchMsg(id: MessageDef, msg: string) {
-  logger.info(`dispatch msg -> ${id}->${msg}`)
+  // logger.info(`dispatch msg -> ${id}->${msg}`)
   switch (id) {
     case MessageDef.Connecting:
       connListener?.onConnecting();
@@ -352,7 +356,8 @@ export function dispatchMsg(id: MessageDef, msg: string) {
       if (activeCallCallBackMap.has(res.operationId)) {
         const callBack = activeCallCallBackMap.get(res.operationId);
         if (callBack != null) {
-          callBack(convertDataType(res.dataType, res.data), res.errCode, res.errMsg)
+          let data = convertDataType(res.dataType, res.data)
+          callBack(data, res.errCode, res.errMsg)
         }
         activeCallCallBackMap.delete(res.operationId)
       }
@@ -361,7 +366,7 @@ export function dispatchMsg(id: MessageDef, msg: string) {
   }
 }
 
-function convertDataType(type: number, msg: string): object | boolean | string | number | undefined {
+function convertDataType(type: number, msg: string): AllowedDataType {
   switch (type) {
     case DataTypeDef.Empty:
       return "";
@@ -427,6 +432,7 @@ function convertDataType(type: number, msg: string): object | boolean | string |
       return parseJson<GroupApplicationInfo>(msg);
     case DataTypeDef.GroupApplicationInfo_List:
       return parseJson<GroupApplicationInfo[]>(msg);
+    default:
+      return ""
   }
-  return undefined
 }

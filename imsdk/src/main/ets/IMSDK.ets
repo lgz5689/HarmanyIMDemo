@@ -24,6 +24,7 @@ import {
   CreateLocationMessageArgs,
   CreateMergerMessageArgs,
   CreateQuoteMessageArgs,
+  CreateSoundMessageArgs,
   CreateSoundMessageByURLArgs,
   CreateSoundMessageFromFullPathArgs,
   CreateTextAtMessageArgs,
@@ -143,7 +144,7 @@ import {
 } from "./Data";
 import { ConversationType, GroupMemberFilter, JoinSource, LoginStatus } from "./Enum";
 import { IConnListener } from "./Listener";
-import { dispatchMsg, IMsgSendCallBack, registerHandler, registerSendMsgHandler } from "./MessageHandle";
+import { BaseCallBack, dispatchMsg, IMsgSendCallBack, registerHandler, registerSendMsgHandler } from "./MessageHandle";
 import { APIKey } from "./native/APIKey";
 import { CallAPI, Redirect, registerMsgCallBack } from "./native/NativeSDK";
 import { ToJson } from "./utils/Json";
@@ -176,7 +177,7 @@ export function UnInitSDK(): void {
   CallAPI(APIKey.UnInitSDK, unInitSDKArgs);
 }
 
-export function Login(cb: (suc: boolean, errCode: number, errMsg: string) => void, uid: string, token: string): void {
+export function Login(cb: BaseCallBack<boolean>, uid: string, token: string): void {
   const args: LoginArgs = {
     operationId: GetOperationId(),
     uid: uid,
@@ -369,6 +370,15 @@ export function CreateSoundMessageByURL(soundBaseInfo: SoundElem): Message {
     soundBaseInfo: ToJson(soundBaseInfo),
   };
   return CallAPI<Message>(APIKey.CreateSoundMessageByURL, args) as Message;
+}
+
+export function CreateSoundMessage(soundPath: string, duration: number): Message {
+  const args: CreateSoundMessageArgs = {
+    operationId: GetOperationId(),
+    soundPath,
+    duration
+  };
+  return CallAPI<Message>(APIKey.CreateSoundMessage, args) as Message;
 }
 
 export function CreateVideoMessageByURL(videoBaseInfo: VideoElem): Message {
@@ -707,7 +717,7 @@ export function HideAllConversations(
   CallAPI(APIKey.HideAllConversations, args);
 }
 
-export function DeleteAllMsgFromLocalAndSVR(
+export function DeleteAllMsgFromLocalAndSvr(
   cb: (result: boolean, errCode: number, errMsg: string) => void
 ): void {
   const args: DeleteAllMsgFromLocalAndSVRArgs = {
