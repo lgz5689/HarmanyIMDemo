@@ -20,7 +20,7 @@ struct Message {
 static void onRecvMsg(int msgId, char *data) {
     printf("OnRecvMsg:%d->%s", msgId, data);
     OH_LOG_INFO(LOG_APP, "RecvMsg:%{public}d->%{public}s", msgId, data);
-    Message *msg = new Message();
+    Message *msg = new Message(); // notice: memory clear
     msg->id = msgId;
     msg->data = data;
     napi_call_threadsafe_function(msgCallBack, msg, napi_tsfn_blocking);
@@ -39,6 +39,9 @@ static void callCallBack(napi_env env, napi_value jsCb, void *context, void *mes
     size_t length = strlen(msg->data);
     napi_create_string_utf8(env, msg->data, length, &argv[1]);
     napi_call_function(env, undefined, jsCb, 2, argv, nullptr);
+    // memory clear
+    // msg->data 会在函数调用结束后自动释放
+    delete msg;
 }
 
 // 注册消息处理函数

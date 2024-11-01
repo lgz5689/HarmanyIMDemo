@@ -48,7 +48,6 @@ struct Index {
           let token =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJ0ZXN0IiwiUGxhdGZvcm1JRCI6MiwiZXhwIjoxNzM3OTgzNjgwLCJuYmYiOjE3MzAyMDczODAsImlhdCI6MTczMDIwNzY4MH0.MjoEKjqetlLqUsgAQz2ux1C_nB3PFb3y6H3dyQHDck0"
           Login((suc, errCode, errMsg) => {
-            hilog.info(0xFF00, "Index", "-----------------11111111111111--------------")
             if (suc) {
               hilog.info(0xFF00, "Index", "Login Suc")
             } else {
