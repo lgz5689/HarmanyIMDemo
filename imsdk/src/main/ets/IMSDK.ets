@@ -1079,14 +1079,14 @@ export function RemoveBlack(cb: (result: boolean, errCode: number, errMsg: strin
   CallAPI(APIKey.RemoveBlack, args);
 }
 
-export function CreateGroup(cb: (result: boolean, errCode: number, errMsg: string) => void,
+export function CreateGroup(cb: (result:  Partial<GroupInfo>, errCode: number, errMsg: string) => void,
   groupReqInfo: CreateGroupReq): void {
   const args: CreateGroupArgs = {
     operationId: GetOperationId(),
     groupReqInfo: ToJson(groupReqInfo),
   };
 
-  registerHandler<boolean>(args.operationId, cb);
+  registerHandler<Partial<GroupInfo>>(args.operationId, cb);
   CallAPI(APIKey.CreateGroup, args);
 }
 
