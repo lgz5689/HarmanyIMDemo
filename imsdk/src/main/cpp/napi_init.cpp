@@ -103,7 +103,9 @@ static napi_value callAPI(napi_env env, napi_callback_info info) {
     char *res = call_api(apiKey, buf);
     OH_LOG_INFO(LOG_APP, "Call [%{public}d]<-%{public}s", apiKey, res);
     napi_value result = nullptr;
+    OH_LOG_INFO(LOG_APP, "Call result");
     size_t res_length = strlen(res);
+    OH_LOG_INFO(LOG_APP, "Call length");
     status = napi_create_string_utf8(env, res, res_length, &result);
     if (status != napi_ok) {
         OH_LOG_ERROR(LOG_APP, "imsdk:call api return value not a string");

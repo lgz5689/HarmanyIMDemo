@@ -8,7 +8,18 @@ import { IMConfig, InitSDK, PlatformID, RedirectStdOut, UnInitSDK, Login, Create
   DeleteFriend,
   RemoveBlack,
   GetFriendListPage,
-  FriendInfo} from "imsdk"
+  FriendInfo,
+  CreateGroup,
+  GroupInfo,
+  GetGroupMemberList,
+  GroupMember,
+  GetJoinedGroupListPage,
+  GetConversationListSplit,
+  Conversation,
+  GetTotalUnreadMsgCount,
+  GetAdvancedHistoryMessageList,
+  AdvancedMessageResult,
+  IsJoinGroup} from "imsdk"
 import { LogLevel } from 'imsdk/src/main/ets/Enum';
 import { ConnListener } from '../listener/ConnListener';
 import { common } from '@kit.AbilityKit';
@@ -30,11 +41,14 @@ import { BatchMsgListener } from '../listener/BatchMsgListener';
 @Component
 struct Index {
   @State ip:string = '192.168.2.20'
-  @State uid:string = "2793860650"
-  @State token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiIyNzkzODYwNjUwIiwiUGxhdGZvcm1JRCI6MiwiZXhwIjoxNzM4ODEzNTgzLCJuYmYiOjE3MzEwMzcyODMsImlhdCI6MTczMTAzNzU4M30.zf-1fU2Ne7NMl27wHJ8WIvsFOsa-7xCH3lWpXbYYosA"
+  @State uid:string = "4350531864"
+  @State token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI0MzUwNTMxODY0IiwiUGxhdGZvcm1JRCI6MiwiZXhwIjoxNzM5MTc5ODEyLCJuYmYiOjE3MzE0MDM1MTIsImlhdCI6MTczMTQwMzgxMn0.troejURlyjGi_2u67IwQnu6cYovsYTEJPryOT2Arw0w"
 
-  // 测试目标用户 管理后台创建
-  @State uid2:string = '7843965975'
+  // 测试
+  @State uid2:string = '4860535712'
+  @State uid3:string = '3559000694'
+  @State myCreateGroupID:string = '2724778243'
+  @State conversationID:string = 'sg_413631798'
 
   aboutToAppear(): void {
     console.error('--------------------aboutToAppear')
@@ -116,6 +130,16 @@ struct Index {
           signalInfo: '',
         },false)
       })
+      Button('GetAdvancedHistoryMessageList').onClick(()=>{
+        GetAdvancedHistoryMessageList((result: AdvancedMessageResult, errCode: number, errMsg: string) =>{
+          console.error('---------------------GetAdvancedHistoryMessageList', JSON.stringify(result),errCode,errMsg)
+        },{
+          lastMinSeq: 0,
+          conversationID: this.conversationID,
+          startClientMsgID: '',
+          count: 20,
+        })
+      })
 
       Text('------------relation-----------------')
       Button('AddFriend').onClick(()=>{
@@ -147,6 +171,50 @@ struct Index {
         GetFriendListPage((result: FriendInfo[], errCode: number, errMsg: string) =>{
           console.error('---------------------GetFriendListPage', JSON.stringify(result),errCode,errMsg)
         },0,500,false)
+      })
+
+      Text('------------group-----------------')
+      Button('CreateGroup').onClick(()=>{
+        CreateGroup((result: Partial<GroupInfo>, errCode: number, errMsg: string) =>{
+          console.error('---------------------createGroup', JSON.stringify(result),errCode,errMsg)
+          this.myCreateGroupID = result.groupID ?? ''
+        },{
+          memberUserIDs: [this.uid2,this.uid3],
+          groupInfo:  {
+            groupName: `123-${new Date().getTime()}`,
+            groupType: 2,
+          },
+          adminUserIDs: [],
+          ownerUserID: this.uid,
+        })
+      })
+      Button('GetGroupMemberList').onClick(()=>{
+        console.error('---------------------GetGroupMemberList', this.myCreateGroupID)
+        GetGroupMemberList((result:  GroupMember[], errCode: number, errMsg: string) =>{
+          console.error('---------------------GetGroupMemberList', JSON.stringify(result),errCode,errMsg)
+        },this.myCreateGroupID,0,0,20)
+      })
+      Button('GetJoinedGroupListPage').onClick(()=>{
+        GetJoinedGroupListPage((result:  GroupInfo[], errCode: number, errMsg: string) =>{
+          console.error('---------------------GetJoinedGroupListPage', JSON.stringify(result),errCode,errMsg)
+        },0,100)
+      })
+      Button('IsJoinGroup').onClick(()=>{
+        IsJoinGroup((result: boolean, errCode: number, errMsg: string) =>{
+          console.error('---------------------IsJoinGroup', JSON.stringify(result),errCode,errMsg)
+        },this.myCreateGroupID)
+      })
+
+      Text('------------Conversation-----------------')
+      Button('GetConversationListSplit').onClick(()=>{
+        GetConversationListSplit((result: Conversation[], errCode: number, errMsg: string) =>{
+          console.error('---------------------GetConversationListSplit', JSON.stringify(result),errCode,errMsg)
+        },0,1)
+      })
+      Button('GetTotalUnreadMsgCount').onClick(()=>{
+        GetTotalUnreadMsgCount((result: number, errCode: number, errMsg: string) =>{
+          console.error('---------------------GetTotalUnreadMsgCount', result,errCode,errMsg)
+        })
       })
 
     }

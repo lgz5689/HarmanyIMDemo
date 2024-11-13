@@ -236,7 +236,7 @@ export interface GroupInfoForSet {
 
 export interface CreateGroupReq {
   memberUserIDs: string[];
-  groupInfo: GroupInfo;
+  groupInfo: Partial<GroupInfo>;
   adminUserIDs: string[];
   ownerUserID: string;
 }
