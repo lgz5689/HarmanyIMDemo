@@ -7,6 +7,10 @@
   "license": "Apache-2.0",
   "packageType": "InterfaceHar",
   "dependencies": {
-    "libimsdk.so": "file:./src/main/cpp/types/libimsdk"
-  }
+    "libimsdk.so": "file:./src/main/cpp/types/libimsdk",
+    "@ohos/protobufjs": "^2.1.0",
+    "long": "^5.2.1"
+  },
+  "devDependencies": {},
+  "dynamicDependencies": {}
 }

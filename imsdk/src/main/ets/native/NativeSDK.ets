@@ -1,28 +1,42 @@
 import native from "libimsdk.so"
-import { APIKey } from "./APIKey"
 import logger from "../utils/Logger"
-import { ToJson } from "../utils/Json"
-
+import { openim } from "../proto/proto"
+import { JSON } from "@kit.ArkTS"
 
 export function Redirect(dir: string) {
   native.redirect(dir)
 }
 
-export function registerMsgCallBack(handler: (id: number, data: string) => void) {
-  native.registerMsgCallBack((msgId, data) => {
+export function Init(handler: (result: openim.ffi.FfiResult) => void) {
+  native.init((data: ArrayBuffer) => {
     try {
-      handler(msgId, data);
+      let uint8Array = new Uint8Array(data)
+      let result = openim.ffi.FfiResult.decode(uint8Array)
+      handler(result)
     } catch (e) {
       logger.error(e.toString())
     }
   })
 }
 
-export function CallAPI<T extends object | null>(key: APIKey, args: object): T | null {
-  let data = native.callAPI(key, ToJson(args))
-  if (data == "") {
-    return null
-  } else {
-    return JSON.parse(data) as T
+export function Call(handlerId: number, funcName: openim.event.FuncRequestEventName, data: Uint8Array) {
+  try {
+    let request = openim.ffi.FfiRequest.create({
+      operationID: "",
+      handleID: handlerId,
+      funcName: funcName,
+      data: data
+    })
+    let buffer: Uint8Array = openim.ffi.FfiRequest.encode(request).finish()
+    console.log("JS Call API:", handlerId, funcName, buffer.length, JSON.stringify(buffer));
+    native.request(buffer.buffer)
+
+  } catch (e) {
+    console.log(e)
   }
+
+}
+
+export function DropHandler(handleId: number) {
+  native.drop(handleId)
 }

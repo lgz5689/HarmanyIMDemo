@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\yejian\\.ohos\\config\\default_IMDemo_Fj7RcdfLcS5rz5vZN_n5i_vck86rL2IcBUZn4IQBB5M=.cer",
+          "storePassword": "0000001B34F10CA6D0F6513D68BB0E347FAEAC039F64DE48783B0E9178EFFAD14D3D3FE76656AD40085C3C",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BA45D48746C954DC0753A2A21FAE818E14706392E765B41F4649523134E90964F996E4782AB7DE1",
+          "profile": "C:\\Users\\yejian\\.ohos\\config\\default_IMDemo_Fj7RcdfLcS5rz5vZN_n5i_vck86rL2IcBUZn4IQBB5M=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\yejian\\.ohos\\config\\default_IMDemo_Fj7RcdfLcS5rz5vZN_n5i_vck86rL2IcBUZn4IQBB5M=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",

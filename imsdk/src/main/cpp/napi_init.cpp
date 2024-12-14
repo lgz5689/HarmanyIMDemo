@@ -2,52 +2,73 @@
 #include "hilog/log.h"
 #include "openimsdk.h"
 #include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <fstream>
+#include <sstream>
 
 #undef LOG_DOMAIN
 #undef LOG_TAG
 #define LOG_DOMAIN 0x494d        // IM
 #define LOG_TAG "[IMSDK Native]" // Tag
 
-napi_threadsafe_function msgCallBack;
-
-struct Message {
-    int id;
-    char *data;
-};
-
-static void onRecvMsg(int msgId, char *data) {
-    printf("OnRecvMsg:%d->%s", msgId, data);
-    OH_LOG_INFO(LOG_APP, "RecvMsg:%{public}d->%{public}s", msgId, data);
-    Message *msg = new Message(); // notice: memory clear
-    msg->id = msgId;
-    msg->data = data;
-    napi_call_threadsafe_function(msgCallBack, msg, napi_tsfn_blocking);
+static void printCharArray(const char *data, size_t length) {
+    // 使用 stringstream 构建格式化字符串
+    std::ostringstream oss;
+    oss << "[";
+    for (size_t i = 0; i < length; ++i) {
+        unsigned char d = (unsigned char)data[i];
+        oss << (unsigned int)d;
+        if (i < length - 1) {
+            oss << ",";
+        }
+    }
+    oss << "]";
+    // 将结果存放在字符串中
+    std::string byteString = oss.str();
+    OH_LOG_INFO(LOG_APP, "length = %{public}d,data = %{public}s", length, byteString.c_str());
 }
 
-static void callCallBack(napi_env env, napi_value jsCb, void *context, void *message) {
+napi_threadsafe_function jsEventCallBack;
+
+struct FFIEvent {
+    void *data;
+    int len;
+};
+
+static void eventHandler(void *data, int len) {
+//     OH_LOG_INFO(LOG_APP, "recv event length %{public}d", len);
+    FFIEvent *msg = new FFIEvent();
+    msg->data = data;
+    msg->len = len;
+    napi_call_threadsafe_function(jsEventCallBack, msg, napi_tsfn_blocking);
+}
+
+static void callCallBack(napi_env env, napi_value jsCb, void *context, void *data) {
+//     OH_LOG_INFO(LOG_APP, "call callback---------------------");
     if (env == nullptr) {
         return;
     }
-    Message *msg = (Message *)message;
-    //     OH_LOG_INFO(LOG_APP, "%{public}d, %{public}s", msg->id, msg->data);
+    FFIEvent *event = (FFIEvent *)data;
+//     printCharArray((const char *)event->data, event->len);
     napi_value undefined = nullptr;
     napi_get_undefined(env, &undefined);
-    napi_value argv[2];
-    napi_create_int32(env, msg->id, &argv[0]);
-    size_t length = strlen(msg->data);
-    napi_create_string_utf8(env, msg->data, length, &argv[1]);
-    napi_call_function(env, undefined, jsCb, 2, argv, nullptr);
-    // memory clear
-    // msg->data 会在函数调用结束后自动释放
-    delete msg;
+    napi_value argv;
+    uint8_t *buffer;
+    napi_status status = napi_create_arraybuffer(env, event->len, (void **)&buffer, &argv);
+    if (status != napi_ok) {
+        napi_throw_error(env, nullptr, "Failed to create ArrayBuffer");
+    }
+    memcpy(buffer, event->data, event->len);
+//     TODO 不拷贝内存
+//     napi_status status = napi_create_external_arraybuffer(env,event->data,event->len,nullptr,nullptr,&argv);
+    napi_call_function(env, undefined, jsCb, 1, &argv, nullptr);
+    delete event;
 }
 
-// 注册消息处理函数
-static napi_value registerMsgCallBack(napi_env env, napi_callback_info info) {
-    OH_LOG_INFO(LOG_APP, "registerMsgCallBack------------");
-    set_msg_handler_func(onRecvMsg);
+static napi_value init(napi_env env, napi_callback_info info) {
+//     OH_LOG_INFO(LOG_APP, "init------------");
+    ffi_init(eventHandler, 2);
     napi_status status;
     size_t argc = 1;
     napi_value jsCb = nullptr;
@@ -64,80 +85,80 @@ static napi_value registerMsgCallBack(napi_env env, napi_callback_info info) {
         return nullptr;
     }
     status = napi_create_threadsafe_function(env, jsCb, nullptr, resourceName, 0, 1, nullptr, nullptr, nullptr,
-                                             callCallBack, &msgCallBack);
+                                             callCallBack, &jsEventCallBack);
     if (status != napi_ok) {
-        OH_LOG_ERROR(LOG_APP, "registerMsgCallBack create_threadsafe_function error");
+        OH_LOG_ERROR(LOG_APP, "init create_threadsafe_function error");
         return nullptr;
     }
     return nullptr;
 }
-
-// 调用sdk 函数
-static napi_value callAPI(napi_env env, napi_callback_info info) {
-    size_t argc;
-    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
-    if (argc != 2) {
-        OH_LOG_ERROR(LOG_APP, "imsdk:%{public}s", "setMsgHandler args count error:need args count 2");
+static napi_value request(napi_env env, napi_callback_info info) {
+//     OH_LOG_INFO(LOG_APP, "call request start");
+    napi_status status;
+    size_t argc = 1;
+    napi_value argv = nullptr;
+    status = napi_get_cb_info(env, info, &argc, &argv, nullptr, nullptr);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "request args error");
         return nullptr;
     }
-    napi_value argv[2];
+    if (argc != 1) {
+        OH_LOG_ERROR(LOG_APP, "request args count error : need args count 1");
+        return nullptr;
+    }
+    size_t length;
+    uint8_t *buf;
+    status == napi_get_arraybuffer_info(env, argv, (void **)&buf, &length);
+    if (status != napi_ok) {
+        OH_LOG_ERROR(LOG_APP, "request args error 2 : %{public}d", status);
+        return nullptr;
+    }
+//     printCharArray((const char *)buf, length);
+
+    ffi_request(buf, length);
+//     OH_LOG_INFO(LOG_APP, "call request end");
+    return nullptr;
+}
+
+
+static napi_value drop(napi_env env, napi_callback_info info) {
+    size_t argc;
+    napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
+    if (argc != 1) {
+        OH_LOG_ERROR(LOG_APP, "imsdk:%{public}s", "drop args count error:need args count 1");
+        return nullptr;
+    }
+    napi_value argv[1];
     napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
     napi_status status;
-    int apiKey;
-    status = napi_get_value_int32(env, argv[0], &apiKey);
+    int64_t handleId;
+    status = napi_get_value_int64(env, argv[0], &handleId);
     if (status != napi_ok) {
         OH_LOG_ERROR(LOG_APP, "imsdk:call api args 1 not a int");
         return nullptr;
     }
-    size_t length;
-    status = napi_get_value_string_utf8(env, argv[1], nullptr, 0, &length);
-    if (status != napi_ok) {
-        OH_LOG_ERROR(LOG_APP, "imsdk:call api args not a string");
-        return nullptr;
-    }
-    char *buf = new char[length + 1];
-    std::memset(buf, 0, length + 1);
-    napi_get_value_string_utf8(env, argv[1], buf, length + 1, &length);
-    OH_LOG_INFO(LOG_APP, "Call [%{public}d]->%{public}s", apiKey, buf);
-    // 调用 C 函数
-    char *res = call_api(apiKey, buf);
-    OH_LOG_INFO(LOG_APP, "Call [%{public}d]<-%{public}s", apiKey, res);
-    napi_value result = nullptr;
-    OH_LOG_INFO(LOG_APP, "Call result");
-    size_t res_length = strlen(res);
-    OH_LOG_INFO(LOG_APP, "Call length");
-    status = napi_create_string_utf8(env, res, res_length, &result);
-    if (status != napi_ok) {
-        OH_LOG_ERROR(LOG_APP, "imsdk:call api return value not a string");
-        return nullptr;
-    }
-    free_data(res);
-    return result;
+    OH_LOG_INFO(LOG_APP, "Drop Handle Id %{public}d", handleId);
+    ffi_drop_handle(handleId);
 }
 
 // 重定向C标准输出到文件
-static napi_value Redirect(napi_env env, napi_callback_info info) {
-    // 获取函数的JS参数
+static napi_value redirect(napi_env env, napi_callback_info info) {
     size_t argc = 1;
     napi_value argv[1] = {nullptr};
     napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
-    // 解析参数1，保存文件的目标目录
     size_t targetDirectoryNameSize;
     char targetDirectoryNameBuf[512];
     napi_get_value_string_utf8(env, argv[0], targetDirectoryNameBuf, sizeof(targetDirectoryNameBuf),
                                &targetDirectoryNameSize);
-    std::string targetDirectoryName(targetDirectoryNameBuf, targetDirectoryNameSize); // 目标目录
-    std::string targetSandboxPath = targetDirectoryName + "/c_print_log.txt";         // 存入的文件路径
+    std::string targetDirectoryName(targetDirectoryNameBuf, targetDirectoryNameSize);
+    std::string targetSandboxPath = targetDirectoryName + "/c_print_log.txt";
     OH_LOG_INFO(LOG_APP, "重定向C输出到文件 === %{public}s", targetSandboxPath.c_str());
-
-    // 使用freopen函数把文件关联到标准输出
     FILE *stdoutFile = NULL;
     FILE *stderrFile = NULL;
     stdoutFile = freopen(targetSandboxPath.c_str(), "a", stdout);
     stderrFile = freopen(targetSandboxPath.c_str(), "a", stderr);
     if (NULL == stdoutFile || NULL == stderrFile) {
         OH_LOG_INFO(LOG_APP, "重创建！");
-        // 打开沙箱文件的文件输出流，会创建出一个文件
         std::ofstream outputFile(targetSandboxPath, std::ios::binary);
         if (!outputFile) {
             OH_LOG_ERROR(LOG_APP, "无法创建目标文件!");
@@ -159,9 +180,10 @@ static napi_value Redirect(napi_env env, napi_callback_info info) {
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports) {
     napi_property_descriptor desc[] = {
-        {"redirect", nullptr, Redirect, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"registerMsgCallBack", nullptr, registerMsgCallBack, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"callAPI", nullptr, callAPI, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"redirect", nullptr, redirect, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"init", nullptr, init, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"request", nullptr, request, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"drop", nullptr, drop, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
