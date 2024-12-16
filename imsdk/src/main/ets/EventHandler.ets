@@ -468,546 +468,535 @@ export namespace event {
         break;
 
       case proto.event.FuncRequestEventName.CreateGroup: {
-        let resp = CreateGroupResp.decode(data);
-        callBack?.(resp.GroupInfo);
+        let resp = proto.sdk.group.CreateGroupResp.decode(data);
+        callBack?.(resp.groupInfo);
       }
         break;
 
       case proto.event.FuncRequestEventName.JoinGroup: {
-        let resp = JoinGroupResp.decode(data);
+        let resp = proto.sdk.group.JoinGroupResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.QuitGroup: {
-        let resp = QuitGroupResp.decode(data);
+        let resp = proto.sdk.group.QuitGroupResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.DismissGroup: {
-        let resp = DismissGroupResp.decode(data);
+        let resp = proto.sdk.group.DismissGroupResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.ChangeGroupMute: {
-        let resp = ChangeGroupMuteResp.decode(data);
+        let resp = proto.sdk.group.ChangeGroupMuteResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.ChangeGroupMemberMute: {
-        let resp = ChangeGroupMemberMuteResp.decode(data);
+        let resp = proto.sdk.group.ChangeGroupMemberMuteResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.TransferGroupOwner: {
-        let resp = TransferGroupOwnerResp.decode(data);
+        let resp = proto.sdk.group.TransferGroupOwnerResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.KickGroupMember: {
-        let resp = KickGroupMemberResp.decode(data);
+        let resp = proto.sdk.group.KickGroupMemberResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetGroupInfo: {
-        let resp = SetGroupInfoResp.decode(data);
+        let resp = proto.sdk.group.SetGroupInfoResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetGroupMemberInfo: {
-        let resp = SetGroupMemberInfoResp.decode(data);
+        let resp = proto.sdk.group.SetGroupMemberInfoResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetJoinedGroups: {
-        let resp = GetJoinedGroupsResp.decode(data);
-        callBack?.([resp.Groups.ToArray()]);
+        let resp = proto.sdk.group.GetJoinedGroupsResp.decode(data);
+        callBack?.(resp.groups);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetJoinedGroupsPage: {
-        let resp = GetJoinedGroupsPageResp.decode(data);
-        callBack?.([resp.Groups.ToArray()]);
+        let resp = proto.sdk.group.GetJoinedGroupsPageResp.decode(data);
+        callBack?.(resp.groups);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetSpecifiedGroupsInfo: {
-        let resp = GetSpecifiedGroupsInfoResp.decode(data);
-        callBack?.([resp.Groups.ToArray()]);
+        let resp = proto.sdk.group.GetSpecifiedGroupsInfoResp.decode(data);
+        callBack?.(resp.groups);
       }
         break;
 
       case proto.event.FuncRequestEventName.SearchGroups: {
-        let resp = SearchGroupsResp.decode(data);
-        callBack?.([resp.Groups.ToArray()]);
+        let resp = proto.sdk.group.SearchGroupsResp.decode(data);
+        callBack?.(resp.groups);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetGroupMemberOwnerAndAdmin: {
-        let resp = GetGroupMemberOwnerAndAdminResp.decode(data);
-        callBack?.([resp.Members.ToArray()]);
+        let resp = proto.sdk.group.GetGroupMemberOwnerAndAdminResp.decode(data);
+        callBack?.(resp.members);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetGroupMembersByJoinTimeFilter: {
-        let resp = GetGroupMembersByJoinTimeFilterResp.decode(data);
-        callBack?.([resp.Members.ToArray()]);
+        let resp = proto.sdk.group.GetGroupMembersByJoinTimeFilterResp.decode(data);
+        callBack?.(resp.members);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetSpecifiedGroupMembersInfo: {
-        let resp = GetSpecifiedGroupMembersInfoResp.decode(data);
-        callBack?.([resp.Members.ToArray()]);
+        let resp = proto.sdk.group.GetSpecifiedGroupMembersInfoResp.decode(data);
+        callBack?.(resp.members);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetGroupMembers: {
-        let resp = GetGroupMembersResp.decode(data);
-        callBack?.([resp.Members.ToArray()]);
+        let resp = proto.sdk.group.GetGroupMembersResp.decode(data);
+        callBack?.(resp.members);
       }
         break;
 
-      case proto.event.FuncRequestEventName.GetGroupRequest: {
-        let resp = GetGroupRequestResp.decode(data);
-        callBack?.([resp.Requests.ToArray()]);
+      case proto.event.FuncRequestEventName.GetGroupApplication: {
+        let resp = proto.sdk.group.GetGroupApplicationResp.decode(data);
+        callBack?.(resp.applications);
       }
         break;
 
       case proto.event.FuncRequestEventName.SearchGroupMembers: {
-        let resp = SearchGroupMembersResp.decode(data);
-        callBack?.([resp.Members.ToArray()]);
+        let resp = proto.sdk.group.SearchGroupMembersResp.decode(data);
+        callBack?.(resp.members);
       }
         break;
 
       case proto.event.FuncRequestEventName.IsJoinGroup: {
-        let resp = IsJoinGroupResp.decode(data);
-        callBack?.(resp.Joined);
+        let resp = proto.sdk.group.IsJoinGroupResp.decode(data);
+        callBack?.(resp.joined);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetUsersInGroup: {
-        let resp = GetUsersInGroupResp.decode(data);
-        callBack?.([resp.UserIDs.ToArray()]);
+        let resp = proto.sdk.group.GetUsersInGroupResp.decode(data);
+        callBack?.(resp.userIDs);
       }
         break;
 
       case proto.event.FuncRequestEventName.InviteUserToGroup: {
-        let resp = InviteUserToGroupResp.decode(data);
+        let resp = proto.sdk.group.InviteUserToGroupResp.decode(data);
         callBack?.(suc);
       }
         break;
 
-      case proto.event.FuncRequestEventName.HandleGroupRequest: {
-        let resp = HandleGroupRequestResp.decode(data);
+      case proto.event.FuncRequestEventName.HandleGroupApplication: {
+        let resp = proto.sdk.group.HandleGroupApplicationResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetSpecifiedFriends: {
-        let resp = GetSpecifiedFriendsResp.decode(data);
-        callBack?.([resp.Friends.ToArray()]);
+        let resp = proto.sdk.relation.GetSpecifiedFriendsResp.decode(data);
+        callBack?.(resp.friends);
       }
         break;
 
       case proto.event.FuncRequestEventName.AddFriend: {
-        let resp = AddFriendResp.decode(data);
+        let resp = proto.sdk.relation.AddFriendResp.decode(data);
         callBack?.(suc);
       }
         break;
 
-      case proto.event.FuncRequestEventName.GetFriendRequests: {
-        let resp = GetFriendRequestsResp.decode(data);
-        callBack?.([resp.Requests.ToArray()]);
+      case proto.event.FuncRequestEventName.GetFriendApplication: {
+        let resp = proto.sdk.relation.GetFriendApplicationResp.decode(data);
+        callBack?.(resp.applications);
       }
         break;
 
-      case proto.event.FuncRequestEventName.HandleFriendRequest: {
-        let resp = HandleFriendRequestResp.decode(data);
+      case proto.event.FuncRequestEventName.HandleFriendApplication: {
+        let resp = proto.sdk.relation.HandleFriendApplicationResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.CheckFriend: {
-        let resp = CheckFriendResp.decode(data);
-        callBack?.([resp.Result.ToArray()]);
+        let resp = proto.sdk.relation.CheckFriendResp.decode(data);
+        callBack?.(resp.result);
       }
         break;
 
       case proto.event.FuncRequestEventName.DeleteFriend: {
-        let resp = DeleteFriendResp.decode(data);
+        let resp = proto.sdk.relation.DeleteFriendResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetFriends: {
-        let resp = GetFriendsResp.decode(data);
-        callBack?.([resp.Friends.ToArray()]);
+        let resp = proto.sdk.relation.GetFriendsResp.decode(data);
+        callBack?.(resp.friends);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetFriendsPage: {
-        let resp = GetFriendsPageResp.decode(data);
-        callBack?.([resp.Friends.ToArray()]);
+        let resp = proto.sdk.relation.GetFriendsPageResp.decode(data);
+        callBack?.(resp.friends);
       }
         break;
 
       case proto.event.FuncRequestEventName.SearchFriends: {
-        let resp = SearchFriendsResp.decode(data);
-        callBack?.([resp.Friends.ToArray()]);
+        let resp = proto.sdk.relation.SearchFriendsResp.decode(data);
+        callBack?.(resp.friends);
       }
         break;
 
       case proto.event.FuncRequestEventName.AddBlack: {
-        let resp = AddBlackResp.decode(data);
+        let resp = proto.sdk.relation.AddBlackResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.DeleteBlack: {
-        let resp = DeleteBlackResp.decode(data);
+        let resp = proto.sdk.relation.DeleteBlackResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetBlacks: {
-        let resp = GetBlacksResp.decode(data);
-        callBack?.([resp.Blacks.ToArray()]);
+        let resp = proto.sdk.relation.GetBlacksResp.decode(data);
+        callBack?.(resp.blacks);
       }
         break;
 
       case proto.event.FuncRequestEventName.UpdateFriend: {
-        let resp = UpdateFriendResp.decode(data);
+        let resp = proto.sdk.relation.UpdateFriendResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetAllConversationList: {
-        let resp = GetAllConversationListResp.decode(data);
-        callBack?.([resp.ConversationList.ToArray()]);
+        let resp = proto.sdk.conversation.GetAllConversationListResp.decode(data);
+        callBack?.(resp.conversationList);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetConversationListSplit: {
-        let resp = GetConversationListSplitResp.decode(data);
-        callBack?.([resp.ConversationList.ToArray()]);
+        let resp = proto.sdk.conversation.GetConversationListSplitResp.decode(data);
+        callBack?.(resp.conversationList);
       }
         break;
 
       case proto.event.FuncRequestEventName.HideConversation: {
-        let resp = HideConversationResp.decode(data);
+        let resp = proto.sdk.conversation.HideConversationResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetAtAllTag: {
-        let resp = GetAtAllTagResp.decode(data);
-        callBack?.(resp.Tag);
+        let resp = proto.sdk.conversation.GetAtAllTagResp.decode(data);
+        callBack?.(resp.tag);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetOneConversation: {
-        let resp = GetOneConversationResp.decode(data);
-        callBack?.(resp.Conversation);
+        let resp = proto.sdk.conversation.GetOneConversationResp.decode(data);
+        callBack?.(resp.conversation);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetMultipleConversation: {
-        let resp = GetMultipleConversationResp.decode(data);
-        callBack?.([resp.ConversationList.ToArray()]);
+        let resp = proto.sdk.conversation.GetMultipleConversationResp.decode(data);
+        callBack?.(resp.conversationList);
       }
         break;
 
       case proto.event.FuncRequestEventName.HideAllConversations: {
-        let resp = HideAllConversationsResp.decode(data);
+        let resp = proto.sdk.conversation.HideAllConversationsResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetConversationDraft: {
-        let resp = SetConversationDraftResp.decode(data);
+        let resp = proto.sdk.conversation.SetConversationDraftResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetConversation: {
-        let resp = SetConversationResp.decode(data);
+        let resp = proto.sdk.conversation.SetConversationResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetTotalUnreadMsgCount: {
-        let resp = GetTotalUnreadMsgCountResp.decode(data);
-        callBack?.(resp.TotalUnreadCount);
+        let resp = proto.sdk.conversation.GetTotalUnreadMsgCountResp.decode(data);
+        callBack?.(resp.totalUnreadCount);
       }
         break;
 
-      case proto.event.FuncRequestEventName.GetConversationIdbySessionType: {
-        let resp = GetConversationIDBySessionTypeResp.decode(data);
-        callBack?.(resp.ConversationID);
+      case proto.event.FuncRequestEventName.GetConversationIDBySessionType: {
+        let resp = proto.sdk.conversation.GetConversationIDBySessionTypeResp.decode(data);
+        callBack?.(resp.conversationID);
       }
         break;
 
       case proto.event.FuncRequestEventName.FindMessageList: {
-        let resp = FindMessageListResp.decode(data);
-        let args = new object[]
-        {
-          resp.TotalCount, resp.FindResultItems.ToArray()
-        }
-        ;
-        callBack?.(args);
+        let resp = proto.sdk.conversation.FindMessageListResp.decode(data);
+        callBack?.(resp.totalCount, resp.findResultItems);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetHistoryMessageList: {
-        let resp = GetHistoryMessageListResp.decode(data);
-        callBack?.(resp);
+        let resp = proto.sdk.message.GetHistoryMessageListResp.decode(data);
+        callBack?.(resp.messageList, resp.isEnd);
       }
         break;
 
       case proto.event.FuncRequestEventName.RevokeMessage: {
-        let resp = RevokeMessageResp.decode(data);
+        let resp = proto.sdk.message.RevokeMessageResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.TypingStatusUpdate: {
-        let resp = TypingStatusUpdateResp.decode(data);
+        let resp = proto.sdk.message.TypingStatusUpdateResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.MarkConversationMessageAsRead: {
-        let resp = MarkConversationMessageAsReadResp.decode(data);
+        let resp = proto.sdk.conversation.MarkConversationMessageAsReadResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.MarkAllConversationMessageAsRead: {
-        let resp = MarkAllConversationMessageAsReadResp.decode(data);
+        let resp = proto.sdk.conversation.MarkAllConversationMessageAsReadResp.decode(data);
         callBack?.(suc);
       }
         break;
 
-      case proto.event.FuncRequestEventName.DeleteMessageFromLocalStorage: {
-        let resp = DeleteMessageFromLocalStorageResp.decode(data);
+      case proto.event.FuncRequestEventName.DeleteMessageFromLocal: {
+        let resp = proto.sdk.message.DeleteAllMessageFromLocalResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.DeleteMessage: {
-        let resp = DeleteMessageResp.decode(data);
+        let resp = proto.sdk.message.DeleteMessageResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.DeleteAllMsgFromLocalAndServer: {
-        let resp = DeleteAllMsgFromLocalAndServerResp.decode(data);
+        let resp = proto.sdk.message.DeleteAllMsgFromLocalAndServerResp.decode(data);
         callBack?.(suc);
       }
         break;
 
-      case proto.event.FuncRequestEventName.DeleteAllMessageFromLocalStorage: {
-        let resp = DeleteAllMessageFromLocalStorageResp.decode(data);
+      case proto.event.FuncRequestEventName.DeleteAllMessageFromLocal: {
+        let resp = proto.sdk.message.DeleteAllMessageFromLocalResp.decode(data);
         callBack?.(suc);
       }
         break;
-
       case proto.event.FuncRequestEventName.ClearConversationAndDeleteAllMsg: {
-        let resp = ClearConversationAndDeleteAllMsgResp.decode(data);
+        let resp = proto.sdk.conversation.ClearConversationAndDeleteAllMsgResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.DeleteConversationAndDeleteAllMsg: {
-        let resp = DeleteConversationAndDeleteAllMsgResp.decode(data);
+        let resp = proto.sdk.conversation.DeleteConversationAndDeleteAllMsgResp.decode(data);
         callBack?.(suc);
       }
         break;
 
-      case proto.event.FuncRequestEventName.InsertSingleMessageToLocalStorage: {
-        let resp = InsertSingleMessageToLocalStorageResp.decode(data);
-        callBack?.(resp.Msg);
+      case proto.event.FuncRequestEventName.InsertSingleMessageToLocal: {
+        let resp = proto.sdk.message.InsertSingleMessageToLocalResp.decode(data);
+        callBack?.(resp.msg);
       }
         break;
 
-      case proto.event.FuncRequestEventName.InsertGroupMessageToLocalStorage: {
-        let resp = InsertGroupMessageToLocalStorageResp.decode(data);
-        callBack?.(resp.Msg);
+      case proto.event.FuncRequestEventName.InsertGroupMessageToLocal: {
+        let resp = proto.sdk.message.InsertGroupMessageToLocalResp.decode(data);
+        callBack?.(resp.msg);
       }
         break;
 
       case proto.event.FuncRequestEventName.SearchLocalMessages: {
-        let resp = SearchLocalMessagesResp.decode(data);
-        let args = new object[]
-        {
-          resp.SearchResult.TotalCount, resp.SearchResult.SearchResultItems
-        }
-        ;
-        callBack?.(args);
+        let resp = proto.sdk.conversation.SearchLocalMessagesResp.decode(data);
+        callBack?.(resp.count, resp.searchResultItems);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetMessageLocalEx: {
-        let resp = SetMessageLocalExResp.decode(data);
-        callBack?.(resp.Success);
+        let resp = proto.sdk.conversation.SetMessageLocalExResp.decode(data);
+        callBack?.(resp.success);
       }
         break;
 
       case proto.event.FuncRequestEventName.SearchConversation: {
-        let resp = SearchConversationResp.decode(data);
-        callBack?.([resp.ConversationList.ToArray()]);
+        let resp = proto.sdk.conversation.SearchConversationResp.decode(data);
+        callBack?.(resp.conversationList);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateTextMessage: {
-        let resp = CreateTextAtMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateTextAtMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateAdvancedTextMessage: {
-        let resp = CreateAdvancedTextMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateAdvancedTextMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateTextAtMessage: {
-        let resp = CreateTextAtMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateTextAtMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateLocationMessage: {
-        let resp = CreateLocationMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateLocationMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateCustomMessage: {
-        let resp = CreateCustomMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateCustomMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateQuoteMessage: {
-        let resp = CreateQuoteMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateQuoteMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateAdvancedQuoteMessage: {
-        let resp = CreateAdvancedQuoteMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateAdvancedQuoteMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
 
       case proto.event.FuncRequestEventName.CreateCardMessage: {
-        let resp = CreateCardMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateCardMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateImageMessage: {
-        let resp = CreateImageMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateImageMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateSoundMessage: {
-        let resp = CreateSoundMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateSoundMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateVideoMessage: {
-        let resp = CreateVideoMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateVideoMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateFileMessage: {
-        let resp = CreateFileMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateFileMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateMergerMessage: {
-        let resp = CreateMergerMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateMergerMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateFaceMessage: {
-        let resp = CreateFaceMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateFaceMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.CreateForwardMessage: {
-        let resp = CreateForwardMessageResp.decode(data);
-        callBack?.(resp.Message);
+        let resp = proto.sdk.message.CreateForwardMessageResp.decode(data);
+        callBack?.(resp.message);
       }
         break;
 
       case proto.event.FuncRequestEventName.ProcessUserCommandGetAll: {
-        let resp = ProcessUserCommandGetAllResp.decode(data);
-        callBack?.([resp.Commands.ToArray()]);
+        let resp = proto.sdk.user.ProcessUserCommandGetAllResp.decode(data);
+        callBack?.(resp.commands);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetSelfUserInfo: {
-        let resp = GetSelfUserInfoResp.decode(data);
-        callBack?.(resp.User);
+        let resp = proto.sdk.user.GetSelfUserInfoResp.decode(data);
+        callBack?.(resp.user);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetSelfInfo: {
-        let resp = SetSelfInfoResp.decode(data);
+        let resp = proto.sdk.user.SetSelfInfoResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.ProcessUserCommandAdd: {
-        let resp = ProcessUserCommandAddResp.decode(data);
+        let resp = proto.sdk.user.ProcessUserCommandAddResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.ProcessUserCommandDelete: {
-        let resp = ProcessUserCommandDeleteResp.decode(data);
+        let resp = proto.sdk.user.ProcessUserCommandDeleteResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.ProcessUserCommandUpdate: {
-        let resp = ProcessUserCommandUpdateResp.decode(data);
+        let resp = proto.sdk.user.ProcessUserCommandUpdateResp.decode(data);
         callBack?.(suc);
       }
         break;
 
       case proto.event.FuncRequestEventName.GetUsersInfo: {
-        let resp = GetUsersInfoResp.decode(data);
-        callBack?.([resp.Users.ToArray()]);
+        let resp = proto.sdk.user.GetUsersInfoResp.decode(data);
+        callBack?.(resp.users);
       }
         break;
 
       case proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus: {
-        let resp = SubscribeUsersOnlineStatusResp.decode(data);
-        callBack?.([resp.Status.ToArray()]);
+        let resp = proto.sdk.conversation.SubscribeUsersOnlineStatusResp.decode(data);
+        callBack?.(resp.status);
       }
         break;
 
       case proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus: {
-        let resp = UnsubscribeUsersOnlineStatusResp.decode(data);
+        let resp = proto.sdk.conversation.UnsubscribeUsersOnlineStatusResp.decode(data);
         callBack?.(suc);
       }
         break;
