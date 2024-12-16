@@ -631,211 +631,172 @@ export namespace imsdk {
         .finish())
   }
 
-  export function GetUsersInfo
-
-  (Action<IMUser[] > cb, string[] userIds)
-  {
+  export function GetUsersInfo(cb: (user: proto.sdk.shared.IIMUser[]) => void, userIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new GetUsersInfoReq();
-    req.UserIDs.Add(userIds);
-    call(handleId, proto.event.FuncRequestEventName.GetUsersInfo, req);
+    let req = proto.sdk.user.GetUsersInfoReq.create({
+      userIDs = userIds
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetUsersInfo, proto.sdk.user.GetSelfUserInfoReq.encode(req)
+      .finish());
   }
 
-  export function SetSelfInfo
-
-  (cb:(suc: boolean) => void, SetSelfInfoReq req)
-  {
+  export function SetSelfInfo(cb: (suc: boolean) => void, req: proto.sdk.user.ISetSelfInfoReq) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SetSelfInfo, req);
+    call(handleId, proto.event.FuncRequestEventName.SetSelfInfo, proto.sdk.user.SetSelfInfoReq.encode(req)
+      .finish());
   }
 
-  export function GetSelfUserInfo
-
-  (Action<IMUser > cb)
-  {
+  export function GetSelfUserInfo(cb: (user: proto.sdk.shared.IIMUser) => void) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetSelfUserInfo, new GetSelfUserInfoReq());
+    let req = proto.sdk.user.GetSelfUserInfoReq.create()
+    call(handleId, proto.event.FuncRequestEventName.GetSelfUserInfo, proto.sdk.user.GetSelfUserInfoReq.encode(req)
+      .finish());
   }
 
-  export function SubscribeUsersOnlineStatus
-
-  (Action<UserOnlinePlatform[] > cb, string[] userIds)
-  {
+  export function SubscribeUsersOnlineStatus(cb: (platforms: proto.sdk.conversation.UserOnlinePlatform[]) => void,
+    userIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new SubscribeUsersOnlineStatusReq();
-    req.UserIDs.Add(userIds);
-    call(handleId, proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus, req);
+    let req = proto.sdk.conversation.SubscribeUsersOnlineStatusReq.create({
+      userIDs = userIds
+    })
+    call(handleId, proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus,
+      proto.sdk.conversation.SubscribeUsersOnlineStatusReq.encode(req)
+        .finish());
   }
 
-  export function UnsubscribeUsersOnlineStatus
-
-  (cb:(suc: boolean) => void, string[] userIds)
-  {
+  export function UnsubscribeUsersOnlineStatus(cb: (suc: boolean) => void, userIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new UnsubscribeUsersOnlineStatusReq();
-    req.UserIDs.Add(userIds);
-    call(handleId, proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus, req);
+    let req = proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.create({
+      userIDs = userIds
+    })
+    call(handleId, proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus,
+      proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.encode(req)
+        .finish());
   }
 
-  export function ProcessUserCommandGetAll
-
-  (Action<CommandInfo[] > cb)
-  {
+  export function ProcessUserCommandGetAll(cb: (commands: proto.sdk.shared.ICommandInfo[]) => void) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.user.ProcessUserCommandGetAllReq.create()
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandGetAll,
-      new ProcessUserCommandGetAllReq
-    {
-    }
-    )
-    ;
+      proto.sdk.user.ProcessUserCommandGetAllReq.encode(req)
+        .finish())
   }
 
-  export function ProcessUserCommandAdd
-
-  (Action<bool >
-    cb, string userId, int type, string uuid, string value, string ex)
-  {
+  export function ProcessUserCommandAdd(cb: (suc: boolean) => void, userId: string, type: number, uuid: string,
+    value: string, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandAdd, new ProcessUserCommandAddReq
-    {
-      UserID = userId,
-      Type = type,
-      Uuid = uuid,
-      Value = value,
-      Ex = ex
-    }
-    )
-    ;
+    let req = proto.sdk.user.ProcessUserCommandAddReq.create({
+      userID = userId,
+      type = type,
+      uuid = uuid,
+      value = value,
+      ex = ex
+    })
+    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandAdd,
+      proto.sdk.user.ProcessUserCommandAddReq.encode(req)
+        .finish())
   }
 
-  export function ProcessUserCommandDelete
-
-  (cb:(suc: boolean) => void, string userId, int type, string uuid)
-  {
+  export function ProcessUserCommandDelete(cb: (suc: boolean) => void, userId: string, type: number, uuid: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.user.ProcessUserCommandDeleteReq.create({
+      userID = userId,
+      type = type,
+      uuid = uuid,
+    })
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandDelete,
-      new ProcessUserCommandDeleteReq
-    {
-      UserID = userId,
-      Type = type,
-      Uuid = uuid,
-    }
-    )
-    ;
+      proto.sdk.user.ProcessUserCommandDeleteReq.encode(req)
+        .finish())
   }
 
-  export function ProcessUserCommandUpdate
-
-  (Action<bool >
-    cb, string userId, int type, string uuid, string value, string ex)
-  {
+  export function ProcessUserCommandUpdate(cb: (suc: boolean) => void, userId: string, type: number, uuid: string,
+    value: string, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.user.ProcessUserCommandUpdateReq.create({
+      userID = userId,
+      type = type,
+      uuid = uuid,
+      value = value,
+      ex = ex
+    })
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandUpdate,
-      new ProcessUserCommandUpdateReq
-    {
-      UserID = userId,
-      Type = type,
-      Uuid = uuid,
-      Value = value,
-      Ex = ex
-    }
-    )
-    ;
-  }
-  #endregion
-
-  #region friend
-
-  export function GetSpecifiedFriends
-
-  (Action<IMFriend[] > cb, string[] userIdList, bool filterBlack)
-  {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = new GetSpecifiedFriendsReq
-    {
-      FilterBlack = filterBlack
-    }
-    ;
-    req.FriendUserIDs.Add(userIdList);
-    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedFriends, req);
+      proto.sdk.user.ProcessUserCommandUpdateReq.encode(req)
+        .finish())
   }
 
-  export function GetFriends
-
-  (Action<IMFriend[] > cb, bool filterBlack)
-  {
+  export function GetSpecifiedFriends(cb: (friends: proto.sdk.shared.IIMFriend[]) => void, userIdList: string[],
+    filterBlack: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetFriends, new GetFriendsReq
-    {
-      FilterBlack = filterBlack
-    }
-    )
-    ;
+    let req = proto.sdk.relation.GetSpecifiedFriendsReq.create({
+      filterBlack = filterBlack,
+      friendUserIDs = userIdList,
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedFriends,
+      proto.sdk.relation.GetSpecifiedFriendsReq.encode(req)
+        .finish());
   }
 
-  export function GetFriendsPage
-
-  (Action<IMFriend[] > cb, int pageNumber, int showNumber, bool filterBlack)
-  {
+  export function GetFriends(cb: (friends: proto.sdk.shared.IIMFriend[]) => void, filterBlack: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetFriendsPage, new GetFriendsPageReq
-    {
-      FilterBlack = filterBlack,
-      Pagination = new RequestPagination
-      {
-        PageNumber = pageNumber,
-        ShowNumber = showNumber,
-      }
-    }
-    )
-    ;
+    let req = proto.sdk.relation.GetFriendsReq.create({
+      filterBlack = filterBlack
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetFriends, proto.sdk.relation.GetFriendsReq.encode(req)
+      .finish())
   }
 
-  export function SearchFriends
-
-  (Action<SearchFriendsInfo[] >
-    cb, string keyWord, bool searchUserId, bool searchNickName, bool searchRemark)
-  {
+  export function GetFriendsPage(cb: (friends: proto.sdk.shared.IIMFriend[]) => void, pageNumber: number,
+    showNumber: number, filterBlack: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SearchFriends, new SearchFriendsReq
-    {
-      Keyword = keyWord,
-      SearchUserID = searchUserId,
-      SearchNickname = searchNickName,
-      SearchRemark = searchRemark
-    }
-    )
-    ;
+    let req = proto.sdk.relation.GetFriendsPageReq.create({
+      filterBlack = filterBlack,
+      pagination = proto.sdk.common.RequestPagination.create({
+        pageNumber = pageNumber,
+        showNumber = showNumber,
+      })
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetFriendsPage, proto.sdk.relation.GetFriendsPageReq.encode(req)
+      .finish())
   }
 
-  export function UpdateFriend
-
-  (cb:(suc: boolean) => void, string userId, bool pinned, string remark, string ex)
-  {
+  export function SearchFriends(cb: (info: proto.sdk.relation.ISearchFriendsInfo[]) => void, keyWord: string,
+    searchUserId: boolean, searchNickName: boolean, searchRemark: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.UpdateFriend, new UpdateFriendReq
-    {
-      UserID = userId,
-      Pinned = pinned,
+    let req = proto.sdk.relation.SearchFriendsReq.create({
+      keyword = keyWord,
+      searchUserID = searchUserId,
+      searchNickname = searchNickName,
+      searchRemark = searchRemark
+    })
+    call(handleId, proto.event.FuncRequestEventName.SearchFriends, proto.sdk.relation.SearchFriendsReq.encode(req)
+      .finish())
+  }
+
+  export function UpdateFriend(cb: (suc: boolean) => void, userId: string, pinned: boolean, remark: string,
+    ex: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.relation.UpdateFriendReq.create({
+      userID = userId,
+      pinned = pinned,
       Remark = remark,
-      Ex = ex,
-    }
-    )
-    ;
+      ex = ex,
+    })
+    call(handleId, proto.event.FuncRequestEventName.UpdateFriend, proto.sdk.relation.UpdateFriendReq.encode(req)
+      .finish())
   }
 
   export function CheckFriend
