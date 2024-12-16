@@ -1,687 +1,709 @@
-import { openim } from "./proto/proto"
+import { openim as proto } from "./proto/proto"
 import { internal_Init, call } from "./native/NativeSDK"
 import logger from "./utils/Logger"
 import { event } from "./EventHandler";
 import { listener } from "./Listener"
 
 export namespace imsdk {
-  let handlerId = 0
+  let handleId = 0
 
-  function genHandlerId(): number {
-    handlerId = handlerId + 1
-    return handlerId
+  function genHandleId(): number {
+    handleId = handleId + 1
+    return handleId
   }
 
   export function SetErrCallBack(callBack: event.ErrCallBack) {
     event.SetErrCallBack(callBack)
   }
 
-  export function AddConnListener(conn: listener.ConnListener) {
-
+  export function SetConnListener(conn: listener.ConnListener) {
+    event.SetConnListener(conn)
   }
 
-  export function RemoveConnListener(conn: listener.ConnListener) {
-
+  export function SetUserListener(conn: listener.UserListener) {
+    event.SetUserListener(conn)
   }
 
-  public static void Version(Action<string > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.Version, new VersionReq
-    {
-    }
-    )
-    ;
+  export function SetConversationListener(conn: listener.ConversationListener) {
+    event.SetConversationListener(conn)
   }
 
-  export function InitSDK(callback: (suc: boolean) => void, config: openim.init.IMConfig) {
+  export function SetFriendShipListener(conn: listener.FriendShipListener) {
+    event.SetFriendShipListener(conn)
+  }
+
+  export function SetGroupListener(conn: listener.GroupListener) {
+    event.SetGroupListener(conn)
+  }
+
+  export function SetMessageListener(conn: listener.MessageListener) {
+    event.SetMessageListener(conn)
+  }
+
+
+  export function Version(cb: (version: string) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.VersionReq.create()
+    call(handleId, proto.event.FuncRequestEventName.Version, proto.init.VersionReq.encode(req).finish())
+  }
+
+  export function InitSDK(callback: (suc: boolean) => void, config: proto.init.IMConfig) {
 
     internal_Init(event.DispatchEvent)
 
-    let req = openim.init.InitSDKReq.create({
+    let req = proto.init.InitSDKReq.create({
       config: config
     })
 
-    let handlerId = genHandlerId()
-    event.RegisterCallBack(handlerId, callback)
-    call(handlerId, openim.event.FuncRequestEventName.InitSDK, openim.init.InitSDKReq.encode(req).finish())
+    let handleId = genHandleId()
+    event.RegisterCallBack(handleId, callback)
+    call(handleId, proto.event.FuncRequestEventName.InitSDK, proto.init.InitSDKReq.encode(req).finish())
   }
 
-  public static void Login(Action<bool > cb, string uid, string token)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.Login, new LoginReq
-    {
-      UserID = uid,
-      Token = token,
-    }
-    )
-    ;
+  export function Login(cb: (suc: boolean) => void, uid: string, token: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.LoginReq.create({
+      userID: uid,
+      token: token,
+    })
+    call(handleId, proto.event.FuncRequestEventName.Login, proto.init.LoginReq.encode(req).finish())
   }
-  public static void Logout(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.Logout, new LogoutReq
-    {
 
-    }
-    )
-    ;
+  export function Logout(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.LogoutReq.create()
+    call(handleId, proto.event.FuncRequestEventName.Logout, proto.init.LogoutReq.encode(req).finish())
   }
-  public static void SetAppBackGroundStatus(Action<bool > cb, bool isBackground)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetAppBackgroundStatus, new SetAppBackgroundStatusReq
-    {
-      IsBackground = isBackground
-    }
-    )
-    ;
-  }
-  public static void NetworkStatusChanged(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.NetworkStatusChanged, new NetworkStatusChangedReq
-    {
-    }
-    )
-    ;
-  }
-  public static void GetLoginStatus(Action<LoginStatus > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetLoginStatus, new GetLoginStatusReq
-    {
-    }
-    )
-    ;
-  }
-  #endregion
 
-  #region conversation_msg
-  public static void CreateTextMessage(Action<IMMessage > cb, string text)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateTextMessage, new CreateTextMessageReq
-    {
-      Text = text
-    }
-    )
-    ;
+  export function SetAppBackGroundStatu(cb: (suc: boolean) => void, isBackground: boolean) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.SetAppBackgroundStatusReq.create({
+      isBackground = isBackground
+    })
+    call(handleId, proto.event.FuncRequestEventName.SetAppBackgroundStatus,
+      proto.init.SetAppBackgroundStatusReq.encode(req).finish());
   }
-  public static void CreateAdvancedTextMessage(Action<IMMessage > cb, string text, MessageEntity[] messageEntityList)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CreateAdvancedTextMessageReq
-    {
-      Text = text,
-    }
-    ;
-    req.MessageEntities.Add(messageEntityList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateAdvancedTextMessage, req);
-  }
-  public static void CreateTextAtMessage(Action<IMMessage >
-    cb, string text, string[] atUserList, AtInfo[] atUsersInfo, IMMessage message)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CreateTextAtMessageReq
-    {
-      Text = text,
-      QuoteMessage = message
-    }
-    ;
-    req.UserIDList.Add(atUserList);
-    req.UsersInfo.Add(atUsersInfo);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateTextAtMessage, req);
-  }
-  public static void CreateLocationMessage(Action<IMMessage > cb, string description, double longitude, double latitude)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateLocationMessage, new CreateLocationMessageReq
-    {
-      Description = description,
-      Longitude = longitude,
-      Latitude = latitude
-    }
-    )
-    ;
-  }
-  public static void CreateCustomMessage(Action<IMMessage > cb, string data, string extension, string description)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateCustomMessage, new CreateCustomMessageReq
-    {
-      Data = data,
-      Extension = extension,
-      Description = description
-    }
-    )
-    ;
-  }
-  public static void CreateQuoteMessage(Action<IMMessage > cb, string text, IMMessage message)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateQuoteMessage, new CreateQuoteMessageReq
-    {
-      Text = text,
-      QuoteMessage = message
-    }
-    )
-    ;
-  }
-  public static void CreateAdvancedQuoteMessage(Action<IMMessage >
-    cb, string text, IMMessage message, MessageEntity[] messageEntityList)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CreateAdvancedQuoteMessageReq
-    {
-      Text = text,
-      QuoteMessage = message,
-    }
-    ;
-    req.MessageEntities.Add(messageEntityList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateAdvancedQuoteMessage, req);
-  }
-  public static void CreateCardMessage(Action<IMMessage > cb, CardElem card)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateCardMessage, new CreateCardMessageReq
-    {
-      Card = card
-    }
-    )
-    ;
-  }
-  public static void CreateImageMessage(Action<IMMessage > cb, string imagePath)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateImageMessage, new CreateImageMessageReq
-    {
-      ImageSourcePath = imagePath
-    }
-    )
-    ;
-  }
-  public static void CreateSoundMessage(Action<IMMessage > cb, string soundPath, long duration)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateSoundMessage, new CreateSoundMessageReq
-    {
-      SoundPath = soundPath,
-      Duration = duration
-    }
-    )
-    ;
-  }
-  public static void CreateVideoMessage(Action<IMMessage >
-    cb, string videoPath, string videoType, long duration, string snapshotPath)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateVideoMessage, new CreateVideoMessageReq
-    {
-      VideoSourcePath = videoPath,
-      VideoType = videoType,
-      Duration = duration,
-      SnapshotSourcePath = snapshotPath
-    }
-    )
-    ;
-  }
-  public static void CreateFileMessage(Action<IMMessage > cb, string filePath, string fileName)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateFileMessage, new CreateFileMessageReq
-    {
-      FileSourcePath = filePath,
-      FileName = fileName
-    }
-    )
-    ;
-  }
-  public static void CreateMergerMessage(Action<IMMessage >
-    cb, IMMessage[] messageList, string title, string[] summaryList)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CreateMergerMessageReq
-    {
-      Title = title,
-    }
-    ;
-    req.Messages.Add(messageList);
-    req.Summaries.Add(summaryList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateMergerMessage, req);
-  }
-  public static void CreateFaceMessage(Action<IMMessage > cb, int index, string data)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateFaceMessage, new CreateFaceMessageReq
-    {
-      Index = index,
-      Data = data,
-    }
-    )
-    ;
-  }
-  public static void CreateForwardMessage(Action<IMMessage > cb, IMMessage message)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateForwardMessage, new CreateForwardMessageReq
-    {
-      Message = message
-    }
-    )
-    ;
-  }
-  public static void GetAllConversationList(Action<IMConversation[] > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetAllConversationList, new GetAllConversationListReq
-    {
-    }
-    )
-    ;
-  }
-  public static void GetConversationListSplit(Action<IMConversation[] > cb, int offset, int count)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetConversationListSplit, new GetConversationListSplitReq
-    {
-      Offset = offset,
-      Count = count,
-    }
-    )
-    ;
-  }
-  public static void GetOneConversation(Action<IMConversation > cb, SessionType sessionType, string sourceId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetOneConversation, new GetOneConversationReq
-    {
-      SessionType = sessionType,
-      SourceID = sourceId,
-    }
-    )
-    ;
-  }
-  public static void GetMultipleConversation(Action<IMConversation[] > cb, string[] conversationIdList)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetMultipleConversationReq();
-    req.ConversationIDList.Add(conversationIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetMultipleConversation, req);
-  }
-  public static void HideConversation(Action<bool > cb, string conversationId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.HideConversation, new HideConversationReq
-    {
-      ConversationID = conversationId,
-    }
-    )
-    ;
-  }
-  public static void HideAllConversations(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.HideAllConversations, new HideAllConversationsReq
-    {
-    }
-    )
-    ;
-  }
-  public static void SetConversation(Action<bool > cb, SetConversationReq req)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetConversation, req);
-  }
-  public static void SetConversationDraft(Action<bool > cb, string conversationId, string draftText)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetConversationDraft, new SetConversationDraftReq
-    {
-      ConversationID = conversationId,
-      DraftText = draftText,
-    }
-    )
-    ;
-  }
-  public static void GetTotalUnreadMsgCount(Action<int > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetTotalUnreadMsgCount, new GetTotalUnreadMsgCountReq
-    {
-    }
-    )
-    ;
-  }
-  public static void GetAtAllTag(Action<string > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetAtAllTag, new GetAtAllTagReq
-    {
-    }
-    )
-    ;
-  }
-  public static void GetConversationIdBySessionType(Action<string > cb, string sourceId, SessionType sessionType)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetConversationIdbySessionType,
-      new GetConversationIDBySessionTypeReq
-    {
-      SourceID = sourceId,
-      SessionType = sessionType,
-    }
-    )
-    ;
-  }
-  public static void SendMessage(ISendMsg cb, IMMessage message, string recvId, string groupId, bool isOnlineOnly)
-  {
-    var handleId = GetHandleId();
-    sendMsgCallBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SendMessage, new SendMessageReq
-    {
-      Message = message,
-      RecvID = recvId,
-      GroupID = groupId,
-      IsOnlineOnly = isOnlineOnly,
-    }
-    )
-    ;
-  }
-  public static void FindMessageList(Action<int, SearchByConversationResult[] >
-    cb, ConversationArgs[] findMessageOptions)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new FindMessageListReq();
-    req.ConversationsArgs.Add(findMessageOptions);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.FindMessageList, req);
-  }
-  public static void GetHistoryMessageList(Action<GetHistoryMessageListResp >
-    cb, string conversationId, string startClientMsgId, int count, bool isReverse)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetHistoryMessageList, new GetHistoryMessageListReq
-    {
-      ConversationID = conversationId,
-      StartClientMsgID = startClientMsgId,
-      Count = count,
-      IsReverse = isReverse,
-    }
-    )
-    ;
-  }
-  public static void RevokeMessage(Action<bool > cb, string conversationId, string clientMsgId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.RevokeMessage, new RevokeMessageReq
-    {
-      ConversationID = conversationId,
-      ClientMsgID = clientMsgId
-    }
-    )
-    ;
-  }
-  public static void TypingStatusUpdate(Action<bool > cb, string recvId, string msgTip)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.TypingStatusUpdate, new TypingStatusUpdateReq
-    {
-      RecvID = recvId,
-      MsgTip = msgTip
-    }
-    )
-    ;
-  }
-  public static void MarkConversationMessageAsRead(Action<bool > cb, string conversationId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.MarkConversationMessageAsRead, new MarkConversationMessageAsReadReq
-    {
-      ConversationID = conversationId
-    }
-    )
-    ;
-  }
-  public static void MarkAllConversationMessageAsRead(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.MarkAllConversationMessageAsRead,
-      new MarkConversationMessageAsReadReq
-    {
-    }
-    )
-    ;
-  }
-  public static void DeleteMessageFromLocalStorage(Action<bool > cb, string conversationId, string clientMsgId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteMessageFromLocalStorage, new DeleteMessageFromLocalStorageReq
-    {
-      ConversationID = conversationId,
-      ClientMsgID = clientMsgId
-    }
-    )
-    ;
-  }
-  public static void DeleteMessage(Action<bool > cb, string conversationId, string clientMsgId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteMessage, new DeleteMessageReq
-    {
-      ConversationID = conversationId,
-      ClientMsgID = clientMsgId
-    }
-    )
-    ;
-  }
-  public static void DeleteAllMsgFromLocalAndServer(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteAllMsgFromLocalAndServer,
-      new DeleteAllMsgFromLocalAndServerReq
-    {
-    }
-    )
-    ;
-  }
-  public static void DeleteAllMessageFromLocalStorage(Action<bool > cb)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteAllMessageFromLocalStorage,
-      new DeleteAllMessageFromLocalStorageReq
-    {
-    }
-    )
-    ;
-  }
-  public static void ClearConversationAndDeleteAllMsg(Action<bool > cb, string conversationId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ClearConversationAndDeleteAllMsg,
-      new ClearConversationAndDeleteAllMsgReq
-    {
-      ConversationID = conversationId
-    }
-    )
-    ;
-  }
-  public static void DeleteConversationAndDeleteAllMsg(Action<bool > cb, string conversationId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteConversationAndDeleteAllMsg,
-      new DeleteConversationAndDeleteAllMsgReq
-    {
-      ConversationID = conversationId
-    }
-    )
-    ;
-  }
-  public static void InsertSingleMessageToLocalStorage(Action<IMMessage >
-    cb, IMMessage message, string recvId, string sendId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.InsertSingleMessageToLocalStorage,
-      new InsertSingleMessageToLocalStorageReq
-    {
-      Msg = message,
-      RecvID = recvId,
-      SendID = sendId
-    }
-    )
-    ;
-  }
-  public static void InsertGroupMessageToLocalStorage(Action<IMMessage >
-    cb, IMMessage message, string groupId, string sendId)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.InsertGroupMessageToLocalStorage,
-      new InsertGroupMessageToLocalStorageReq
-    {
-      Msg = message,
-      GroupID = groupId,
-      SendID = sendId
-    }
-    )
-    ;
-  }
-  public static void SearchLocalMessages(Action<int, SearchByConversationResult[] >
-    cb, SearchLocalMessagesParams searchParam)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SearchLocalMessages, new SearchLocalMessagesReq
-    {
-      SearchParam = searchParam
-    }
-    )
-    ;
-  }
-  public static void SearchConversation(Action<IMConversation[] > cb, string searchParam)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SearchConversation, new SearchConversationReq
-    {
-      SearchParam = searchParam
-    }
-    )
-    ;
-  }
-  public static void SetMessageLocalEx(Action<bool > cb, string conversationId, string clientMsgId, string localEx)
-  {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetMessageLocalEx, new SetMessageLocalExReq
-    {
-      ConversationID = conversationId,
-      ClientMsgID = clientMsgId,
-      LocalEx = localEx
-    }
-    )
-    ;
-  }
-  #endregion
 
-  #region user
-  public static void GetUsersInfo(Action<IMUser[] > cb, string[] userIds)
+  export function NetworkStatusChanged(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.NetworkStatusChangedReq.create()
+    call(handleId, proto.event.FuncRequestEventName.NetworkStatusChanged,
+      proto.init.NetworkStatusChangedReq.encode(req).finish())
+  }
+
+  export function GetLoginStatus(cb: (status: proto.init.LoginStatus) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.init.GetLoginStatusReq.create()
+    call(handleId, proto.event.FuncRequestEventName.GetLoginStatus, proto.init.GetLoginStatusReq.encode(req).finish())
+  }
+
+  export function CreateTextMessage(cb: (msg: proto.sdk.shared.IIMMessage) => void, text: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateTextMessageReq.create({
+      text: text
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateTextMessage,
+      proto.sdk.message.CreateTextMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateAdvancedTextMessage(cb: (msg: proto.sdk.shared.IIMMessage) => void, text: string,
+    messageEntityList: proto.sdk.shared.IMessageEntity[]) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateAdvancedTextMessageReq.create({
+      text: text,
+      messageEntities: messageEntityList
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateAdvancedTextMessage,
+      proto.sdk.message.CreateAdvancedTextMessageReq.encode(req)
+        .finish());
+  }
+
+  export function CreateTextAtMessage(cb: (msg: proto.sdk.shared.IIMMessage) => void, text: string,
+    atUserList: string[], atUsersInfo: proto.sdk.shared.IAtInfo[], message: proto.sdk.shared.IIMMessage) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateTextAtMessageReq.create({
+      text: text,
+      userIDList: atUserList,
+      usersInfo: atUsersInfo,
+      quoteMessage: message
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateTextAtMessage,
+      proto.sdk.message.CreateTextAtMessageReq.encode(req)
+        .finish());
+  }
+
+  export function CreateLocationMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, description: string,
+    longitude: number, latitude: number) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateLocationMessageReq.create({
+      description = description,
+      longitude = longitude,
+      latitude = latitude
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateLocationMessage,
+      proto.sdk.message.CreateLocationMessageReq.encode(req)
+        .finish())
+
+  }
+
+  export function CreateCustomMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, data: string, extension: string,
+    description: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateCustomMessageReq.create({
+      data = data,
+      extension = extension,
+      description = description
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateCustomMessage,
+      proto.sdk.message.CreateCustomMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateQuoteMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, text: string,
+    message: proto.sdk.shared.IIMMessage) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateQuoteMessageReq.create({
+      text = text,
+      quoteMessage = message
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateQuoteMessage,
+      proto.sdk.message.CreateQuoteMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateAdvancedQuoteMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, text: string,
+    message: proto.sdk.shared.IIMMessage, messageEntityList: proto.sdk.shared.IMessageEntity[]) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateAdvancedQuoteMessageReq.create({
+      text = text,
+      quoteMessage = message,
+      messageEntities = messageEntityList
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateAdvancedQuoteMessage,
+      proto.sdk.message.CreateAdvancedQuoteMessageReq.encode(req)
+        .finish());
+  }
+
+  export function CreateCardMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, card: proto.sdk.shared.ICardElem) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateCardMessageReq.create({
+      userID = card.userID,
+      nickname = card.nickname,
+      faceURL = card.faceURL,
+      ex = card.ex
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateCardMessage,
+      proto.sdk.message.CreateCardMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateImageMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, imagePath: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateImageMessageReq.create({
+      imageSourcePath = imagePath
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateImageMessage,
+      proto.sdk.message.CreateImageMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateSoundMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, soundPath: string,
+    duration: number) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateSoundMessageReq.create({
+      soundPath = soundPath,
+      duration = duration
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateSoundMessage,
+      proto.sdk.message.CreateSoundMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateVideoMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, videoPath: string,
+    videoType: string, duration: number,
+    snapshotPath: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateVideoMessageReq.create({
+      videoSourcePath = videoPath,
+      videoType = videoType,
+      duration = duration,
+      snapshotSourcePath = snapshotPath
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateVideoMessage,
+      proto.sdk.message.CreateVideoMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateFileMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, filePath: string,
+    fileName: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateFileMessageReq.create({
+      fileSourcePath = filePath,
+      fileName = fileName
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateFileMessage,
+      proto.sdk.message.CreateFileMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateMergerMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void,
+    messages: proto.sdk.shared.IIMMessage[], title: string, summarys: string[]) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateMergerMessageReq.create({
+      title = title,
+      messages = messages,
+      summaries = summarys
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateMergerMessage,
+      proto.sdk.message.CreateMergerMessageReq.encode(req)
+        .finish());
+  }
+
+  export function CreateFaceMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, index: number, data: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateFaceMessageReq.create({
+      index = index,
+      data = data,
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateFaceMessage,
+      proto.sdk.message.CreateFaceMessageReq.encode(req)
+        .finish())
+  }
+
+  export function CreateForwardMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void,
+    message: proto.sdk.shared.IIMMessage) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.CreateForwardMessageReq.create({
+      message = message
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateForwardMessage,
+      proto.sdk.message.CreateForwardMessageReq.encode(req)
+        .finish())
+  }
+
+  export function GetAllConversationList(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetAllConversationListReq.create()
+    call(handleId, proto.event.FuncRequestEventName.GetAllConversationList,
+      proto.sdk.conversation.GetAllConversationListReq.encode(req)
+        .finish())
+  }
+
+  export function GetConversationListSplit(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void,
+    offset: number, count: number) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetConversationListSplitReq.create({
+      offset = offset,
+      count = count,
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetConversationListSplit,
+      proto.sdk.conversation.GetConversationListSplitReq.encode(req)
+        .finish())
+  }
+
+  export function GetOneConversation(cb: (conversations: proto.sdk.shared.IIMConversation) => void,
+    sessionType: proto.sdk.common.SessionType, sourceId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetOneConversationReq.create({
+      sessionType = sessionType,
+      sourceID = sourceId,
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetOneConversation,
+      proto.sdk.conversation.GetOneConversationReq.encode(req)
+        .finish())
+  }
+
+  export function GetMultipleConversation(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void,
+    conversationIds: string[]) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetMultipleConversationReq.create({
+      conversationIDList = conversationIds
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetMultipleConversation,
+      proto.sdk.conversation.GetMultipleConversationReq.encode(req)
+        .finish());
+  }
+
+  export function HideConversation(cb: (suc: boolean) => void, conversationId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.HideConversationReq.create({
+      conversationID = conversationId
+    })
+    call(handleId, proto.event.FuncRequestEventName.HideConversation,
+      proto.sdk.conversation.HideConversationReq.encode(req)
+        .finish())
+  }
+
+  export function HideAllConversations(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.HideAllConversationsReq.create()
+    call(handleId, proto.event.FuncRequestEventName.HideAllConversations,
+      proto.sdk.conversation.HideAllConversationsReq.encode(req)
+        .finish())
+  }
+
+  export function SetConversation(cb: (suc: boolean) => void, req: proto.sdk.conversation.ISetConversationReq) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+
+    call(handleId, proto.event.FuncRequestEventName.SetConversation,
+      proto.sdk.conversation.SetConversationDraftReq.encode(req)
+        .finish());
+  }
+
+  export function SetConversationDraft(cb: (suc: boolean) => void, conversationId: string, draftText: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.SetConversationDraftReq.create({
+      conversationID = conversationId,
+      draftText = draftText,
+    })
+    call(handleId, proto.event.FuncRequestEventName.SetConversationDraft,
+      proto.sdk.conversation.SetConversationDraftReq.encode(req)
+        .finish())
+  }
+
+  export function GetTotalUnreadMsgCount(cb: (count: number) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetTotalUnreadMsgCountReq.create()
+    call(handleId, proto.event.FuncRequestEventName.GetTotalUnreadMsgCount,
+      proto.sdk.conversation.GetTotalUnreadMsgCountReq.encode(req)
+        .finish())
+  }
+
+  export function GetAtAllTag(cb: (tag: string) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetAtAllTagReq.create()
+    call(handleId, proto.event.FuncRequestEventName.GetAtAllTag, proto.sdk.conversation.GetAtAllTagReq.encode(req)
+      .finish())
+  }
+
+  export function GetConversationIDBySessionType(cb: (conversationId: string) => void, sourceId: string,
+    sessionType: proto.sdk.common.SessionType) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.GetConversationIDBySessionTypeReq.create({
+      sourceID = sourceId,
+      sessionType = sessionType,
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetConversationIDBySessionType,
+      proto.sdk.conversation.GetConversationIDBySessionTypeReq.encode(req)
+        .finish())
+  }
+
+  // export function SendMessage (ISendMsg cb, IMMessage message, string recvId, string groupId, bool isOnlineOnly)
+  // {
+  //   let handleId = genHandleId();
+  //   sendMsgevent.RegisterCallBack(handleId, cb);
+  //   call(handleId, proto.event.FuncRequestEventName.SendMessage, new SendMessageReq
+  //   {
+  //     Message = message,
+  //     RecvID = recvId,
+  //     GroupID = groupId,
+  //     IsOnlineOnly = isOnlineOnly,
+  //   }
+  //   )
+  // }
+
+  export function FindMessageList(cb: (count: number,
+    data: proto.sdk.conversation.ISearchByConversationResult[]) => void,
+    args: proto.sdk.conversation.IConversationArgs[]) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.FindMessageListReq.create({
+      conversationsArgs = args
+    });
+    call(handleId, proto.event.FuncRequestEventName.FindMessageList,
+      proto.sdk.conversation.FindMessageListReq.encode(req)
+        .finish());
+  }
+
+  // export function GetHistoryMessageList( )=>void, string conversationId, string startClientMsgId, int count, bool isReverse)
+  // {
+  //   let handleId = genHandleId();
+  //   event.RegisterCallBack(handleId, cb);
+  //   call(handleId, proto.event.FuncRequestEventName.GetHistoryMessageList, new GetHistoryMessageListReq
+  //   {
+  //     ConversationID = conversationId,
+  //     StartClientMsgID = startClientMsgId,
+  //     Count = count,
+  //     IsReverse = isReverse,
+  //   }
+  //   )
+  //   ;
+  // }
+
+  export function RevokeMessage(cb: (suc: boolean) => void, conversationId: string, clientMsgId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.RevokeMessageReq.create({
+      conversationID = conversationId,
+      clientMsgID = clientMsgId
+    })
+    call(handleId, proto.event.FuncRequestEventName.RevokeMessage, proto.sdk.message.RevokeMessageReq.encode(req)
+      .finish())
+  }
+
+  export function TypingStatusUpdate(cb: (suc: boolean) => void, recvId: string, msgTip: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.TypingStatusUpdateReq.create({
+      recvID = recvId,
+      msgTip = msgTip
+    })
+    call(handleId, proto.event.FuncRequestEventName.TypingStatusUpdate,
+      proto.sdk.message.TypingStatusUpdateReq.encode(req)
+        .finish())
+  }
+
+  export function MarkConversationMessageAsRead(cb: (suc: boolean) => void, conversationId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.MarkConversationMessageAsReadReq.create({
+      conversationID = conversationId
+    })
+    call(handleId, proto.event.FuncRequestEventName.MarkConversationMessageAsRead,
+      proto.sdk.conversation.MarkConversationMessageAsReadReq.encode(req)
+        .finish())
+  }
+
+  export function MarkAllConversationMessageAsRead(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.MarkAllConversationMessageAsReadReq.create()
+    call(handleId, proto.event.FuncRequestEventName.MarkAllConversationMessageAsRead,
+      proto.sdk.conversation.MarkAllConversationMessageAsReadReq.encode(req)
+        .finish())
+  }
+
+  export function DeleteMessageFromLocal(cb: (suc: boolean) => void, conversationId: string, clientMsgId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.DeleteAllMessageFromLocalReq.create({
+      conversationID = conversationId,
+      clientMsgID = clientMsgId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DeleteMessageFromLocal,
+      proto.sdk.message.DeleteAllMessageFromLocalReq.encode(req)
+        .finish())
+  }
+
+  export function DeleteMessage(cb: (suc: boolean) => void, conversationId: string, clientMsgId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.DeleteMessageReq.create({
+      conversationID = conversationId,
+      clientMsgID = clientMsgId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DeleteMessage, proto.sdk.message.DeleteMessageReq.encode(req)
+      .finish())
+  }
+
+  export function DeleteAllMsgFromLocalAndServer(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.DeleteAllMsgFromLocalAndServerReq.create()
+    call(handleId, proto.event.FuncRequestEventName.DeleteAllMsgFromLocalAndServer,
+      proto.sdk.message.DeleteAllMsgFromLocalAndServerReq.encode(req)
+        .finish())
+  }
+
+  export function DeleteAllMessageFromLocal(cb: (suc: boolean) => void) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.DeleteAllMessageFromLocalReq.create()
+    call(handleId, proto.event.FuncRequestEventName.DeleteAllMessageFromLocal,
+      proto.sdk.message.DeleteAllMessageFromLocalReq.encode(req)
+        .finish())
+  }
+
+  export function ClearConversationAndDeleteAllMsg(cb: (suc: boolean) => void, conversationId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.ClearConversationAndDeleteAllMsgReq.create({
+      conversationID = conversationId
+    })
+    call(handleId, proto.event.FuncRequestEventName.ClearConversationAndDeleteAllMsg,
+      proto.sdk.conversation.ClearConversationAndDeleteAllMsgReq.encode(req)
+        .finish())
+  }
+
+  export function DeleteConversationAndDeleteAllMsg(cb: (suc: boolean) => void, conversationId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.DeleteConversationAndDeleteAllMsgReq.create({
+      conversationID = conversationId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DeleteConversationAndDeleteAllMsg,
+      proto.sdk.conversation.DeleteConversationAndDeleteAllMsgReq.encode(req)
+        .finish())
+  }
+
+  export function InsertSingleMessageToLocal(cb: (msg: proto.sdk.shared.IIMMessage) => void,
+    message: proto.sdk.shared.IIMMessage, recvId: string, sendId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.InsertSingleMessageToLocalReq.create({
+      msg = message,
+      recvID = recvId,
+      sendID = sendId
+    })
+    call(handleId, proto.event.FuncRequestEventName.InsertSingleMessageToLocal,
+      proto.sdk.message.InsertSingleMessageToLocalReq.encode(req)
+        .finish())
+  }
+
+  export function InsertGroupMessageToLocalStorage(cb: (msg: proto.sdk.shared.IIMMessage) => void,
+    message: proto.sdk.shared.IIMMessage, groupId: string, sendId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.InsertGroupMessageToLocalReq.create({
+      msg = message,
+      groupID = groupId,
+      sendID = sendId
+    })
+    call(handleId, proto.event.FuncRequestEventName.InsertGroupMessageToLocal,
+      proto.sdk.message.InsertGroupMessageToLocalReq.encode(req)
+        .finish())
+  }
+
+  // export function SearchLocalMessages(cb :(count: number, data:proto.sdk.conversation.ISearchByConversationResult[])=>void, searchParam:proto.sdk.conversation.Search)
+  // {
+  //   let handleId = genHandleId();
+  //   event.RegisterCallBack(handleId, cb);
+  //   let req = proto.sdk.message
+  //   call(handleId, proto.event.FuncRequestEventName.SearchLocalMessages,)
+  // }
+
+  export function SearchConversation(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void,
+    searchParam: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.SearchConversationReq.create({
+      searchParam = searchParam
+    })
+    call(handleId, proto.event.FuncRequestEventName.SearchConversation,
+      proto.sdk.conversation.SearchConversationReq.encode(req)
+        .finish())
+  }
+
+  export function SetMessageLocalEx(cb: (suc: boolean) => void, conversationId: string, clientMsgId: string,
+    localEx: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.conversation.SetMessageLocalExReq.create({
+      conversationID = conversationId,
+      clientMsgID = clientMsgId,
+      localEx = localEx
+    })
+    call(handleId, proto.event.FuncRequestEventName.SetMessageLocalEx,
+      proto.sdk.conversation.SetMessageLocalExReq.encode(req)
+        .finish())
+  }
+
+  export function GetUsersInfo
+
+  (Action<IMUser[] > cb, string[] userIds)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetUsersInfoReq();
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetUsersInfoReq();
     req.UserIDs.Add(userIds);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetUsersInfo, req);
+    call(handleId, proto.event.FuncRequestEventName.GetUsersInfo, req);
   }
-  public static void SetSelfInfo(Action<bool > cb, SetSelfInfoReq req)
+
+  export function SetSelfInfo
+
+  (cb:(suc: boolean) => void, SetSelfInfoReq req)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetSelfInfo, req);
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SetSelfInfo, req);
   }
-  public static void GetSelfUserInfo(Action<IMUser > cb)
+
+  export function GetSelfUserInfo
+
+  (Action<IMUser > cb)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetSelfUserInfo, new GetSelfUserInfoReq());
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetSelfUserInfo, new GetSelfUserInfoReq());
   }
-  public static void SubscribeUsersOnlineStatus(Action<UserOnlinePlatform[] > cb, string[] userIds)
+
+  export function SubscribeUsersOnlineStatus
+
+  (Action<UserOnlinePlatform[] > cb, string[] userIds)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new SubscribeUsersOnlineStatusReq();
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new SubscribeUsersOnlineStatusReq();
     req.UserIDs.Add(userIds);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SubscribeUsersOnlineStatus, req);
+    call(handleId, proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus, req);
   }
-  public static void UnsubscribeUsersOnlineStatus(Action<bool > cb, string[] userIds)
+
+  export function UnsubscribeUsersOnlineStatus
+
+  (cb:(suc: boolean) => void, string[] userIds)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new UnsubscribeUsersOnlineStatusReq();
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new UnsubscribeUsersOnlineStatusReq();
     req.UserIDs.Add(userIds);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.UnsubscribeUsersOnlineStatus, req);
+    call(handleId, proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus, req);
   }
-  public static void ProcessUserCommandGetAll(Action<CommandInfo[] > cb)
+
+  export function ProcessUserCommandGetAll
+
+  (Action<CommandInfo[] > cb)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ProcessUserCommandGetAll, new ProcessUserCommandGetAllReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandGetAll,
+      new ProcessUserCommandGetAllReq
     {
     }
     )
     ;
   }
-  public static void ProcessUserCommandAdd(Action<bool >
+
+  export function ProcessUserCommandAdd
+
+  (Action<bool >
     cb, string userId, int type, string uuid, string value, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ProcessUserCommandAdd, new ProcessUserCommandAddReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandAdd, new ProcessUserCommandAddReq
     {
       UserID = userId,
       Type = type,
@@ -692,11 +714,15 @@ export namespace imsdk {
     )
     ;
   }
-  public static void ProcessUserCommandDelete(Action<bool > cb, string userId, int type, string uuid)
+
+  export function ProcessUserCommandDelete
+
+  (cb:(suc: boolean) => void, string userId, int type, string uuid)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ProcessUserCommandDelete, new ProcessUserCommandDeleteReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandDelete,
+      new ProcessUserCommandDeleteReq
     {
       UserID = userId,
       Type = type,
@@ -705,12 +731,16 @@ export namespace imsdk {
     )
     ;
   }
-  public static void ProcessUserCommandUpdate(Action<bool >
+
+  export function ProcessUserCommandUpdate
+
+  (Action<bool >
     cb, string userId, int type, string uuid, string value, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ProcessUserCommandUpdate, new ProcessUserCommandUpdateReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandUpdate,
+      new ProcessUserCommandUpdateReq
     {
       UserID = userId,
       Type = type,
@@ -724,34 +754,43 @@ export namespace imsdk {
   #endregion
 
   #region friend
-  public static void GetSpecifiedFriends(Action<IMFriend[] > cb, string[] userIdList, bool filterBlack)
+
+  export function GetSpecifiedFriends
+
+  (Action<IMFriend[] > cb, string[] userIdList, bool filterBlack)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetSpecifiedFriendsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetSpecifiedFriendsReq
     {
       FilterBlack = filterBlack
     }
     ;
     req.FriendUserIDs.Add(userIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetSpecifiedFriends, req);
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedFriends, req);
   }
-  public static void GetFriends(Action<IMFriend[] > cb, bool filterBlack)
+
+  export function GetFriends
+
+  (Action<IMFriend[] > cb, bool filterBlack)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetFriends, new GetFriendsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetFriends, new GetFriendsReq
     {
       FilterBlack = filterBlack
     }
     )
     ;
   }
-  public static void GetFriendsPage(Action<IMFriend[] > cb, int pageNumber, int showNumber, bool filterBlack)
+
+  export function GetFriendsPage
+
+  (Action<IMFriend[] > cb, int pageNumber, int showNumber, bool filterBlack)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetFriendsPage, new GetFriendsPageReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetFriendsPage, new GetFriendsPageReq
     {
       FilterBlack = filterBlack,
       Pagination = new RequestPagination
@@ -764,12 +803,14 @@ export namespace imsdk {
     ;
   }
 
-  public static void SearchFriends(Action<SearchFriendsInfo[] >
+  export function SearchFriends
+
+  (Action<SearchFriendsInfo[] >
     cb, string keyWord, bool searchUserId, bool searchNickName, bool searchRemark)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SearchFriends, new SearchFriendsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SearchFriends, new SearchFriendsReq
     {
       Keyword = keyWord,
       SearchUserID = searchUserId,
@@ -779,11 +820,14 @@ export namespace imsdk {
     )
     ;
   }
-  public static void UpdateFriend(Action<bool > cb, string userId, bool pinned, string remark, string ex)
+
+  export function UpdateFriend
+
+  (cb:(suc: boolean) => void, string userId, bool pinned, string remark, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.UpdateFriend, new UpdateFriendReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.UpdateFriend, new UpdateFriendReq
     {
       UserID = userId,
       Pinned = pinned,
@@ -793,22 +837,28 @@ export namespace imsdk {
     )
     ;
   }
-  public static void CheckFriend(Action<CheckFriendInfo[] > cb, string[] userIdList)
+
+  export function CheckFriend
+
+  (Action<CheckFriendInfo[] > cb, string[] userIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CheckFriendReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new CheckFriendReq
     {
     }
     ;
     req.FriendUserIDs.Add(userIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CheckFriend, req);
+    call(handleId, proto.event.FuncRequestEventName.CheckFriend, req);
   }
-  public static void AddFriend(Action<bool > cb, string userId, string reqMsg, string ex)
+
+  export function AddFriend
+
+  (cb:(suc: boolean) => void, string userId, string reqMsg, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.AddFriend, new AddFriendReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.AddFriend, new AddFriendReq
     {
       UserID = userId,
       ReqMsg = reqMsg,
@@ -817,22 +867,28 @@ export namespace imsdk {
     )
     ;
   }
-  public static void DeleteFriend(Action<bool > cb, string friendUserId)
+
+  export function DeleteFriend
+
+  (cb:(suc: boolean) => void, string friendUserId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteFriend, new DeleteFriendReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.DeleteFriend, new DeleteFriendReq
     {
       UserID = friendUserId
     }
     )
     ;
   }
-  public static void GetFriendsRequest(Action<IMFriendApplication[] > cb, bool send)
+
+  export function GetFriendsRequest
+
+  (Action<IMFriendApplication[] > cb, bool send)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetFriendRequests, new GetFriendRequestsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetFriendRequests, new GetFriendRequestsReq
     {
       Send = send
     }
@@ -840,11 +896,13 @@ export namespace imsdk {
     ;
   }
 
-  public static void HandleFriendRequest(Action<bool > cb, string userId, string handleMsg, ApprovalStatus status)
+  export function HandleFriendRequest
+
+  (cb:(suc: boolean) => void, string userId, string handleMsg, ApprovalStatus status)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.HandleFriendRequest, new HandleFriendRequestReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.HandleFriendRequest, new HandleFriendRequestReq
     {
       UserID = userId,
       HandleMsg = handleMsg,
@@ -853,11 +911,14 @@ export namespace imsdk {
     )
     ;
   }
-  public static void AddBlack(Action<bool > cb, string userId, string ex)
+
+  export function AddBlack
+
+  (cb:(suc: boolean) => void, string userId, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.AddBlack, new AddBlackReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.AddBlack, new AddBlackReq
     {
       UserID = userId,
       Ex = ex
@@ -865,21 +926,27 @@ export namespace imsdk {
     )
     ;
   }
-  public static void GetBlacks(Action<IMBlack[] > cb)
+
+  export function GetBlacks
+
+  (Action<IMBlack[] > cb)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetBlacks, new GetBlacksReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetBlacks, new GetBlacksReq
     {
     }
     )
     ;
   }
-  public static void DeleteBlack(Action<bool > cb, string removeUserId)
+
+  export function DeleteBlack
+
+  (cb:(suc: boolean) => void, string removeUserId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DeleteBlack, new DeleteBlackReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.DeleteBlack, new DeleteBlackReq
     {
       UserID = removeUserId
     }
@@ -889,21 +956,27 @@ export namespace imsdk {
   #endregion
 
   #region group
-  public static void CreateGroup(Action<IMGroup > cb, IMGroup group, string[] adminUserIds, string[] memeberUserIds)
+
+  export function CreateGroup
+
+  (Action<IMGroup > cb, IMGroup group, string[] adminUserIds, string[] memeberUserIds)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new CreateGroupReq();
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new CreateGroupReq();
     req.GroupInfo = group;
     req.AdminUserIDs.Add(adminUserIds);
     req.MemberUserIDs.Add(memeberUserIds);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.CreateGroup, req);
+    call(handleId, proto.event.FuncRequestEventName.CreateGroup, req);
   }
-  public static void JoinGroup(Action<bool > cb, string groupId, string reqMsg, GroupJoinSource joinSource, string ex)
+
+  export function JoinGroup
+
+  (cb:(suc: boolean) => void, string groupId, string reqMsg, GroupJoinSource joinSource, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.JoinGroup, new JoinGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.JoinGroup, new JoinGroupReq
     {
       GroupID = groupId,
       ReqMessage = reqMsg,
@@ -913,11 +986,14 @@ export namespace imsdk {
     )
     ;
   }
-  public static void QuitGroup(Action<bool > cb, string groupId)
+
+  export function QuitGroup
+
+  (cb:(suc: boolean) => void, string groupId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.QuitGroup, new QuitGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.QuitGroup, new QuitGroupReq
     {
       GroupID = groupId
     }
@@ -925,22 +1001,27 @@ export namespace imsdk {
     ;
   }
 
-  public static void DismissGroup(Action<bool > cb, string groupId)
+  export function DismissGroup
+
+  (cb:(suc: boolean) => void, string groupId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.DismissGroup, new DismissGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.DismissGroup, new DismissGroupReq
     {
       GroupID = groupId
     }
     )
     ;
   }
-  public static void ChangeGroupMute(Action<bool > cb, string groupId, bool isMute)
+
+  export function ChangeGroupMute
+
+  (cb:(suc: boolean) => void, string groupId, bool isMute)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ChangeGroupMute, new ChangeGroupMuteReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMute, new ChangeGroupMuteReq
     {
       GroupID = groupId,
       Mute = isMute,
@@ -948,11 +1029,14 @@ export namespace imsdk {
     )
     ;
   }
-  public static void ChangeGroupMemberMute(Action<bool > cb, string groupId, string userId, uint mutedSeconds)
+
+  export function ChangeGroupMemberMute
+
+  (cb:(suc: boolean) => void, string groupId, string userId, uint mutedSeconds)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.ChangeGroupMemberMute, new ChangeGroupMemberMuteReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMemberMute, new ChangeGroupMemberMuteReq
     {
       GroupID = userId,
       UserID = userId,
@@ -961,12 +1045,15 @@ export namespace imsdk {
     )
     ;
   }
-  public static void SetGroupMemberInfo(Action<bool >
+
+  export function SetGroupMemberInfo
+
+  (Action<bool >
     cb, string groupId, string userId, string nickName, string faceUrl, int roleLevel, string ex)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetGroupMemberInfo, new SetGroupMemberInfoReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SetGroupMemberInfo, new SetGroupMemberInfoReq
     {
       GroupID = groupId,
       UserID = userId,
@@ -977,21 +1064,27 @@ export namespace imsdk {
     )
     ;
   }
-  public static void GetJoinedGroups(Action<IMGroup[] > cb)
+
+  export function GetJoinedGroups
+
+  (Action<IMGroup[] > cb)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetJoinedGroups, new GetJoinedGroupsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroups, new GetJoinedGroupsReq
     {
     }
     )
     ;
   }
-  public static void GetJoinedGroupsPage(Action<IMGroup[] > cb, int pageNumber, int showNumber)
+
+  export function GetJoinedGroupsPage
+
+  (Action<IMGroup[] > cb, int pageNumber, int showNumber)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetJoinedGroupsPage, new GetJoinedGroupsPageReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroupsPage, new GetJoinedGroupsPageReq
     {
       Pagination = new RequestPagination
       {
@@ -1002,19 +1095,25 @@ export namespace imsdk {
     )
     ;
   }
-  public static void GetSpecifiedGroupsInfo(Action<IMGroup[] > cb, string[] groupIdList)
+
+  export function GetSpecifiedGroupsInfo
+
+  (Action<IMGroup[] > cb, string[] groupIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetSpecifiedGroupsInfoReq();
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetSpecifiedGroupsInfoReq();
     req.GroupIDs.Add(groupIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetSpecifiedGroupsInfo, req);
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupsInfo, req);
   }
-  public static void SearchGroups(Action<IMGroup[] > cb, string keyWord, bool searchGroupId, bool searchGroupName)
+
+  export function SearchGroups
+
+  (Action<IMGroup[] > cb, string keyWord, bool searchGroupId, bool searchGroupName)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SearchGroups, new SearchGroupsReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SearchGroups, new SearchGroupsReq
     {
       Keyword = keyWord,
       SearchGroupID = searchGroupId,
@@ -1023,18 +1122,24 @@ export namespace imsdk {
     )
     ;
   }
-  public static void SetGroupInfo(Action<bool > cb, SetGroupInfoReq req)
+
+  export function SetGroupInfo
+
+  (cb:(suc: boolean) => void, SetGroupInfoReq req)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SetGroupInfo, req);
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SetGroupInfo, req);
   }
-  public static void GetGroupMembers(Action<IMGroupMember[] >
+
+  export function GetGroupMembers
+
+  (Action<IMGroupMember[] >
     cb, string groupId, GroupFilter filter, int pageNumber, int showNumber)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetGroupMembers, new GetGroupMembersReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetGroupMembers, new GetGroupMembersReq
     {
       GroupID = groupId,
       Filter = filter,
@@ -1047,23 +1152,30 @@ export namespace imsdk {
     )
     ;
   }
-  public static void GetGroupMemberOwnerAndAdmin(Action<IMGroupMember[] > cb, string groupId)
+
+  export function GetGroupMemberOwnerAndAdmin
+
+  (Action<IMGroupMember[] > cb, string groupId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetGroupMemberOwnerAndAdmin, new GetGroupMemberOwnerAndAdminReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetGroupMemberOwnerAndAdmin,
+      new GetGroupMemberOwnerAndAdminReq
     {
       GroupID = groupId
     }
     )
     ;
   }
-  public static void GetGroupMembersByJoinTimeFilter(Action<IMGroupMember[] >
+
+  export function GetGroupMembersByJoinTimeFilter
+
+  (Action<IMGroupMember[] >
     cb, string groupId, long joinTimeBegin, long joinTimeEnd, int pageNumber, int showNumber)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetGroupMembersByJoinTimeFilterReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetGroupMembersByJoinTimeFilterReq
     {
       GroupID = groupId,
       JoinTimeBegin = joinTimeBegin,
@@ -1075,39 +1187,48 @@ export namespace imsdk {
       }
     }
     ;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetGroupMembersByJoinTimeFilter, req);
+    call(handleId, proto.event.FuncRequestEventName.GetGroupMembersByJoinTimeFilter, req);
   }
-  public static void GetSpecifiedGroupMembersInfo(Action<IMGroupMember[] > cb, string groupId, string[] userIdList)
+
+  export function GetSpecifiedGroupMembersInfo
+
+  (Action<IMGroupMember[] > cb, string groupId, string[] userIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetSpecifiedGroupMembersInfoReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetSpecifiedGroupMembersInfoReq
     {
       GroupID = groupId
     }
     ;
     req.UserIDs.Add(userIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetSpecifiedGroupMembersInfo, req);
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupMembersInfo, req);
   }
-  public static void KickGroupMember(Action<bool > cb, string groupId, string reason, string[] userIdList)
+
+  export function KickGroupMember
+
+  (cb:(suc: boolean) => void, string groupId, string reason, string[] userIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new KickGroupMemberReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new KickGroupMemberReq
     {
       GroupID = groupId,
       Reason = reason
     }
     ;
     req.KickedUserIDs.Add(userIdList);
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.KickGroupMember, req);
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.KickGroupMember, req);
   }
-  public static void TransferGroupOwner(Action<bool > cb, string groupId, string ownerUserId)
+
+  export function TransferGroupOwner
+
+  (cb:(suc: boolean) => void, string groupId, string ownerUserId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.TransferGroupOwner, new TransferGroupOwnerReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.TransferGroupOwner, new TransferGroupOwnerReq
     {
       GroupID = groupId,
       OwnerUserID = ownerUserId
@@ -1115,36 +1236,45 @@ export namespace imsdk {
     )
     ;
   }
-  public static void InviteUserToGroup(Action<bool > cb, string groupId, string reason, string[] userIdList)
+
+  export function InviteUserToGroup
+
+  (cb:(suc: boolean) => void, string groupId, string reason, string[] userIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new InviteUserToGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new InviteUserToGroupReq
     {
       GroupID = groupId,
       Reason = reason,
     }
     ;
     req.UserIDs.Add(userIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.InviteUserToGroup, req);
+    call(handleId, proto.event.FuncRequestEventName.InviteUserToGroup, req);
   }
-  public static void GetGroupRequest(Action<IMGroupApplication[] > cb, bool send)
+
+  export function GetGroupRequest
+
+  (Action<IMGroupApplication[] > cb, bool send)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetGroupRequest, new GetGroupRequestReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.GetGroupRequest, new GetGroupRequestReq
     {
       Send = send
     }
     )
     ;
   }
-  public static void HandlerGroupRequest(Action<bool >
+
+  export function HandlerGroupRequest
+
+  (Action<bool >
     cb, string groupId, string fromUserId, string handleMsg, ApprovalStatus status)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.HandleGroupRequest, new HandleGroupRequestReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.HandleGroupRequest, new HandleGroupRequestReq
     {
       GroupID = groupId,
       FromUserID = fromUserId,
@@ -1155,12 +1285,14 @@ export namespace imsdk {
     ;
   }
 
-  public static void SearchGroupMembers(Action<IMGroupMember >
+  export function SearchGroupMembers
+
+  (Action<IMGroupMember >
     cb, string groupId, string keyWord, bool searchUserId, bool searchNickName, int pageNumber, int showNumber)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.SearchGroupMembers, new SearchGroupMembersReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SearchGroupMembers, new SearchGroupMembersReq
     {
       GroupID = groupId,
       Keyword = keyWord,
@@ -1175,36 +1307,44 @@ export namespace imsdk {
     )
     ;
   }
-  public static void IsJoinGroup(Action<bool > cb, string groupId)
+
+  export function IsJoinGroup
+
+  (cb:(suc: boolean) => void, string groupId)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.IsJoinGroup, new IsJoinGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.IsJoinGroup, new IsJoinGroupReq
     {
       GroupID = groupId
     }
     )
     ;
   }
-  public static void GetUsersInGroup(Action<string[] > cb, string groupId, string[] userIdList)
+
+  export function GetUsersInGroup
+
+  (Action<string[] > cb, string groupId, string[] userIdList)
   {
-    var handleId = GetHandleId();
-    callBackDic[handleId] = cb;
-    var req = new GetUsersInGroupReq
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = new GetUsersInGroupReq
     {
       GroupID = groupId,
     }
     ;
     req.UserIDs.Add(userIdList);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.GetUsersInGroup, req);
+    call(handleId, proto.event.FuncRequestEventName.GetUsersInGroup, req);
   }
   #endregion
 
-  public static void UploadLogs(IUploadLogs cb, int line, string ex, UploadSDKDataMode mode)
+  export function UploadLogs
+
+  (IUploadLogs cb, int line, string ex, UploadSDKDataMode mode)
   {
-    var handleId = GetHandleId();
-    uploadLogsCallBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.UploadLogs, new UploadSDKDataReq
+    let handleId = genHandleId();
+    uploadLogsevent.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.UploadLogs, new UploadSDKDataReq
     {
       Line = line,
       Ex = ex,
@@ -1213,11 +1353,14 @@ export namespace imsdk {
     )
     ;
   }
-  public static void UploadFile(IUploadFile cb, string filePath, string name, string mimeType, string fileCategory)
+
+  export function UploadFile
+
+  (IUploadFile cb, string filePath, string name, string mimeType, string fileCategory)
   {
-    var handleId = GetHandleId();
-    uploadFileCallBackDic[handleId] = cb;
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.UploadFile, new UploadFileReq
+    let handleId = genHandleId();
+    uploadFileevent.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.UploadFile, new UploadFileReq
     {
       Filepath = filePath,
       Name = name,
@@ -1227,10 +1370,13 @@ export namespace imsdk {
     )
     ;
   }
-  public static void Log(LogLevel level, string file, int line, string msg, string err, LogKv[] kvs)
+
+  export function Log
+
+  (LogLevel level, string file, int line, string msg, string err, LogKv[] kvs)
   {
-    var handleId = GetHandleId();
-    var req = new LogReq
+    let handleId = genHandleId();
+    let req = new LogReq
     {
       LogLevel = level,
       File = file,
@@ -1240,7 +1386,7 @@ export namespace imsdk {
     }
     ;
     req.Kvs.Add(kvs);
-    NativeSDK.CallAPI(handleId, FuncRequestEventName.Log, req);
+    call(handleId, proto.event.FuncRequestEventName.Log, req);
   }
 }
 }
