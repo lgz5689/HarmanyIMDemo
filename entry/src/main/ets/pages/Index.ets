@@ -1,6 +1,6 @@
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { common } from '@kit.AbilityKit';
-import { proto, InitSDK } from "imsdk"
+import { proto, imsdk } from "imsdk"
 
 @Entry
 @Component
@@ -29,7 +29,7 @@ struct Index {
       dbPath: filesDir + "/openim"
     })
     console.info("initsdk")
-    InitSDK(config)
+    imsdk.InitSDK(config)
   }
 
   build() {

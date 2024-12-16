@@ -1,3 +1,5 @@
+import Long from "long";
+
 export const redirect: (dir: string) => void;
 
 export const init: (callback: (string) => void) => void;

@@ -1,3 +1,5 @@
 export { openim as proto } from "./src/main/ets/proto/proto"
 
-export { InitSDK } from './src/main/ets/IMSDK'
+export { listener } from './src/main/ets/Listener'
+
+export { imsdk } from './src/main/ets/IMSDK'

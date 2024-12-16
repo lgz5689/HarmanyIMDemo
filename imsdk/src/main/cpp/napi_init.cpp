@@ -134,11 +134,12 @@ static napi_value drop(napi_env env, napi_callback_info info) {
     int64_t handleId;
     status = napi_get_value_int64(env, argv[0], &handleId);
     if (status != napi_ok) {
-        OH_LOG_ERROR(LOG_APP, "imsdk:call api args 1 not a int");
+        OH_LOG_ERROR(LOG_APP, "args error: not int64 :%{public}d", status);
         return nullptr;
     }
-    OH_LOG_INFO(LOG_APP, "Drop Handle Id %{public}d", handleId);
     ffi_drop_handle(handleId);
+//     OH_LOG_INFO(LOG_APP, "Drop Handle Id %{public}d", handleId);
+    return nullptr;
 }
 
 // 重定向C标准输出到文件
