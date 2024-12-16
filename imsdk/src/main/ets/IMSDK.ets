@@ -1,6 +1,5 @@
 import { openim as proto } from "./proto/proto"
 import { internal_Init, call } from "./native/NativeSDK"
-import logger from "./utils/Logger"
 import { event } from "./EventHandler";
 import { listener } from "./Listener"
 
@@ -82,7 +81,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.init.SetAppBackgroundStatusReq.create({
-      isBackground = isBackground
+      isBackground: isBackground
     })
     call(handleId, proto.event.FuncRequestEventName.SetAppBackgroundStatus,
       proto.init.SetAppBackgroundStatusReq.encode(req).finish());
@@ -147,9 +146,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateLocationMessageReq.create({
-      description = description,
-      longitude = longitude,
-      latitude = latitude
+      description: description,
+      longitude: longitude,
+      latitude: latitude
     })
     call(handleId, proto.event.FuncRequestEventName.CreateLocationMessage,
       proto.sdk.message.CreateLocationMessageReq.encode(req)
@@ -162,9 +161,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateCustomMessageReq.create({
-      data = data,
-      extension = extension,
-      description = description
+      data: data,
+      extension: extension,
+      description: description
     })
     call(handleId, proto.event.FuncRequestEventName.CreateCustomMessage,
       proto.sdk.message.CreateCustomMessageReq.encode(req)
@@ -176,8 +175,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateQuoteMessageReq.create({
-      text = text,
-      quoteMessage = message
+      text: text,
+      quoteMessage: message
     })
     call(handleId, proto.event.FuncRequestEventName.CreateQuoteMessage,
       proto.sdk.message.CreateQuoteMessageReq.encode(req)
@@ -189,9 +188,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateAdvancedQuoteMessageReq.create({
-      text = text,
-      quoteMessage = message,
-      messageEntities = messageEntityList
+      text: text,
+      quoteMessage: message,
+      messageEntities: messageEntityList
     })
     call(handleId, proto.event.FuncRequestEventName.CreateAdvancedQuoteMessage,
       proto.sdk.message.CreateAdvancedQuoteMessageReq.encode(req)
@@ -202,21 +201,28 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateCardMessageReq.create({
-      userID = card.userID,
-      nickname = card.nickname,
-      faceURL = card.faceURL,
-      ex = card.ex
+      userID: card.userID,
+      nickname: card.nickname,
+      faceURL: card.faceURL,
+      ex: card.ex
     })
     call(handleId, proto.event.FuncRequestEventName.CreateCardMessage,
       proto.sdk.message.CreateCardMessageReq.encode(req)
         .finish())
   }
 
-  export function CreateImageMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, imagePath: string) {
+  export function CreateImageMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, sourcePath: string,
+    bigPath: string | null, snapShotPath: string | null, sourcePicture: proto.sdk.shared.IPictureBaseInfo | null,
+    bigPicture: proto.sdk.shared.IPictureBaseInfo | null, snapShotPicture: proto.sdk.shared.IPictureBaseInfo | null) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateImageMessageReq.create({
-      imageSourcePath = imagePath
+      sourcePath: sourcePath,
+      bigPath: bigPath,
+      snapshotPath: snapShotPath,
+      sourcePicture: sourcePicture,
+      bigPicture: bigPicture,
+      snapshotPicture: snapShotPicture
     })
     call(handleId, proto.event.FuncRequestEventName.CreateImageMessage,
       proto.sdk.message.CreateImageMessageReq.encode(req)
@@ -228,8 +234,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateSoundMessageReq.create({
-      soundPath = soundPath,
-      duration = duration
+      soundPath: soundPath,
+      duration: duration
     })
     call(handleId, proto.event.FuncRequestEventName.CreateSoundMessage,
       proto.sdk.message.CreateSoundMessageReq.encode(req)
@@ -242,10 +248,10 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateVideoMessageReq.create({
-      videoSourcePath = videoPath,
-      videoType = videoType,
-      duration = duration,
-      snapshotSourcePath = snapshotPath
+      videoSourcePath: videoPath,
+      videoType: videoType,
+      duration: duration,
+      snapshotSourcePath: snapshotPath
     })
     call(handleId, proto.event.FuncRequestEventName.CreateVideoMessage,
       proto.sdk.message.CreateVideoMessageReq.encode(req)
@@ -257,8 +263,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateFileMessageReq.create({
-      fileSourcePath = filePath,
-      fileName = fileName
+      fileSourcePath: filePath,
+      fileName: fileName
     })
     call(handleId, proto.event.FuncRequestEventName.CreateFileMessage,
       proto.sdk.message.CreateFileMessageReq.encode(req)
@@ -270,9 +276,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateMergerMessageReq.create({
-      title = title,
-      messages = messages,
-      summaries = summarys
+      title: title,
+      messages: messages,
+      summaries: summarys
     })
     call(handleId, proto.event.FuncRequestEventName.CreateMergerMessage,
       proto.sdk.message.CreateMergerMessageReq.encode(req)
@@ -283,8 +289,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateFaceMessageReq.create({
-      index = index,
-      data = data,
+      index: index,
+      data: data,
     })
     call(handleId, proto.event.FuncRequestEventName.CreateFaceMessage,
       proto.sdk.message.CreateFaceMessageReq.encode(req)
@@ -296,7 +302,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateForwardMessageReq.create({
-      message = message
+      message: message
     })
     call(handleId, proto.event.FuncRequestEventName.CreateForwardMessage,
       proto.sdk.message.CreateForwardMessageReq.encode(req)
@@ -313,12 +319,14 @@ export namespace imsdk {
   }
 
   export function GetConversationListSplit(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void,
-    offset: number, count: number) {
+    pageNumber: number, showNumber: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.GetConversationListSplitReq.create({
-      offset = offset,
-      count = count,
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
+      })
     })
     call(handleId, proto.event.FuncRequestEventName.GetConversationListSplit,
       proto.sdk.conversation.GetConversationListSplitReq.encode(req)
@@ -330,8 +338,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.GetOneConversationReq.create({
-      sessionType = sessionType,
-      sourceID = sourceId,
+      sessionType: sessionType,
+      sourceID: sourceId,
     })
     call(handleId, proto.event.FuncRequestEventName.GetOneConversation,
       proto.sdk.conversation.GetOneConversationReq.encode(req)
@@ -343,7 +351,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.GetMultipleConversationReq.create({
-      conversationIDList = conversationIds
+      conversationIDList: conversationIds
     })
     call(handleId, proto.event.FuncRequestEventName.GetMultipleConversation,
       proto.sdk.conversation.GetMultipleConversationReq.encode(req)
@@ -354,7 +362,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.HideConversationReq.create({
-      conversationID = conversationId
+      conversationID: conversationId
     })
     call(handleId, proto.event.FuncRequestEventName.HideConversation,
       proto.sdk.conversation.HideConversationReq.encode(req)
@@ -383,8 +391,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.SetConversationDraftReq.create({
-      conversationID = conversationId,
-      draftText = draftText,
+      conversationID: conversationId,
+      draftText: draftText,
     })
     call(handleId, proto.event.FuncRequestEventName.SetConversationDraft,
       proto.sdk.conversation.SetConversationDraftReq.encode(req)
@@ -413,27 +421,27 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.GetConversationIDBySessionTypeReq.create({
-      sourceID = sourceId,
-      sessionType = sessionType,
+      sourceID: sourceId,
+      sessionType: sessionType,
     })
     call(handleId, proto.event.FuncRequestEventName.GetConversationIDBySessionType,
       proto.sdk.conversation.GetConversationIDBySessionTypeReq.encode(req)
         .finish())
   }
 
-  // export function SendMessage (ISendMsg cb, IMMessage message, string recvId, string groupId, bool isOnlineOnly)
-  // {
-  //   let handleId = genHandleId();
-  //   sendMsgevent.RegisterCallBack(handleId, cb);
-  //   call(handleId, proto.event.FuncRequestEventName.SendMessage, new SendMessageReq
-  //   {
-  //     Message = message,
-  //     RecvID = recvId,
-  //     GroupID = groupId,
-  //     IsOnlineOnly = isOnlineOnly,
-  //   }
-  //   )
-  // }
+  export function SendMessage(cb: listener.ISendMsg, message: proto.sdk.shared.IIMMessage, recvId: string,
+    groupId: string, isOnlineOnly: boolean) {
+    let handleId = genHandleId();
+    event.RegisterSendMsgCallBack(handleId, cb);
+    let req = proto.sdk.message.SendMessageReq.create({
+      message: message,
+      recvID: recvId,
+      groupID: groupId,
+      isOnlineOnly: isOnlineOnly,
+    })
+    call(handleId, proto.event.FuncRequestEventName.SendMessage, proto.sdk.message.SendMessageReq.encode(req)
+      .finish())
+  }
 
   export function FindMessageList(cb: (count: number,
     data: proto.sdk.conversation.ISearchByConversationResult[]) => void,
@@ -441,34 +449,34 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.FindMessageListReq.create({
-      conversationsArgs = args
+      conversationsArgs: args
     });
     call(handleId, proto.event.FuncRequestEventName.FindMessageList,
       proto.sdk.conversation.FindMessageListReq.encode(req)
         .finish());
   }
 
-  // export function GetHistoryMessageList( )=>void, string conversationId, string startClientMsgId, int count, bool isReverse)
-  // {
-  //   let handleId = genHandleId();
-  //   event.RegisterCallBack(handleId, cb);
-  //   call(handleId, proto.event.FuncRequestEventName.GetHistoryMessageList, new GetHistoryMessageListReq
-  //   {
-  //     ConversationID = conversationId,
-  //     StartClientMsgID = startClientMsgId,
-  //     Count = count,
-  //     IsReverse = isReverse,
-  //   }
-  //   )
-  //   ;
-  // }
+  export function GetHistoryMessageList(cb: (messages: proto.sdk.shared.IIMMessage[]) => void, conversationId: string,
+    startClientMsgId: string, count: number, isReverse: boolean) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.message.GetHistoryMessageListReq.create({
+      conversationID: conversationId,
+      startClientMsgID: startClientMsgId,
+      count: count,
+      isReverse: isReverse,
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetHistoryMessageList,
+      proto.sdk.message.GetHistoryMessageListReq.encode(req)
+        .finish())
+  }
 
   export function RevokeMessage(cb: (suc: boolean) => void, conversationId: string, clientMsgId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.RevokeMessageReq.create({
-      conversationID = conversationId,
-      clientMsgID = clientMsgId
+      conversationID: conversationId,
+      clientMsgID: clientMsgId
     })
     call(handleId, proto.event.FuncRequestEventName.RevokeMessage, proto.sdk.message.RevokeMessageReq.encode(req)
       .finish())
@@ -478,8 +486,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.TypingStatusUpdateReq.create({
-      recvID = recvId,
-      msgTip = msgTip
+      recvID: recvId,
+      msgTip: msgTip
     })
     call(handleId, proto.event.FuncRequestEventName.TypingStatusUpdate,
       proto.sdk.message.TypingStatusUpdateReq.encode(req)
@@ -490,7 +498,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.MarkConversationMessageAsReadReq.create({
-      conversationID = conversationId
+      conversationID: conversationId
     })
     call(handleId, proto.event.FuncRequestEventName.MarkConversationMessageAsRead,
       proto.sdk.conversation.MarkConversationMessageAsReadReq.encode(req)
@@ -510,8 +518,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.DeleteAllMessageFromLocalReq.create({
-      conversationID = conversationId,
-      clientMsgID = clientMsgId
+      conversationID: conversationId,
+      clientMsgID: clientMsgId
     })
     call(handleId, proto.event.FuncRequestEventName.DeleteMessageFromLocal,
       proto.sdk.message.DeleteAllMessageFromLocalReq.encode(req)
@@ -522,8 +530,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.DeleteMessageReq.create({
-      conversationID = conversationId,
-      clientMsgID = clientMsgId
+      conversationID: conversationId,
+      clientMsgID: clientMsgId
     })
     call(handleId, proto.event.FuncRequestEventName.DeleteMessage, proto.sdk.message.DeleteMessageReq.encode(req)
       .finish())
@@ -551,7 +559,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.ClearConversationAndDeleteAllMsgReq.create({
-      conversationID = conversationId
+      conversationID: conversationId
     })
     call(handleId, proto.event.FuncRequestEventName.ClearConversationAndDeleteAllMsg,
       proto.sdk.conversation.ClearConversationAndDeleteAllMsgReq.encode(req)
@@ -562,7 +570,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.DeleteConversationAndDeleteAllMsgReq.create({
-      conversationID = conversationId
+      conversationID: conversationId
     })
     call(handleId, proto.event.FuncRequestEventName.DeleteConversationAndDeleteAllMsg,
       proto.sdk.conversation.DeleteConversationAndDeleteAllMsgReq.encode(req)
@@ -574,9 +582,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.InsertSingleMessageToLocalReq.create({
-      msg = message,
-      recvID = recvId,
-      sendID = sendId
+      msg: message,
+      recvID: recvId,
+      sendID: sendId
     })
     call(handleId, proto.event.FuncRequestEventName.InsertSingleMessageToLocal,
       proto.sdk.message.InsertSingleMessageToLocalReq.encode(req)
@@ -588,29 +596,31 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.InsertGroupMessageToLocalReq.create({
-      msg = message,
-      groupID = groupId,
-      sendID = sendId
+      msg: message,
+      groupID: groupId,
+      sendID: sendId
     })
     call(handleId, proto.event.FuncRequestEventName.InsertGroupMessageToLocal,
       proto.sdk.message.InsertGroupMessageToLocalReq.encode(req)
         .finish())
   }
 
-  // export function SearchLocalMessages(cb :(count: number, data:proto.sdk.conversation.ISearchByConversationResult[])=>void, searchParam:proto.sdk.conversation.Search)
-  // {
-  //   let handleId = genHandleId();
-  //   event.RegisterCallBack(handleId, cb);
-  //   let req = proto.sdk.message
-  //   call(handleId, proto.event.FuncRequestEventName.SearchLocalMessages,)
-  // }
+  export function SearchLocalMessages(cb: (count: number,
+    data: proto.sdk.conversation.ISearchByConversationResult[]) => void,
+    req: proto.sdk.conversation.SearchLocalMessagesReq) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    call(handleId, proto.event.FuncRequestEventName.SearchLocalMessages,
+      proto.sdk.conversation.SearchLocalMessagesReq.encode(req)
+        .finish())
+  }
 
   export function SearchConversation(cb: (conversations: proto.sdk.shared.IIMConversation[]) => void,
     searchParam: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.SearchConversationReq.create({
-      searchParam = searchParam
+      searchParam: searchParam
     })
     call(handleId, proto.event.FuncRequestEventName.SearchConversation,
       proto.sdk.conversation.SearchConversationReq.encode(req)
@@ -622,9 +632,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.SetMessageLocalExReq.create({
-      conversationID = conversationId,
-      clientMsgID = clientMsgId,
-      localEx = localEx
+      conversationID: conversationId,
+      clientMsgID: clientMsgId,
+      localEx: localEx
     })
     call(handleId, proto.event.FuncRequestEventName.SetMessageLocalEx,
       proto.sdk.conversation.SetMessageLocalExReq.encode(req)
@@ -635,7 +645,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.user.GetUsersInfoReq.create({
-      userIDs = userIds
+      userIDs: userIds
     })
     call(handleId, proto.event.FuncRequestEventName.GetUsersInfo, proto.sdk.user.GetSelfUserInfoReq.encode(req)
       .finish());
@@ -661,7 +671,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.SubscribeUsersOnlineStatusReq.create({
-      userIDs = userIds
+      userIDs: userIds
     })
     call(handleId, proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus,
       proto.sdk.conversation.SubscribeUsersOnlineStatusReq.encode(req)
@@ -672,7 +682,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.create({
-      userIDs = userIds
+      userIDs: userIds
     })
     call(handleId, proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus,
       proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.encode(req)
@@ -693,11 +703,11 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.user.ProcessUserCommandAddReq.create({
-      userID = userId,
-      type = type,
-      uuid = uuid,
-      value = value,
-      ex = ex
+      userID: userId,
+      type: type,
+      uuid: uuid,
+      value: value,
+      ex: ex
     })
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandAdd,
       proto.sdk.user.ProcessUserCommandAddReq.encode(req)
@@ -708,9 +718,9 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.user.ProcessUserCommandDeleteReq.create({
-      userID = userId,
-      type = type,
-      uuid = uuid,
+      userID: userId,
+      type: type,
+      uuid: uuid,
     })
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandDelete,
       proto.sdk.user.ProcessUserCommandDeleteReq.encode(req)
@@ -722,11 +732,11 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.user.ProcessUserCommandUpdateReq.create({
-      userID = userId,
-      type = type,
-      uuid = uuid,
-      value = value,
-      ex = ex
+      userID: userId,
+      type: type,
+      uuid: uuid,
+      value: value,
+      ex: ex
     })
     call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandUpdate,
       proto.sdk.user.ProcessUserCommandUpdateReq.encode(req)
@@ -738,8 +748,8 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.relation.GetSpecifiedFriendsReq.create({
-      filterBlack = filterBlack,
-      friendUserIDs = userIdList,
+      filterBlack: filterBlack,
+      friendUserIDs: userIdList,
     })
     call(handleId, proto.event.FuncRequestEventName.GetSpecifiedFriends,
       proto.sdk.relation.GetSpecifiedFriendsReq.encode(req)
@@ -750,7 +760,7 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.relation.GetFriendsReq.create({
-      filterBlack = filterBlack
+      filterBlack: filterBlack
     })
     call(handleId, proto.event.FuncRequestEventName.GetFriends, proto.sdk.relation.GetFriendsReq.encode(req)
       .finish())
@@ -761,10 +771,10 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.relation.GetFriendsPageReq.create({
-      filterBlack = filterBlack,
-      pagination = proto.sdk.common.RequestPagination.create({
-        pageNumber = pageNumber,
-        showNumber = showNumber,
+      filterBlack: filterBlack,
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
       })
     })
     call(handleId, proto.event.FuncRequestEventName.GetFriendsPage, proto.sdk.relation.GetFriendsPageReq.encode(req)
@@ -776,10 +786,10 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.relation.SearchFriendsReq.create({
-      keyword = keyWord,
-      searchUserID = searchUserId,
-      searchNickname = searchNickName,
-      searchRemark = searchRemark
+      keyword: keyWord,
+      searchUserID: searchUserId,
+      searchNickname: searchNickName,
+      searchRemark: searchRemark
     })
     call(handleId, proto.event.FuncRequestEventName.SearchFriends, proto.sdk.relation.SearchFriendsReq.encode(req)
       .finish())
@@ -790,566 +800,449 @@ export namespace imsdk {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.relation.UpdateFriendReq.create({
-      userID = userId,
-      pinned = pinned,
-      Remark = remark,
-      ex = ex,
+      userID: userId,
+      pinned: pinned,
+      remark: remark,
+      ex: ex,
     })
     call(handleId, proto.event.FuncRequestEventName.UpdateFriend, proto.sdk.relation.UpdateFriendReq.encode(req)
       .finish())
   }
 
-  export function CheckFriend
-
-  (Action<CheckFriendInfo[] > cb, string[] userIdList)
-  {
+  export function CheckFriend(cb: (info: proto.sdk.relation.CheckFriendInfo[]) => void, userIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new CheckFriendReq
-    {
-    }
-    ;
-    req.FriendUserIDs.Add(userIdList);
-    call(handleId, proto.event.FuncRequestEventName.CheckFriend, req);
+    let req = proto.sdk.relation.CheckFriendReq.create({
+      friendUserIDs: userIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.CheckFriend, proto.sdk.relation.CheckFriendReq.encode(req)
+      .finish());
   }
 
-  export function AddFriend
-
-  (cb:(suc: boolean) => void, string userId, string reqMsg, string ex)
-  {
+  export function AddFriend(cb: (suc: boolean) => void, userId: string, reqMsg: string, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.AddFriend, new AddFriendReq
-    {
-      UserID = userId,
-      ReqMsg = reqMsg,
-      Ex = ex,
-    }
-    )
-    ;
+
+    let req = proto.sdk.relation.AddFriendReq.create({
+      userID: userId,
+      reqMsg: reqMsg,
+      ex: ex,
+    })
+    call(handleId, proto.event.FuncRequestEventName.AddFriend, proto.sdk.relation.AddFriendReq.encode(req)
+      .finish())
   }
 
-  export function DeleteFriend
-
-  (cb:(suc: boolean) => void, string friendUserId)
-  {
+  export function DeleteFriend(cb: (suc: boolean) => void, friendUserId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.DeleteFriend, new DeleteFriendReq
-    {
-      UserID = friendUserId
-    }
-    )
-    ;
+    let req = proto.sdk.relation.DeleteFriendReq.create({
+      userID: friendUserId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DeleteFriend, proto.sdk.relation.DeleteFriendReq.encode(req)
+      .finish())
   }
 
-  export function GetFriendsRequest
-
-  (Action<IMFriendApplication[] > cb, bool send)
-  {
+  export function GetFriendApplication(cb: (application: proto.sdk.shared.IIMFriendApplication) => void,
+    send: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetFriendRequests, new GetFriendRequestsReq
-    {
-      Send = send
-    }
-    )
-    ;
+    let req = proto.sdk.relation.GetFriendApplicationReq.create({
+      send: send
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetFriendApplication,
+      proto.sdk.relation.GetFriendApplicationReq.encode(req)
+        .finish())
   }
 
-  export function HandleFriendRequest
-
-  (cb:(suc: boolean) => void, string userId, string handleMsg, ApprovalStatus status)
-  {
+  export function HandleFriendRequest(cb: (suc: boolean) => void, userId: string, handleMsg: string,
+    status: proto.sdk.common.ApprovalStatus) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.HandleFriendRequest, new HandleFriendRequestReq
-    {
-      UserID = userId,
-      HandleMsg = handleMsg,
-      Status = status,
-    }
-    )
-    ;
+    let req = proto.sdk.relation.HandleFriendApplicationReq.create({
+      userID: userId,
+      handleMsg: handleMsg,
+      status: status,
+    })
+    call(handleId, proto.event.FuncRequestEventName.HandleFriendApplication,
+      proto.sdk.relation.HandleFriendApplicationReq.encode(req)
+        .finish())
   }
 
-  export function AddBlack
-
-  (cb:(suc: boolean) => void, string userId, string ex)
-  {
+  export function AddBlack(cb: (suc: boolean) => void, userId: string, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.AddBlack, new AddBlackReq
-    {
-      UserID = userId,
-      Ex = ex
-    }
-    )
-    ;
+    let req = proto.sdk.relation.AddBlackReq.create({
+      userID: userId,
+      ex: ex
+    })
+    call(handleId, proto.event.FuncRequestEventName.AddBlack, proto.sdk.relation.AddBlackReq.encode(req)
+      .finish())
   }
 
-  export function GetBlacks
-
-  (Action<IMBlack[] > cb)
-  {
+  export function GetBlacks(cb: (black: proto.sdk.shared.IIMBlack[]) => void) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetBlacks, new GetBlacksReq
-    {
-    }
-    )
-    ;
+    let req = proto.sdk.relation.GetBlacksReq.create({})
+    call(handleId, proto.event.FuncRequestEventName.GetBlacks, proto.sdk.relation.GetBlacksReq.encode(req)
+      .finish())
   }
 
-  export function DeleteBlack
-
-  (cb:(suc: boolean) => void, string removeUserId)
-  {
+  export function DeleteBlack(cb: (suc: boolean) => void, removeUserId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.DeleteBlack, new DeleteBlackReq
-    {
-      UserID = removeUserId
-    }
-    )
-    ;
-  }
-  #endregion
-
-  #region group
-
-  export function CreateGroup
-
-  (Action<IMGroup > cb, IMGroup group, string[] adminUserIds, string[] memeberUserIds)
-  {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = new CreateGroupReq();
-    req.GroupInfo = group;
-    req.AdminUserIDs.Add(adminUserIds);
-    req.MemberUserIDs.Add(memeberUserIds);
-    call(handleId, proto.event.FuncRequestEventName.CreateGroup, req);
+    let req = proto.sdk.relation.DeleteBlackReq.create({
+      userID: removeUserId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DeleteBlack, proto.sdk.relation.DeleteBlackReq.encode(req)
+      .finish())
   }
 
-  export function JoinGroup
-
-  (cb:(suc: boolean) => void, string groupId, string reqMsg, GroupJoinSource joinSource, string ex)
-  {
+  export function CreateGroup(cb: (group: proto.sdk.shared.IIMGroup) => void, group: proto.sdk.shared.IIMGroup,
+    adminUserIds: string[], memeberUserIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.JoinGroup, new JoinGroupReq
-    {
-      GroupID = groupId,
-      ReqMessage = reqMsg,
-      JoinSource = joinSource,
-      Ex = ex
-    }
-    )
-    ;
+    let req = proto.sdk.group.CreateGroupReq.create({
+      memberUserIDs: memeberUserIds,
+      adminUserIDs: adminUserIds,
+      groupName: group.groupName,
+    })
+    call(handleId, proto.event.FuncRequestEventName.CreateGroup, proto.sdk.group.CreateGroupReq.encode(req)
+      .finish());
   }
 
-  export function QuitGroup
-
-  (cb:(suc: boolean) => void, string groupId)
-  {
+  export function JoinGroup(cb: (suc: boolean) => void, groupId: string, reqMsg: string,
+    joinSource: proto.sdk.shared.GroupJoinSource, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.QuitGroup, new QuitGroupReq
-    {
-      GroupID = groupId
-    }
-    )
-    ;
+    let req = proto.sdk.group.JoinGroupReq.create({
+      groupID: groupId,
+      reqMsg: reqMsg,
+      joinSource: joinSource,
+      ex: ex
+    })
+    call(handleId, proto.event.FuncRequestEventName.JoinGroup, proto.sdk.group.JoinGroupReq.encode(req)
+      .finish())
   }
 
-  export function DismissGroup
-
-  (cb:(suc: boolean) => void, string groupId)
-  {
+  export function QuitGroup(cb: (suc: boolean) => void, groupId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.DismissGroup, new DismissGroupReq
-    {
-      GroupID = groupId
-    }
-    )
-    ;
+    let req = proto.sdk.group.QuitGroupReq.create({
+      groupID: groupId
+    })
+    call(handleId, proto.event.FuncRequestEventName.QuitGroup, proto.sdk.group.QuitGroupReq.encode(req)
+      .finish())
   }
 
-  export function ChangeGroupMute
-
-  (cb:(suc: boolean) => void, string groupId, bool isMute)
-  {
+  export function DismissGroup(cb: (suc: boolean) => void, groupId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMute, new ChangeGroupMuteReq
-    {
-      GroupID = groupId,
-      Mute = isMute,
-    }
-    )
-    ;
+    let req = proto.sdk.group.DismissGroupReq.create({
+      groupID: groupId
+    })
+    call(handleId, proto.event.FuncRequestEventName.DismissGroup, proto.sdk.group.DismissGroupReq.encode(req)
+      .finish())
   }
 
-  export function ChangeGroupMemberMute
-
-  (cb:(suc: boolean) => void, string groupId, string userId, uint mutedSeconds)
-  {
+  export function ChangeGroupMute(cb: (suc: boolean) => void, groupId: string, isMute: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMemberMute, new ChangeGroupMemberMuteReq
-    {
-      GroupID = userId,
-      UserID = userId,
-      MutedSeconds = mutedSeconds
-    }
-    )
-    ;
+    let req = proto.sdk.group.ChangeGroupMuteReq.create({
+      groupID: groupId,
+      mute: isMute,
+    })
+    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMute, proto.sdk.group.ChangeGroupMuteReq.encode(req)
+      .finish())
   }
 
-  export function SetGroupMemberInfo
-
-  (Action<bool >
-    cb, string groupId, string userId, string nickName, string faceUrl, int roleLevel, string ex)
-  {
+  export function ChangeGroupMemberMute(cb: (suc: boolean) => void, groupId: string, userId: string,
+    mutedSeconds: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SetGroupMemberInfo, new SetGroupMemberInfoReq
-    {
-      GroupID = groupId,
-      UserID = userId,
-      Nickname = nickName,
-      RoleLevel = roleLevel,
-      Ex = ex
-    }
-    )
-    ;
+    let req = proto.sdk.group.ChangeGroupMemberMuteReq.create({
+      groupID: groupId,
+      userID: userId,
+      mutedSeconds: mutedSeconds
+    })
+    call(handleId, proto.event.FuncRequestEventName.ChangeGroupMemberMute,
+      proto.sdk.group.ChangeGroupMemberMuteReq.encode(req)
+        .finish())
   }
 
-  export function GetJoinedGroups
-
-  (Action<IMGroup[] > cb)
-  {
+  export function SetGroupMemberInfo(cb: (suc: boolean) => void, groupId: string, userId: string, nickName: string,
+    faceUrl: string, roleLevel: number, ex: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroups, new GetJoinedGroupsReq
-    {
-    }
-    )
-    ;
+    let req = proto.sdk.group.SetGroupMemberInfoReq.create({
+      groupID: groupId,
+      userID: userId,
+      faceURL: faceUrl,
+      nickname: nickName,
+      roleLevel: roleLevel,
+      ex: ex
+    })
+    call(handleId, proto.event.FuncRequestEventName.SetGroupMemberInfo,
+      proto.sdk.group.SetGroupMemberInfoReq.encode(req)
+        .finish())
   }
 
-  export function GetJoinedGroupsPage
-
-  (Action<IMGroup[] > cb, int pageNumber, int showNumber)
-  {
+  export function GetJoinedGroups(cb: (group: proto.sdk.shared.IIMGroup[]) => void) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroupsPage, new GetJoinedGroupsPageReq
-    {
-      Pagination = new RequestPagination
-      {
-        PageNumber = pageNumber,
-        ShowNumber = showNumber
-      }
-    }
-    )
-    ;
+    let req = proto.sdk.group.GetJoinedGroupsReq.create({})
+    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroups, proto.sdk.group.GetJoinedGroupsReq.encode(req)
+      .finish())
   }
 
-  export function GetSpecifiedGroupsInfo
-
-  (Action<IMGroup[] > cb, string[] groupIdList)
-  {
+  export function GetJoinedGroupsPage(cb: (group: proto.sdk.shared.IIMGroup[]) => void, pageNumber: number,
+    showNumber: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new GetSpecifiedGroupsInfoReq();
-    req.GroupIDs.Add(groupIdList);
-    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupsInfo, req);
+    let req = proto.sdk.group.GetJoinedGroupsPageReq.create({
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
+      })
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetJoinedGroupsPage,
+      proto.sdk.group.GetJoinedGroupsPageReq.encode(req)
+        .finish())
   }
 
-  export function SearchGroups
-
-  (Action<IMGroup[] > cb, string keyWord, bool searchGroupId, bool searchGroupName)
-  {
+  export function GetSpecifiedGroupsInfo(cb: (groups: proto.sdk.shared.IIMGroup[]) => void, groupIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SearchGroups, new SearchGroupsReq
-    {
-      Keyword = keyWord,
-      SearchGroupID = searchGroupId,
-      SearchGroupName = searchGroupName
-    }
-    )
-    ;
+    let req = proto.sdk.group.GetSpecifiedGroupsInfoReq.create({
+      groupIDs: groupIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupsInfo,
+      proto.sdk.group.GetSpecifiedGroupsInfoReq.encode(req)
+        .finish());
   }
 
-  export function SetGroupInfo
-
-  (cb:(suc: boolean) => void, SetGroupInfoReq req)
-  {
+  export function SearchGroups(cb: (groups: proto.sdk.shared.IIMGroup[]) => void, keyWord: string,
+    searchGroupId: boolean, searchGroupName: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SetGroupInfo, req);
+    let req = proto.sdk.group.SearchGroupsReq.create({
+      keyword: keyWord,
+      searchGroupID: searchGroupId,
+      searchGroupName: searchGroupName
+    })
+    call(handleId, proto.event.FuncRequestEventName.SearchGroups, proto.sdk.group.SearchGroupsReq.encode(req)
+      .finish())
   }
 
-  export function GetGroupMembers
-
-  (Action<IMGroupMember[] >
-    cb, string groupId, GroupFilter filter, int pageNumber, int showNumber)
-  {
+  export function SetGroupInfo(cb: (suc: boolean) => void, req: proto.sdk.group.ISetGroupInfoReq) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetGroupMembers, new GetGroupMembersReq
-    {
-      GroupID = groupId,
-      Filter = filter,
-      Pagination = new RequestPagination
-      {
-        PageNumber = pageNumber,
-        ShowNumber = showNumber
-      }
-    }
-    )
-    ;
+    call(handleId, proto.event.FuncRequestEventName.SetGroupInfo, proto.sdk.group.SetGroupInfoReq.encode(req)
+      .finish());
   }
 
-  export function GetGroupMemberOwnerAndAdmin
-
-  (Action<IMGroupMember[] > cb, string groupId)
-  {
+  export function GetGroupMembers(cb: (memebers: proto.sdk.shared.IIMGroupMember) => void, groupId: string,
+    filter: proto.sdk.group.GroupMemberFilter, pageNumber: number, showNumber: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.group.GetGroupMembersReq.create({
+      groupID: groupId,
+      filter: filter,
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
+      })
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetGroupMembers, proto.sdk.group.GetGroupMembersReq.encode(req)
+      .finish())
+  }
+
+  export function GetGroupMemberOwnerAndAdmin(cb: (groupMemebers: proto.sdk.shared.IIMGroupMember[]) => void,
+    groupId: string) {
+    let handleId = genHandleId();
+    event.RegisterCallBack(handleId, cb);
+    let req = proto.sdk.group.GetGroupMemberOwnerAndAdminReq.create({
+      groupID: groupId
+    })
     call(handleId, proto.event.FuncRequestEventName.GetGroupMemberOwnerAndAdmin,
-      new GetGroupMemberOwnerAndAdminReq
-    {
-      GroupID = groupId
-    }
-    )
-    ;
+      proto.sdk.group.GetGroupMemberOwnerAndAdminReq.encode(req)
+        .finish())
   }
 
-  export function GetGroupMembersByJoinTimeFilter
-
-  (Action<IMGroupMember[] >
-    cb, string groupId, long joinTimeBegin, long joinTimeEnd, int pageNumber, int showNumber)
-  {
+  export function GetGroupMembersByJoinTimeFilter(cb: (groupMemebers: proto.sdk.shared.IIMGroupMember[]) => void,
+    groupId: string, joinTimeBegin: number, joinTimeEnd: number, pageNumber: number, showNumber: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new GetGroupMembersByJoinTimeFilterReq
-    {
-      GroupID = groupId,
-      JoinTimeBegin = joinTimeBegin,
-      JoinTimeEnd = joinTimeEnd,
-      Pagination = new RequestPagination
-      {
-        PageNumber = pageNumber,
-        ShowNumber = showNumber
-      }
-    }
-    ;
-    call(handleId, proto.event.FuncRequestEventName.GetGroupMembersByJoinTimeFilter, req);
+    let req = proto.sdk.group.GetGroupMembersByJoinTimeFilterReq.create({
+      groupID: groupId,
+      joinTimeBegin: joinTimeBegin,
+      joinTimeEnd: joinTimeEnd,
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
+      })
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetGroupMembersByJoinTimeFilter,
+      proto.sdk.group.GetGroupMemberOwnerAndAdminReq.encode(req)
+        .finish());
   }
 
-  export function GetSpecifiedGroupMembersInfo
-
-  (Action<IMGroupMember[] > cb, string groupId, string[] userIdList)
-  {
+  export function GetSpecifiedGroupMembersInfo(cb: (members: proto.sdk.shared.IIMGroupMember[]) => void,
+    groupId: string, userIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new GetSpecifiedGroupMembersInfoReq
-    {
-      GroupID = groupId
-    }
-    ;
-    req.UserIDs.Add(userIdList);
-    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupMembersInfo, req);
+    let req = proto.sdk.group.GetSpecifiedGroupMembersInfoReq.create({
+      groupID: groupId,
+      userIDs: userIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetSpecifiedGroupMembersInfo,
+      proto.sdk.group.GetSpecifiedGroupMembersInfoReq.encode(req)
+        .finish());
   }
 
-  export function KickGroupMember
-
-  (cb:(suc: boolean) => void, string groupId, string reason, string[] userIdList)
-  {
+  export function KickGroupMember(cb: (suc: boolean) => void, groupId: string, reason: string, userIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new KickGroupMemberReq
-    {
-      GroupID = groupId,
-      Reason = reason
-    }
-    ;
-    req.KickedUserIDs.Add(userIdList);
-    event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.KickGroupMember, req);
+    let req = proto.sdk.group.KickGroupMemberReq.create({
+      groupID: groupId,
+      reason: reason,
+      kickedUserIDs: userIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.KickGroupMember, proto.sdk.group.KickGroupMemberReq.encode(req)
+      .finish());
   }
 
-  export function TransferGroupOwner
-
-  (cb:(suc: boolean) => void, string groupId, string ownerUserId)
-  {
+  export function TransferGroupOwner(cb: (suc: boolean) => void, groupId: string, ownerUserId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.TransferGroupOwner, new TransferGroupOwnerReq
-    {
-      GroupID = groupId,
-      OwnerUserID = ownerUserId
-    }
-    )
-    ;
+    let req = proto.sdk.group.TransferGroupOwnerReq.create({
+      groupID: groupId,
+      ownerUserID: ownerUserId
+    })
+    call(handleId, proto.event.FuncRequestEventName.TransferGroupOwner,
+      proto.sdk.group.TransferGroupOwnerReq.encode(req)
+        .finish())
   }
 
-  export function InviteUserToGroup
-
-  (cb:(suc: boolean) => void, string groupId, string reason, string[] userIdList)
-  {
+  export function InviteUserToGroup(cb: (suc: boolean) => void, groupId: string, reason: string, userIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new InviteUserToGroupReq
-    {
-      GroupID = groupId,
-      Reason = reason,
-    }
-    ;
-    req.UserIDs.Add(userIdList);
-    call(handleId, proto.event.FuncRequestEventName.InviteUserToGroup, req);
+    let req = proto.sdk.group.InviteUserToGroupReq.create({
+      groupID: groupId,
+      reason: reason,
+      userIDs: userIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.InviteUserToGroup, proto.sdk.group.InviteUserToGroupReq.encode(req)
+      .finish());
   }
 
-  export function GetGroupRequest
-
-  (Action<IMGroupApplication[] > cb, bool send)
-  {
+  export function GetGroupApplication(cb: (applications: proto.sdk.shared.IIMGroupApplication[]) => void,
+    sender: boolean) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.GetGroupRequest, new GetGroupRequestReq
-    {
-      Send = send
-    }
-    )
-    ;
+    let req = proto.sdk.group.GetGroupApplicationReq.create({
+      send: sender
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetGroupApplication,
+      proto.sdk.group.GetGroupApplicationReq.encode(req)
+        .finish())
   }
 
-  export function HandlerGroupRequest
-
-  (Action<bool >
-    cb, string groupId, string fromUserId, string handleMsg, ApprovalStatus status)
-  {
+  export function HandleGroupApplication(cb: (suc: boolean) => void, groupId: string, fromUserId: string,
+    handleMsg: string, status: proto.sdk.common.ApprovalStatus) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.HandleGroupRequest, new HandleGroupRequestReq
-    {
-      GroupID = groupId,
-      FromUserID = fromUserId,
-      HandledMsg = handleMsg,
-      Status = status,
-    }
-    )
-    ;
+    let req = proto.sdk.group.HandleGroupApplicationReq.create({
+      groupID: groupId,
+      fromUserID: fromUserId,
+      handledMsg: handleMsg,
+      status: status,
+    })
+    call(handleId, proto.event.FuncRequestEventName.HandleGroupApplication,
+      proto.sdk.group.HandleGroupApplicationReq.encode(req)
+        .finish())
   }
 
-  export function SearchGroupMembers
-
-  (Action<IMGroupMember >
-    cb, string groupId, string keyWord, bool searchUserId, bool searchNickName, int pageNumber, int showNumber)
-  {
+  export function SearchGroupMembers(cb: (member: proto.sdk.shared.IIMGroupMember) => void, groupId: string,
+    keyWord: string, searchUserId: boolean, searchNickName: boolean, pageNumber: number, showNumber: number) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.SearchGroupMembers, new SearchGroupMembersReq
-    {
-      GroupID = groupId,
-      Keyword = keyWord,
-      SearchUserID = searchUserId,
-      SearchMemberNickname = searchNickName,
-      Pagination = new RequestPagination
-      {
-        PageNumber = pageNumber,
-        ShowNumber = showNumber
-      }
-    }
-    )
-    ;
+    let req = proto.sdk.group.SearchGroupMembersReq.create({
+      groupID: groupId,
+      keyword: keyWord,
+      searchUserID: searchUserId,
+      searchMemberNickname: searchNickName,
+      pagination: proto.sdk.common.RequestPagination.create({
+        pageNumber: pageNumber,
+        showNumber: showNumber,
+      })
+    })
+    call(handleId, proto.event.FuncRequestEventName.SearchGroupMembers,
+      proto.sdk.group.SearchGroupMembersReq.encode(req)
+        .finish())
   }
 
-  export function IsJoinGroup
-
-  (cb:(suc: boolean) => void, string groupId)
-  {
+  export function IsJoinGroup(cb: (suc: boolean) => void, groupId: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.IsJoinGroup, new IsJoinGroupReq
-    {
-      GroupID = groupId
-    }
-    )
-    ;
+    let req = proto.sdk.group.IsJoinGroupReq.create({
+      groupID: groupId
+    })
+    call(handleId, proto.event.FuncRequestEventName.IsJoinGroup, proto.sdk.group.IsJoinGroupReq.encode(req)
+      .finish())
   }
 
-  export function GetUsersInGroup
-
-  (Action<string[] > cb, string groupId, string[] userIdList)
-  {
+  export function GetUsersInGroup(cb: (userIds: string[]) => void, groupId: string, userIdList: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = new GetUsersInGroupReq
-    {
-      GroupID = groupId,
-    }
-    ;
-    req.UserIDs.Add(userIdList);
-    call(handleId, proto.event.FuncRequestEventName.GetUsersInGroup, req);
+    let req = proto.sdk.group.GetUsersInGroupReq.create({
+      groupID: groupId,
+      userIDs: userIdList
+    })
+    call(handleId, proto.event.FuncRequestEventName.GetUsersInGroup, proto.sdk.group.GetUsersInGroupReq.encode(req)
+      .finish());
   }
-  #endregion
 
-  export function UploadLogs
-
-  (IUploadLogs cb, int line, string ex, UploadSDKDataMode mode)
-  {
+  export function UploadLogs(cb: listener.IUploadLogs, line: number, ex: string,
+    mode: proto.sdk.common.UploadSDKDataMode) {
     let handleId = genHandleId();
-    uploadLogsevent.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.UploadLogs, new UploadSDKDataReq
-    {
-      Line = line,
-      Ex = ex,
-      Mode = mode
-    }
-    )
-    ;
+    event.RegisterUploadLogsCallBack(handleId, cb);
+    let req = proto.sdk.third.UploadSDKDataReq.create({
+      line: line,
+      ex: ex,
+      mode: mode
+    })
+    call(handleId, proto.event.FuncRequestEventName.UploadLogs, proto.sdk.third.UploadSDKDataReq.encode(req)
+      .finish())
   }
 
-  export function UploadFile
-
-  (IUploadFile cb, string filePath, string name, string mimeType, string fileCategory)
-  {
+  export function UploadFile(cb: listener.IUploadFile, filePath: string, name: string, mimeType: string,
+    fileCategory: string) {
     let handleId = genHandleId();
-    uploadFileevent.RegisterCallBack(handleId, cb);
-    call(handleId, proto.event.FuncRequestEventName.UploadFile, new UploadFileReq
-    {
-      Filepath = filePath,
-      Name = name,
-      MimeType = mimeType,
-      FileCategory = fileCategory
-    }
-    )
-    ;
+    event.RegisterUploadFileCallBack(handleId, cb);
+    let req = proto.sdk.third.UploadFileReq.create({
+      filepath: filePath,
+      name: name,
+      mimeType: mimeType,
+      fileCategory: fileCategory
+    })
+    call(handleId, proto.event.FuncRequestEventName.UploadFile, proto.sdk.third.UploadFileReq.encode(req)
+      .finish())
   }
 
-  export function Log
-
-  (LogLevel level, string file, int line, string msg, string err, LogKv[] kvs)
-  {
+  export function Log(level: proto.sdk.common.LogLevel, file: string, line: number, msg: string, err: string,
+    kvs: proto.sdk.third.LogKv[]) {
     let handleId = genHandleId();
-    let req = new LogReq
-    {
-      LogLevel = level,
-      File = file,
-      Line = line,
-      Msg = msg,
-      Err = err,
-    }
-    ;
-    req.Kvs.Add(kvs);
-    call(handleId, proto.event.FuncRequestEventName.Log, req);
+    let req = proto.sdk.third.LogReq.create({
+      logLevel: level,
+      file: file,
+      line: line,
+      msg: msg,
+      err: err,
+      kvs: kvs
+    })
+    call(handleId, proto.event.FuncRequestEventName.Log, proto.sdk.third.LogReq.encode(req)
+      .finish());
   }
-}
 }
 
 

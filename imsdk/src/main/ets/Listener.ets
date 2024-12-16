@@ -98,7 +98,7 @@ export namespace listener {
   export interface UserListener {
     onSelfInfoUpdated(user: proto.sdk.shared.IIMUser | null | undefined): void;
 
-    onUserStatusChanged(userId: string, platforms: proto.sdk.common.Platform[]): void;
+    onUserOnlineStatusChanged(userId: string, platforms: proto.sdk.common.Platform[]): void;
 
     onUserCommandAdd(command: proto.sdk.shared.ICommandInfo | null | undefined): void;
 

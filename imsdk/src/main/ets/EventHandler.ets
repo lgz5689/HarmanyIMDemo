@@ -52,6 +52,18 @@ export namespace event {
     callBackDic.set(key, callBack)
   }
 
+  export function RegisterSendMsgCallBack(key: number, callBack: listener.ISendMsg) {
+    sendMsgCallBackDic.set(key, callBack)
+  }
+
+  export function RegisterUploadFileCallBack(key: number, callBack: listener.IUploadFile) {
+    uploadFileCallBackDic.set(key, callBack)
+  }
+
+  export function RegisterUploadLogsCallBack(key: number, callBack: listener.IUploadLogs) {
+    uploadLogsCallBackDic.set(key, callBack)
+  }
+
   export function DispatchEvent(result: proto.ffi.FfiResult) {
     let errCode = result.errCode;
     let errMsg = result.errMsg;
@@ -443,9 +455,9 @@ export namespace event {
       }
         break;
 
-      case proto.event.FuncRequestEventName.EventOnUserStatusChanged: {
+      case proto.event.FuncRequestEventName.EventOnUserOnlineStatusChanged: {
         let resp = proto.event.EventOnUserOnlineStatusChangedData.decode(data);
-        userListener?.onUserStatusChanged(resp.userID, resp.platforms)
+        userListener?.onUserOnlineStatusChanged(resp.userID, resp.platforms)
       }
         break;
 

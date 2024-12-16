@@ -951,11 +951,8 @@ export namespace openim {
             /** Properties of a GetConversationListSplitReq. */
             interface IGetConversationListSplitReq {
 
-                /** GetConversationListSplitReq offset */
-                offset?: (number|null);
-
-                /** GetConversationListSplitReq count */
-                count?: (number|null);
+                /** GetConversationListSplitReq pagination */
+                pagination?: (openim.sdk.common.IRequestPagination|null);
             }
 
             /** Represents a GetConversationListSplitReq. */
@@ -967,11 +964,8 @@ export namespace openim {
                  */
                 constructor(properties?: openim.sdk.conversation.IGetConversationListSplitReq);
 
-                /** GetConversationListSplitReq offset. */
-                public offset: number;
-
-                /** GetConversationListSplitReq count. */
-                public count: number;
+                /** GetConversationListSplitReq pagination. */
+                public pagination?: (openim.sdk.common.IRequestPagination|null);
 
                 /**
                  * Creates a new GetConversationListSplitReq instance using the specified properties.
@@ -8114,6 +8108,12 @@ export namespace openim {
                 /** PictureElem sourcePath */
                 sourcePath?: (string|null);
 
+                /** PictureElem bigPath */
+                bigPath?: (string|null);
+
+                /** PictureElem snapshotPath */
+                snapshotPath?: (string|null);
+
                 /** PictureElem sourcePicture */
                 sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
 
@@ -8135,6 +8135,12 @@ export namespace openim {
 
                 /** PictureElem sourcePath. */
                 public sourcePath: string;
+
+                /** PictureElem bigPath. */
+                public bigPath: string;
+
+                /** PictureElem snapshotPath. */
+                public snapshotPath: string;
 
                 /** PictureElem sourcePicture. */
                 public sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
@@ -8640,6 +8646,109 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for FileElem
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of an ErrorElem. */
+            interface IErrorElem {
+
+                /** ErrorElem type */
+                type?: (string|null);
+
+                /** ErrorElem data */
+                data?: (string|null);
+            }
+
+            /** Represents an ErrorElem. */
+            class ErrorElem implements IErrorElem {
+
+                /**
+                 * Constructs a new ErrorElem.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.shared.IErrorElem);
+
+                /** ErrorElem type. */
+                public type: string;
+
+                /** ErrorElem data. */
+                public data: string;
+
+                /**
+                 * Creates a new ErrorElem instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns ErrorElem instance
+                 */
+                public static create(properties?: openim.sdk.shared.IErrorElem): openim.sdk.shared.ErrorElem;
+
+                /**
+                 * Encodes the specified ErrorElem message. Does not implicitly {@link openim.sdk.shared.ErrorElem.verify|verify} messages.
+                 * @param message ErrorElem message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.shared.IErrorElem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified ErrorElem message, length delimited. Does not implicitly {@link openim.sdk.shared.ErrorElem.verify|verify} messages.
+                 * @param message ErrorElem message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.shared.IErrorElem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes an ErrorElem message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns ErrorElem
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.shared.ErrorElem;
+
+                /**
+                 * Decodes an ErrorElem message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns ErrorElem
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.shared.ErrorElem;
+
+                /**
+                 * Verifies an ErrorElem message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates an ErrorElem message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns ErrorElem
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.shared.ErrorElem;
+
+                /**
+                 * Creates a plain object from an ErrorElem message. Also converts values to other types if specified.
+                 * @param message ErrorElem
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.shared.ErrorElem, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this ErrorElem to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for ErrorElem
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -12304,6 +12413,9 @@ export namespace openim {
                 /** IMMessage revokedTips */
                 revokedTips?: (openim.sdk.shared.IRevokedTips|null);
 
+                /** IMMessage errorTips */
+                errorTips?: (openim.sdk.shared.IErrorElem|null);
+
                 /** IMMessage groupCreatedTips */
                 groupCreatedTips?: (openim.sdk.shared.IGroupCreatedTips|null);
 
@@ -12473,6 +12585,9 @@ export namespace openim {
                 /** IMMessage revokedTips. */
                 public revokedTips?: (openim.sdk.shared.IRevokedTips|null);
 
+                /** IMMessage errorTips. */
+                public errorTips?: (openim.sdk.shared.IErrorElem|null);
+
                 /** IMMessage groupCreatedTips. */
                 public groupCreatedTips?: (openim.sdk.shared.IGroupCreatedTips|null);
 
@@ -12525,7 +12640,7 @@ export namespace openim {
                 public oaTips?: (openim.sdk.shared.IOaTips|null);
 
                 /** IMMessage content. */
-                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oaTips");
+                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"errorTips"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oaTips");
 
                 /**
                  * Creates a new IMMessage instance using the specified properties.
@@ -12736,40 +12851,40 @@ export namespace openim {
                 constructor(properties?: openim.sdk.group.ICreateGroupReq);
 
                 /** CreateGroupReq groupID. */
-                public groupID: string;
+                public groupID?: (string|null);
 
                 /** CreateGroupReq groupName. */
                 public groupName: string;
 
                 /** CreateGroupReq notification. */
-                public notification: string;
+                public notification?: (string|null);
 
                 /** CreateGroupReq introduction. */
-                public introduction: string;
+                public introduction?: (string|null);
 
                 /** CreateGroupReq faceURL. */
-                public faceURL: string;
+                public faceURL?: (string|null);
 
                 /** CreateGroupReq ex. */
-                public ex: string;
+                public ex?: (string|null);
 
                 /** CreateGroupReq needVerification. */
-                public needVerification: openim.sdk.shared.GroupNeedVerification;
+                public needVerification?: (openim.sdk.shared.GroupNeedVerification|null);
 
                 /** CreateGroupReq lookMemberInfo. */
-                public lookMemberInfo: openim.sdk.shared.GroupLookMemberInfo;
+                public lookMemberInfo?: (openim.sdk.shared.GroupLookMemberInfo|null);
 
                 /** CreateGroupReq applyMemberFriend. */
-                public applyMemberFriend: openim.sdk.shared.GroupApplyMemberFriend;
+                public applyMemberFriend?: (openim.sdk.shared.GroupApplyMemberFriend|null);
 
                 /** CreateGroupReq notificationUpdateTime. */
-                public notificationUpdateTime: (number|Long);
+                public notificationUpdateTime?: (number|Long|null);
 
                 /** CreateGroupReq notificationUserID. */
-                public notificationUserID: string;
+                public notificationUserID?: (string|null);
 
                 /** CreateGroupReq attachedInfo. */
-                public attachedInfo: string;
+                public attachedInfo?: (string|null);
 
                 /** CreateGroupReq adminUserIDs. */
                 public adminUserIDs: string[];
@@ -12958,8 +13073,8 @@ export namespace openim {
                 /** JoinGroupReq groupID */
                 groupID?: (string|null);
 
-                /** JoinGroupReq reqMessage */
-                reqMessage?: (string|null);
+                /** JoinGroupReq reqMsg */
+                reqMsg?: (string|null);
 
                 /** JoinGroupReq joinSource */
                 joinSource?: (openim.sdk.shared.GroupJoinSource|null);
@@ -12980,8 +13095,8 @@ export namespace openim {
                 /** JoinGroupReq groupID. */
                 public groupID: string;
 
-                /** JoinGroupReq reqMessage. */
-                public reqMessage: string;
+                /** JoinGroupReq reqMsg. */
+                public reqMsg: string;
 
                 /** JoinGroupReq joinSource. */
                 public joinSource: openim.sdk.shared.GroupJoinSource;
@@ -17608,11 +17723,11 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** Represents a group */
-            class group extends $protobuf.rpc.Service {
+            /** Represents a GroupService */
+            class GroupService extends $protobuf.rpc.Service {
 
                 /**
-                 * Constructs a new group service.
+                 * Constructs a new GroupService service.
                  * @param rpcImpl RPC implementation
                  * @param [requestDelimited=false] Whether requests are length-delimited
                  * @param [responseDelimited=false] Whether responses are length-delimited
@@ -17620,13 +17735,13 @@ export namespace openim {
                 constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
 
                 /**
-                 * Creates new group service using the specified rpc implementation.
+                 * Creates new GroupService service using the specified rpc implementation.
                  * @param rpcImpl RPC implementation
                  * @param [requestDelimited=false] Whether requests are length-delimited
                  * @param [responseDelimited=false] Whether responses are length-delimited
                  * @returns RPC service. Useful where requests and/or responses are streamed.
                  */
-                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): group;
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): GroupService;
 
                 /**
                  * The group creator assigns roles and adds members
@@ -17637,7 +17752,7 @@ export namespace openim {
                  * @param request CreateGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateGroupResp
                  */
-                public createGroup(request: openim.sdk.group.ICreateGroupReq, callback: openim.sdk.group.group.CreateGroupCallback): void;
+                public createGroup(request: openim.sdk.group.ICreateGroupReq, callback: openim.sdk.group.GroupService.CreateGroupCallback): void;
 
                 /**
                  * The group creator assigns roles and adds members
@@ -17656,7 +17771,7 @@ export namespace openim {
                  * @param request JoinGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and JoinGroupResp
                  */
-                public joinGroup(request: openim.sdk.group.IJoinGroupReq, callback: openim.sdk.group.group.JoinGroupCallback): void;
+                public joinGroup(request: openim.sdk.group.IJoinGroupReq, callback: openim.sdk.group.GroupService.JoinGroupCallback): void;
 
                 /**
                  * Apply to join a group
@@ -17672,7 +17787,7 @@ export namespace openim {
                  * @param request QuitGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and QuitGroupResp
                  */
-                public quitGroup(request: openim.sdk.group.IQuitGroupReq, callback: openim.sdk.group.group.QuitGroupCallback): void;
+                public quitGroup(request: openim.sdk.group.IQuitGroupReq, callback: openim.sdk.group.GroupService.QuitGroupCallback): void;
 
                 /**
                  * Leave the group
@@ -17688,7 +17803,7 @@ export namespace openim {
                  * @param request DismissGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and DismissGroupResp
                  */
-                public dismissGroup(request: openim.sdk.group.IDismissGroupReq, callback: openim.sdk.group.group.DismissGroupCallback): void;
+                public dismissGroup(request: openim.sdk.group.IDismissGroupReq, callback: openim.sdk.group.GroupService.DismissGroupCallback): void;
 
                 /**
                  * Disband the group
@@ -17704,7 +17819,7 @@ export namespace openim {
                  * @param request ChangeGroupMuteReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and ChangeGroupMuteResp
                  */
-                public changeGroupMute(request: openim.sdk.group.IChangeGroupMuteReq, callback: openim.sdk.group.group.ChangeGroupMuteCallback): void;
+                public changeGroupMute(request: openim.sdk.group.IChangeGroupMuteReq, callback: openim.sdk.group.GroupService.ChangeGroupMuteCallback): void;
 
                 /**
                  * The group owner or group admin changes the mute status of the group.
@@ -17720,7 +17835,7 @@ export namespace openim {
                  * @param request ChangeGroupMemberMuteReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and ChangeGroupMemberMuteResp
                  */
-                public changeGroupMemberMute(request: openim.sdk.group.IChangeGroupMemberMuteReq, callback: openim.sdk.group.group.ChangeGroupMemberMuteCallback): void;
+                public changeGroupMemberMute(request: openim.sdk.group.IChangeGroupMemberMuteReq, callback: openim.sdk.group.GroupService.ChangeGroupMemberMuteCallback): void;
 
                 /**
                  * The group owner or group administrators can change the mute status of group members.
@@ -17736,7 +17851,7 @@ export namespace openim {
                  * @param request TransferGroupOwnerReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and TransferGroupOwnerResp
                  */
-                public transferGroupOwner(request: openim.sdk.group.ITransferGroupOwnerReq, callback: openim.sdk.group.group.TransferGroupOwnerCallback): void;
+                public transferGroupOwner(request: openim.sdk.group.ITransferGroupOwnerReq, callback: openim.sdk.group.GroupService.TransferGroupOwnerCallback): void;
 
                 /**
                  * Transfer the group owner status.
@@ -17752,7 +17867,7 @@ export namespace openim {
                  * @param request KickGroupMemberReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and KickGroupMemberResp
                  */
-                public kickGroupMember(request: openim.sdk.group.IKickGroupMemberReq, callback: openim.sdk.group.group.KickGroupMemberCallback): void;
+                public kickGroupMember(request: openim.sdk.group.IKickGroupMemberReq, callback: openim.sdk.group.GroupService.KickGroupMemberCallback): void;
 
                 /**
                  * Remove a member from a group.
@@ -17768,7 +17883,7 @@ export namespace openim {
                  * @param request SetGroupInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SetGroupInfoResp
                  */
-                public setGroupInfo(request: openim.sdk.group.ISetGroupInfoReq, callback: openim.sdk.group.group.SetGroupInfoCallback): void;
+                public setGroupInfo(request: openim.sdk.group.ISetGroupInfoReq, callback: openim.sdk.group.GroupService.SetGroupInfoCallback): void;
 
                 /**
                  * Set group information
@@ -17784,7 +17899,7 @@ export namespace openim {
                  * @param request SetGroupMemberInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SetGroupMemberInfoResp
                  */
-                public setGroupMemberInfo(request: openim.sdk.group.ISetGroupMemberInfoReq, callback: openim.sdk.group.group.SetGroupMemberInfoCallback): void;
+                public setGroupMemberInfo(request: openim.sdk.group.ISetGroupMemberInfoReq, callback: openim.sdk.group.GroupService.SetGroupMemberInfoCallback): void;
 
                 /**
                  * Set group information
@@ -17800,7 +17915,7 @@ export namespace openim {
                  * @param request GetJoinedGroupsReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetJoinedGroupsResp
                  */
-                public getJoinedGroups(request: openim.sdk.group.IGetJoinedGroupsReq, callback: openim.sdk.group.group.GetJoinedGroupsCallback): void;
+                public getJoinedGroups(request: openim.sdk.group.IGetJoinedGroupsReq, callback: openim.sdk.group.GroupService.GetJoinedGroupsCallback): void;
 
                 /**
                  * Fetch the list of groups you've joined.
@@ -17816,7 +17931,7 @@ export namespace openim {
                  * @param request GetJoinedGroupsPageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetJoinedGroupsPageResp
                  */
-                public getJoinedGroupsPage(request: openim.sdk.group.IGetJoinedGroupsPageReq, callback: openim.sdk.group.group.GetJoinedGroupsPageCallback): void;
+                public getJoinedGroupsPage(request: openim.sdk.group.IGetJoinedGroupsPageReq, callback: openim.sdk.group.GroupService.GetJoinedGroupsPageCallback): void;
 
                 /**
                  * Split fetch the list of groups you've joined.
@@ -17832,7 +17947,7 @@ export namespace openim {
                  * @param request GetSpecifiedGroupsInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetSpecifiedGroupsInfoResp
                  */
-                public getSpecifiedGroupsInfo(request: openim.sdk.group.IGetSpecifiedGroupsInfoReq, callback: openim.sdk.group.group.GetSpecifiedGroupsInfoCallback): void;
+                public getSpecifiedGroupsInfo(request: openim.sdk.group.IGetSpecifiedGroupsInfoReq, callback: openim.sdk.group.GroupService.GetSpecifiedGroupsInfoCallback): void;
 
                 /**
                  * Set group information
@@ -17848,7 +17963,7 @@ export namespace openim {
                  * @param request SearchGroupsReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SearchGroupsResp
                  */
-                public searchGroups(request: openim.sdk.group.ISearchGroupsReq, callback: openim.sdk.group.group.SearchGroupsCallback): void;
+                public searchGroups(request: openim.sdk.group.ISearchGroupsReq, callback: openim.sdk.group.GroupService.SearchGroupsCallback): void;
 
                 /**
                  * Search for joined groups using keyword
@@ -17864,7 +17979,7 @@ export namespace openim {
                  * @param request GetGroupMemberOwnerAndAdminReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMemberOwnerAndAdminResp
                  */
-                public getGroupMemberOwnerAndAdmin(request: openim.sdk.group.IGetGroupMemberOwnerAndAdminReq, callback: openim.sdk.group.group.GetGroupMemberOwnerAndAdminCallback): void;
+                public getGroupMemberOwnerAndAdmin(request: openim.sdk.group.IGetGroupMemberOwnerAndAdminReq, callback: openim.sdk.group.GroupService.GetGroupMemberOwnerAndAdminCallback): void;
 
                 /**
                  * Search for joined groups using keyword
@@ -17880,7 +17995,7 @@ export namespace openim {
                  * @param request GetGroupMembersByJoinTimeFilterReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMembersByJoinTimeFilterResp
                  */
-                public getGroupMembersByJoinTimeFilter(request: openim.sdk.group.IGetGroupMembersByJoinTimeFilterReq, callback: openim.sdk.group.group.GetGroupMembersByJoinTimeFilterCallback): void;
+                public getGroupMembersByJoinTimeFilter(request: openim.sdk.group.IGetGroupMembersByJoinTimeFilterReq, callback: openim.sdk.group.GroupService.GetGroupMembersByJoinTimeFilterCallback): void;
 
                 /**
                  * Set group information
@@ -17896,7 +18011,7 @@ export namespace openim {
                  * @param request GetSpecifiedGroupMembersInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetSpecifiedGroupMembersInfoResp
                  */
-                public getSpecifiedGroupMembersInfo(request: openim.sdk.group.IGetSpecifiedGroupMembersInfoReq, callback: openim.sdk.group.group.GetSpecifiedGroupMembersInfoCallback): void;
+                public getSpecifiedGroupMembersInfo(request: openim.sdk.group.IGetSpecifiedGroupMembersInfoReq, callback: openim.sdk.group.GroupService.GetSpecifiedGroupMembersInfoCallback): void;
 
                 /**
                  * Set group information
@@ -17912,7 +18027,7 @@ export namespace openim {
                  * @param request GetGroupMembersReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMembersResp
                  */
-                public getGroupMembers(request: openim.sdk.group.IGetGroupMembersReq, callback: openim.sdk.group.group.GetGroupMembersCallback): void;
+                public getGroupMembers(request: openim.sdk.group.IGetGroupMembersReq, callback: openim.sdk.group.GroupService.GetGroupMembersCallback): void;
 
                 /**
                  * Set group information
@@ -17928,7 +18043,7 @@ export namespace openim {
                  * @param request GetGroupApplicationReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupApplicationResp
                  */
-                public getGroupRequest(request: openim.sdk.group.IGetGroupApplicationReq, callback: openim.sdk.group.group.GetGroupRequestCallback): void;
+                public getGroupRequest(request: openim.sdk.group.IGetGroupApplicationReq, callback: openim.sdk.group.GroupService.GetGroupRequestCallback): void;
 
                 /**
                  * Set group information
@@ -17944,7 +18059,7 @@ export namespace openim {
                  * @param request SearchGroupMembersReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SearchGroupMembersResp
                  */
-                public searchGroupMembers(request: openim.sdk.group.ISearchGroupMembersReq, callback: openim.sdk.group.group.SearchGroupMembersCallback): void;
+                public searchGroupMembers(request: openim.sdk.group.ISearchGroupMembersReq, callback: openim.sdk.group.GroupService.SearchGroupMembersCallback): void;
 
                 /**
                  * Set group information
@@ -17960,7 +18075,7 @@ export namespace openim {
                  * @param request IsJoinGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and IsJoinGroupResp
                  */
-                public isJoinGroup(request: openim.sdk.group.IIsJoinGroupReq, callback: openim.sdk.group.group.IsJoinGroupCallback): void;
+                public isJoinGroup(request: openim.sdk.group.IIsJoinGroupReq, callback: openim.sdk.group.GroupService.IsJoinGroupCallback): void;
 
                 /**
                  * Set group information
@@ -17976,7 +18091,7 @@ export namespace openim {
                  * @param request GetUsersInGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetUsersInGroupResp
                  */
-                public getUsersInGroup(request: openim.sdk.group.IGetUsersInGroupReq, callback: openim.sdk.group.group.GetUsersInGroupCallback): void;
+                public getUsersInGroup(request: openim.sdk.group.IGetUsersInGroupReq, callback: openim.sdk.group.GroupService.GetUsersInGroupCallback): void;
 
                 /**
                  * Set group information
@@ -17992,7 +18107,7 @@ export namespace openim {
                  * @param request InviteUserToGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and InviteUserToGroupResp
                  */
-                public inviteUserToGroup(request: openim.sdk.group.IInviteUserToGroupReq, callback: openim.sdk.group.group.InviteUserToGroupCallback): void;
+                public inviteUserToGroup(request: openim.sdk.group.IInviteUserToGroupReq, callback: openim.sdk.group.GroupService.InviteUserToGroupCallback): void;
 
                 /**
                  * Set group information
@@ -18008,7 +18123,7 @@ export namespace openim {
                  * @param request HandleGroupApplicationReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and HandleGroupApplicationResp
                  */
-                public handleGroupRequest(request: openim.sdk.group.IHandleGroupApplicationReq, callback: openim.sdk.group.group.HandleGroupRequestCallback): void;
+                public handleGroupRequest(request: openim.sdk.group.IHandleGroupApplicationReq, callback: openim.sdk.group.GroupService.HandleGroupRequestCallback): void;
 
                 /**
                  * Set group information
@@ -18019,171 +18134,171 @@ export namespace openim {
                 public handleGroupRequest(request: openim.sdk.group.IHandleGroupApplicationReq): Promise<openim.sdk.group.HandleGroupApplicationResp>;
             }
 
-            namespace group {
+            namespace GroupService {
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#createGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#createGroup}.
                  * @param error Error, if any
                  * @param [response] CreateGroupResp
                  */
                 type CreateGroupCallback = (error: (Error|null), response?: openim.sdk.group.CreateGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#joinGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#joinGroup}.
                  * @param error Error, if any
                  * @param [response] JoinGroupResp
                  */
                 type JoinGroupCallback = (error: (Error|null), response?: openim.sdk.group.JoinGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#quitGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#quitGroup}.
                  * @param error Error, if any
                  * @param [response] QuitGroupResp
                  */
                 type QuitGroupCallback = (error: (Error|null), response?: openim.sdk.group.QuitGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#dismissGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#dismissGroup}.
                  * @param error Error, if any
                  * @param [response] DismissGroupResp
                  */
                 type DismissGroupCallback = (error: (Error|null), response?: openim.sdk.group.DismissGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#changeGroupMute}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#changeGroupMute}.
                  * @param error Error, if any
                  * @param [response] ChangeGroupMuteResp
                  */
                 type ChangeGroupMuteCallback = (error: (Error|null), response?: openim.sdk.group.ChangeGroupMuteResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#changeGroupMemberMute}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#changeGroupMemberMute}.
                  * @param error Error, if any
                  * @param [response] ChangeGroupMemberMuteResp
                  */
                 type ChangeGroupMemberMuteCallback = (error: (Error|null), response?: openim.sdk.group.ChangeGroupMemberMuteResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#transferGroupOwner}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#transferGroupOwner}.
                  * @param error Error, if any
                  * @param [response] TransferGroupOwnerResp
                  */
                 type TransferGroupOwnerCallback = (error: (Error|null), response?: openim.sdk.group.TransferGroupOwnerResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#kickGroupMember}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#kickGroupMember}.
                  * @param error Error, if any
                  * @param [response] KickGroupMemberResp
                  */
                 type KickGroupMemberCallback = (error: (Error|null), response?: openim.sdk.group.KickGroupMemberResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#setGroupInfo}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#setGroupInfo}.
                  * @param error Error, if any
                  * @param [response] SetGroupInfoResp
                  */
                 type SetGroupInfoCallback = (error: (Error|null), response?: openim.sdk.group.SetGroupInfoResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#setGroupMemberInfo}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#setGroupMemberInfo}.
                  * @param error Error, if any
                  * @param [response] SetGroupMemberInfoResp
                  */
                 type SetGroupMemberInfoCallback = (error: (Error|null), response?: openim.sdk.group.SetGroupMemberInfoResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getJoinedGroups}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getJoinedGroups}.
                  * @param error Error, if any
                  * @param [response] GetJoinedGroupsResp
                  */
                 type GetJoinedGroupsCallback = (error: (Error|null), response?: openim.sdk.group.GetJoinedGroupsResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getJoinedGroupsPage}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getJoinedGroupsPage}.
                  * @param error Error, if any
                  * @param [response] GetJoinedGroupsPageResp
                  */
                 type GetJoinedGroupsPageCallback = (error: (Error|null), response?: openim.sdk.group.GetJoinedGroupsPageResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getSpecifiedGroupsInfo}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getSpecifiedGroupsInfo}.
                  * @param error Error, if any
                  * @param [response] GetSpecifiedGroupsInfoResp
                  */
                 type GetSpecifiedGroupsInfoCallback = (error: (Error|null), response?: openim.sdk.group.GetSpecifiedGroupsInfoResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#searchGroups}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#searchGroups}.
                  * @param error Error, if any
                  * @param [response] SearchGroupsResp
                  */
                 type SearchGroupsCallback = (error: (Error|null), response?: openim.sdk.group.SearchGroupsResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getGroupMemberOwnerAndAdmin}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getGroupMemberOwnerAndAdmin}.
                  * @param error Error, if any
                  * @param [response] GetGroupMemberOwnerAndAdminResp
                  */
                 type GetGroupMemberOwnerAndAdminCallback = (error: (Error|null), response?: openim.sdk.group.GetGroupMemberOwnerAndAdminResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getGroupMembersByJoinTimeFilter}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getGroupMembersByJoinTimeFilter}.
                  * @param error Error, if any
                  * @param [response] GetGroupMembersByJoinTimeFilterResp
                  */
                 type GetGroupMembersByJoinTimeFilterCallback = (error: (Error|null), response?: openim.sdk.group.GetGroupMembersByJoinTimeFilterResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getSpecifiedGroupMembersInfo}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getSpecifiedGroupMembersInfo}.
                  * @param error Error, if any
                  * @param [response] GetSpecifiedGroupMembersInfoResp
                  */
                 type GetSpecifiedGroupMembersInfoCallback = (error: (Error|null), response?: openim.sdk.group.GetSpecifiedGroupMembersInfoResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getGroupMembers}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getGroupMembers}.
                  * @param error Error, if any
                  * @param [response] GetGroupMembersResp
                  */
                 type GetGroupMembersCallback = (error: (Error|null), response?: openim.sdk.group.GetGroupMembersResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getGroupRequest}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getGroupRequest}.
                  * @param error Error, if any
                  * @param [response] GetGroupApplicationResp
                  */
                 type GetGroupRequestCallback = (error: (Error|null), response?: openim.sdk.group.GetGroupApplicationResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#searchGroupMembers}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#searchGroupMembers}.
                  * @param error Error, if any
                  * @param [response] SearchGroupMembersResp
                  */
                 type SearchGroupMembersCallback = (error: (Error|null), response?: openim.sdk.group.SearchGroupMembersResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#isJoinGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#isJoinGroup}.
                  * @param error Error, if any
                  * @param [response] IsJoinGroupResp
                  */
                 type IsJoinGroupCallback = (error: (Error|null), response?: openim.sdk.group.IsJoinGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#getUsersInGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#getUsersInGroup}.
                  * @param error Error, if any
                  * @param [response] GetUsersInGroupResp
                  */
                 type GetUsersInGroupCallback = (error: (Error|null), response?: openim.sdk.group.GetUsersInGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#inviteUserToGroup}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#inviteUserToGroup}.
                  * @param error Error, if any
                  * @param [response] InviteUserToGroupResp
                  */
                 type InviteUserToGroupCallback = (error: (Error|null), response?: openim.sdk.group.InviteUserToGroupResp) => void;
 
                 /**
-                 * Callback as used by {@link openim.sdk.group.group#handleGroupRequest}.
+                 * Callback as used by {@link openim.sdk.group.GroupService#handleGroupRequest}.
                  * @param error Error, if any
                  * @param [response] HandleGroupApplicationResp
                  */
@@ -23019,8 +23134,14 @@ export namespace openim {
             /** Properties of a CreateImageMessageReq. */
             interface ICreateImageMessageReq {
 
-                /** CreateImageMessageReq imageSourcePath */
-                imageSourcePath?: (string|null);
+                /** CreateImageMessageReq sourcePath */
+                sourcePath?: (string|null);
+
+                /** CreateImageMessageReq bigPath */
+                bigPath?: (string|null);
+
+                /** CreateImageMessageReq snapshotPath */
+                snapshotPath?: (string|null);
 
                 /** CreateImageMessageReq sourcePicture */
                 sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
@@ -23041,8 +23162,14 @@ export namespace openim {
                  */
                 constructor(properties?: openim.sdk.message.ICreateImageMessageReq);
 
-                /** CreateImageMessageReq imageSourcePath. */
-                public imageSourcePath: string;
+                /** CreateImageMessageReq sourcePath. */
+                public sourcePath: string;
+
+                /** CreateImageMessageReq bigPath. */
+                public bigPath?: (string|null);
+
+                /** CreateImageMessageReq snapshotPath. */
+                public snapshotPath?: (string|null);
 
                 /** CreateImageMessageReq sourcePicture. */
                 public sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
@@ -24456,6 +24583,122 @@ export namespace openim {
                  * @returns The default type url
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Represents a MessageService */
+            class MessageService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new MessageService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new MessageService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): MessageService;
+
+                /**
+                 * create a picture message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateImageMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateImageMessageResp
+                 */
+                public createImageMessage(request: openim.sdk.message.ICreateImageMessageReq, callback: openim.sdk.message.MessageService.CreateImageMessageCallback): void;
+
+                /**
+                 * create a picture message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateImageMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createImageMessage(request: openim.sdk.message.ICreateImageMessageReq): Promise<openim.sdk.message.CreateImageMessageResp>;
+
+                /**
+                 * create a sound message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateSoundMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateSoundMessageResp
+                 */
+                public createSoundMessage(request: openim.sdk.message.ICreateSoundMessageReq, callback: openim.sdk.message.MessageService.CreateSoundMessageCallback): void;
+
+                /**
+                 * create a sound message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateSoundMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createSoundMessage(request: openim.sdk.message.ICreateSoundMessageReq): Promise<openim.sdk.message.CreateSoundMessageResp>;
+
+                /**
+                 * create a video message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateVideoMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateVideoMessageResp
+                 */
+                public createVideoMessage(request: openim.sdk.message.ICreateVideoMessageReq, callback: openim.sdk.message.MessageService.CreateVideoMessageCallback): void;
+
+                /**
+                 * create a video message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateVideoMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createVideoMessage(request: openim.sdk.message.ICreateVideoMessageReq): Promise<openim.sdk.message.CreateVideoMessageResp>;
+
+                /**
+                 * create a file message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateFileMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateFileMessageResp
+                 */
+                public createFileMessage(request: openim.sdk.message.ICreateFileMessageReq, callback: openim.sdk.message.MessageService.CreateFileMessageCallback): void;
+
+                /**
+                 * create a file message
+                 * in the js environment, filepath is a file object
+                 * @param request CreateFileMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createFileMessage(request: openim.sdk.message.ICreateFileMessageReq): Promise<openim.sdk.message.CreateFileMessageResp>;
+            }
+
+            namespace MessageService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createImageMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateImageMessageResp
+                 */
+                type CreateImageMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateImageMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createSoundMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateSoundMessageResp
+                 */
+                type CreateSoundMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateSoundMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createVideoMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateVideoMessageResp
+                 */
+                type CreateVideoMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateVideoMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createFileMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateFileMessageResp
+                 */
+                type CreateFileMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateFileMessageResp) => void;
             }
         }
 
@@ -27041,8 +27284,8 @@ export namespace openim {
                 /** UpdateFriendReq pinned */
                 pinned?: (boolean|null);
 
-                /** UpdateFriendReq Remark */
-                Remark?: (string|null);
+                /** UpdateFriendReq remark */
+                remark?: (string|null);
 
                 /** UpdateFriendReq ex */
                 ex?: (string|null);
@@ -27063,8 +27306,8 @@ export namespace openim {
                 /** UpdateFriendReq pinned. */
                 public pinned?: (boolean|null);
 
-                /** UpdateFriendReq Remark. */
-                public Remark?: (string|null);
+                /** UpdateFriendReq remark. */
+                public remark?: (string|null);
 
                 /** UpdateFriendReq ex. */
                 public ex?: (string|null);
@@ -28355,6 +28598,53 @@ export namespace openim {
                  * @returns The default type url
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Represents a ThirdService */
+            class ThirdService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new ThirdService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new ThirdService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): ThirdService;
+
+                /**
+                 * when uploading files to s3, the file stream will not pass through the api server.
+                 * in the js environment, filepath is a file object
+                 * @param request UploadFileReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and UploadFileResp
+                 */
+                public uploadFile(request: openim.sdk.third.IUploadFileReq, callback: openim.sdk.third.ThirdService.UploadFileCallback): void;
+
+                /**
+                 * when uploading files to s3, the file stream will not pass through the api server.
+                 * in the js environment, filepath is a file object
+                 * @param request UploadFileReq message or plain object
+                 * @returns Promise
+                 */
+                public uploadFile(request: openim.sdk.third.IUploadFileReq): Promise<openim.sdk.third.UploadFileResp>;
+            }
+
+            namespace ThirdService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.third.ThirdService#uploadFile}.
+                 * @param error Error, if any
+                 * @param [response] UploadFileResp
+                 */
+                type UploadFileCallback = (error: (Error|null), response?: openim.sdk.third.UploadFileResp) => void;
             }
         }
 
@@ -29834,7 +30124,7 @@ export namespace openim {
             EventOnGroupApplicationRejected = 55,
             EventOnRecvCustomBusinessMessage = 56,
             EventOnSelfInfoUpdated = 57,
-            EventOnUserStatusChanged = 58,
+            EventOnUserOnlineStatusChanged = 58,
             EventOnUserCommandAdd = 59,
             EventOnUserCommandDelete = 60,
             EventOnUserCommandUpdate = 61,
