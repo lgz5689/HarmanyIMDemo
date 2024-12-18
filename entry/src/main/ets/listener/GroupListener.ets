@@ -1,47 +1,47 @@
-// import { GroupApplicationInfo, GroupInfo, GroupMember, IGroupListener } from "imsdk";
-//
-// export class GroupListener implements IGroupListener {
-//   onJoinedGroupAdded(groupInfo: GroupInfo): void{
-//     console.error('==========================onJoinedGroupAdded',JSON.stringify(groupInfo))
-//   };
-//
-//   onJoinedGroupDeleted(groupInfo: GroupInfo): void{
-//     console.error('==========================onJoinedGroupDeleted',JSON.stringify(groupInfo))
-//   };
-//
-//   onGroupMemberAdded(groupMemberInfo: GroupMember): void{
-//     console.error('==========================onGroupMemberAdded',JSON.stringify(groupMemberInfo))
-//   };
-//
-//   onGroupMemberDeleted(groupMemberInfo: GroupMember): void{
-//     console.error('==========================onGroupMemberDeleted',JSON.stringify(groupMemberInfo))
-//   };
-//
-//   onGroupApplicationAdded(groupApplication: GroupApplicationInfo): void{
-//     console.error('==========================onGroupApplicationAdded',JSON.stringify(groupApplication))
-//   };
-//
-//   onGroupApplicationDeleted(groupApplication: GroupApplicationInfo): void{
-//     console.error('==========================onGroupApplicationDeleted',JSON.stringify(groupApplication))
-//   };
-//
-//   onGroupInfoChanged(groupInfo: GroupInfo): void{
-//     console.error('==========================onGroupInfoChanged',JSON.stringify(groupInfo))
-//   };
-//
-//   onGroupDismissed(groupInfo: GroupInfo): void{
-//     console.error('==========================onGroupDismissed',JSON.stringify(groupInfo))
-//   };
-//
-//   onGroupMemberInfoChanged(groupMemberInfo: GroupMember): void{
-//     console.error('==========================onGroupMemberInfoChanged',JSON.stringify(groupMemberInfo))
-//   };
-//
-//   onGroupApplicationAccepted(groupApplication: GroupApplicationInfo): void{
-//     console.error('==========================onGroupApplicationAccepted',JSON.stringify(groupApplication))
-//   };
-//
-//   onGroupApplicationRejected(groupApplication: GroupApplicationInfo): void{
-//     console.error('==========================onGroupApplicationRejected',JSON.stringify(groupApplication))
-//   };
-// }
+import { proto, listener } from "imsdk";
+
+export class GroupListener implements listener.GroupListener {
+  onJoinedGroupAdded(groupInfo: proto.sdk.shared.IIMGroup | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onJoinedGroupDeleted(groupInfo: proto.sdk.shared.IIMGroup | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupMemberAdded(groupMemberInfo: proto.sdk.shared.IIMGroupMember | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupMemberDeleted(groupMemberInfo: proto.sdk.shared.IIMGroupMember | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupApplicationAdded(groupApplication: proto.sdk.shared.IIMGroupApplication | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupApplicationDeleted(groupApplication: proto.sdk.shared.IIMGroupApplication | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupInfoChanged(groupInfo: proto.sdk.shared.IIMGroup | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupDismissed(groupInfo: proto.sdk.shared.IIMGroup | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupMemberInfoChanged(groupMemberInfo: proto.sdk.shared.IIMGroupMember | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupApplicationAccepted(groupApplication: proto.sdk.shared.IIMGroupApplication | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+
+  onGroupApplicationRejected(groupApplication: proto.sdk.shared.IIMGroupApplication | null | undefined): void {
+    throw new Error("Method not implemented.");
+  }
+}

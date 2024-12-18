@@ -2,6 +2,12 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { common } from '@kit.AbilityKit';
 import { proto, imsdk } from "imsdk"
 import { SendMessageCallBack } from '../callback/SendMessageCallBack';
+import { ConnListener } from '../listener/ConnListener';
+import { UserListener } from '../listener/UserListener';
+import { ConversationListener } from '../listener/ConversationListener';
+import { GroupListener } from '../listener/GroupListener';
+import { FriendShipListener } from '../listener/FriendShipListener';
+import { MessageListener } from '../listener/MessageListener';
 
 @Entry
 @Component
@@ -14,6 +20,16 @@ struct Index {
 
   aboutToAppear(): void {
     console.info("IMDemo", '--------------------aboutToAppear')
+    imsdk.SetErrCallBack((errCode: number, errMsg) => {
+      console.error(errMsg)
+    })
+    imsdk.SetConnListener(new ConnListener)
+    imsdk.SetUserListener(new UserListener)
+    imsdk.SetConversationListener(new ConversationListener)
+    imsdk.SetGroupListener(new GroupListener)
+    imsdk.SetFriendShipListener(new FriendShipListener)
+    imsdk.SetMessageListener(new MessageListener)
+
     let context = getContext(this) as common.UIAbilityContext;
     let filesDir = context.filesDir;
     const config = proto.init.IMConfig.create({
@@ -25,9 +41,6 @@ struct Index {
       isLogStandardOutput: false,
       logFilePath: filesDir + "/openim/log",
       dbPath: filesDir + "/openim"
-    })
-    imsdk.SetErrCallBack((errCode: number, errMsg) => {
-      console.error(errMsg)
     })
     imsdk.InitSDK((suc: boolean) => {
       if (suc) {
