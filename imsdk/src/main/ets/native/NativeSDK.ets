@@ -37,7 +37,7 @@ export function call(handlerId: number, funcName: openim.event.FuncRequestEventN
       data: data
     })
     let buffer: Uint8Array = openim.ffi.FfiRequest.encode(request).finish()
-    // console.log("JS Call API:", handlerId, funcName, buffer.length, JSON.stringify(buffer));
+    console.log("JS Call API:handlerId = ", handlerId, openim.event.FuncRequestEventName[funcName]);
     native.request(buffer.buffer)
 
   } catch (e) {

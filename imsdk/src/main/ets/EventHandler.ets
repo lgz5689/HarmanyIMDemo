@@ -72,6 +72,7 @@ export namespace event {
     let data = result.data;
     let suc = errCode == 0;
     let callBack = callBackDic.get(handleId)
+    console.log("DispatchEvent: handlerId = ", handleId, proto.event.FuncRequestEventName[eventName])
 
     switch (eventName) {
       case proto.event.FuncRequestEventName.None:
