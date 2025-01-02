@@ -345,7 +345,10 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** ConvRecvMsgOpt enum. */
+            /**
+             * In the recvMsgOpt of a ConversationInfo, in addition to controlling whether to receive offline push notifications for that session,
+             * it also controls whether the unread count of that session is included in the total unread count.
+             */
             enum ConvRecvMsgOpt {
                 ReceiveMessage = 0,
                 NotReceiveMessage = 1,
@@ -361,14 +364,20 @@ export namespace openim {
                 GroupNotification = 4
             }
 
-            /** GlobalRecvMsgOpt enum. */
+            /**
+             * GlobalRecvMsgOpt represents the global message receive option.
+             * In the globalRecvMsgOpt of UserInfo, globally control whether to receive offline push notifications.
+             */
             enum GlobalRecvMsgOpt {
                 Normal = 0,
                 NotReceive = 1,
                 NotNotify = 2
             }
 
-            /** LogLevel enum. */
+            /**
+             * LogLevel represents the log level. debug -> info -> warn -> error -> fatal.
+             * Default log level is LevelWarn or LevelDebug.
+             */
             enum LogLevel {
                 LevelFatal = 0,
                 LevelPanic = 1,
@@ -379,7 +388,11 @@ export namespace openim {
                 LevelDebugWithSQL = 6
             }
 
-            /** UploadSDKDataMode enum. */
+            /**
+             * UploadSDKDataMode represents the mode of upload sdk data.
+             * If multiple modes are needed, their values should be ModeA | ModeB
+             * e.g. UploadLogsAndDB = UploadLogs | UploadDB
+             */
             enum UploadSDKDataMode {
                 UploadSDKDataMode_ = 0,
                 UploadLogs = 1,
@@ -389,7 +402,7 @@ export namespace openim {
 
             /** RevokerRole enum. */
             enum RevokerRole {
-                RevokerRoleDefault = 0,
+                RevokerRole_ = 0,
                 RevokerRoleOwner = 100,
                 RevokerRoleAdmin = 60,
                 RevokerRoleMember = 20
@@ -397,7 +410,7 @@ export namespace openim {
 
             /** FriendSource enum. */
             enum FriendSource {
-                _ = 0,
+                FriendSource_ = 0,
                 Search = 3,
                 QRCode = 4
             }
@@ -420,345 +433,6 @@ export namespace openim {
 
         /** Namespace conversation. */
         namespace conversation {
-
-            /** Properties of a ConversationArgs. */
-            interface IConversationArgs {
-
-                /** ConversationArgs conversationID */
-                conversationID?: (string|null);
-
-                /** ConversationArgs clientMsgIDList */
-                clientMsgIDList?: (string[]|null);
-            }
-
-            /** Represents a ConversationArgs. */
-            class ConversationArgs implements IConversationArgs {
-
-                /**
-                 * Constructs a new ConversationArgs.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IConversationArgs);
-
-                /** ConversationArgs conversationID. */
-                public conversationID: string;
-
-                /** ConversationArgs clientMsgIDList. */
-                public clientMsgIDList: string[];
-
-                /**
-                 * Creates a new ConversationArgs instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ConversationArgs instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IConversationArgs): openim.sdk.conversation.ConversationArgs;
-
-                /**
-                 * Encodes the specified ConversationArgs message. Does not implicitly {@link openim.sdk.conversation.ConversationArgs.verify|verify} messages.
-                 * @param message ConversationArgs message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IConversationArgs, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ConversationArgs message, length delimited. Does not implicitly {@link openim.sdk.conversation.ConversationArgs.verify|verify} messages.
-                 * @param message ConversationArgs message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IConversationArgs, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ConversationArgs message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ConversationArgs
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.ConversationArgs;
-
-                /**
-                 * Decodes a ConversationArgs message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ConversationArgs
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.ConversationArgs;
-
-                /**
-                 * Verifies a ConversationArgs message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ConversationArgs message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ConversationArgs
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.ConversationArgs;
-
-                /**
-                 * Creates a plain object from a ConversationArgs message. Also converts values to other types if specified.
-                 * @param message ConversationArgs
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.ConversationArgs, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ConversationArgs to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ConversationArgs
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a FindMessageListCallback. */
-            interface IFindMessageListCallback {
-
-                /** FindMessageListCallback totalCount */
-                totalCount?: (number|null);
-
-                /** FindMessageListCallback findResultItems */
-                findResultItems?: (openim.sdk.conversation.ISearchByConversationResult[]|null);
-            }
-
-            /** Represents a FindMessageListCallback. */
-            class FindMessageListCallback implements IFindMessageListCallback {
-
-                /**
-                 * Constructs a new FindMessageListCallback.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IFindMessageListCallback);
-
-                /** FindMessageListCallback totalCount. */
-                public totalCount: number;
-
-                /** FindMessageListCallback findResultItems. */
-                public findResultItems: openim.sdk.conversation.ISearchByConversationResult[];
-
-                /**
-                 * Creates a new FindMessageListCallback instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns FindMessageListCallback instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IFindMessageListCallback): openim.sdk.conversation.FindMessageListCallback;
-
-                /**
-                 * Encodes the specified FindMessageListCallback message. Does not implicitly {@link openim.sdk.conversation.FindMessageListCallback.verify|verify} messages.
-                 * @param message FindMessageListCallback message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IFindMessageListCallback, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified FindMessageListCallback message, length delimited. Does not implicitly {@link openim.sdk.conversation.FindMessageListCallback.verify|verify} messages.
-                 * @param message FindMessageListCallback message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IFindMessageListCallback, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a FindMessageListCallback message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns FindMessageListCallback
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.FindMessageListCallback;
-
-                /**
-                 * Decodes a FindMessageListCallback message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns FindMessageListCallback
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.FindMessageListCallback;
-
-                /**
-                 * Verifies a FindMessageListCallback message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a FindMessageListCallback message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns FindMessageListCallback
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.FindMessageListCallback;
-
-                /**
-                 * Creates a plain object from a FindMessageListCallback message. Also converts values to other types if specified.
-                 * @param message FindMessageListCallback
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.FindMessageListCallback, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this FindMessageListCallback to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for FindMessageListCallback
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SearchByConversationResult. */
-            interface ISearchByConversationResult {
-
-                /** SearchByConversationResult conversationID */
-                conversationID?: (string|null);
-
-                /** SearchByConversationResult conversationType */
-                conversationType?: (number|null);
-
-                /** SearchByConversationResult showName */
-                showName?: (string|null);
-
-                /** SearchByConversationResult faceURL */
-                faceURL?: (string|null);
-
-                /** SearchByConversationResult latestMsgSendTime */
-                latestMsgSendTime?: (number|Long|null);
-
-                /** SearchByConversationResult messageCount */
-                messageCount?: (number|null);
-
-                /** SearchByConversationResult messageList */
-                messageList?: (openim.sdk.shared.IIMMessage[]|null);
-            }
-
-            /** Represents a SearchByConversationResult. */
-            class SearchByConversationResult implements ISearchByConversationResult {
-
-                /**
-                 * Constructs a new SearchByConversationResult.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISearchByConversationResult);
-
-                /** SearchByConversationResult conversationID. */
-                public conversationID: string;
-
-                /** SearchByConversationResult conversationType. */
-                public conversationType: number;
-
-                /** SearchByConversationResult showName. */
-                public showName: string;
-
-                /** SearchByConversationResult faceURL. */
-                public faceURL: string;
-
-                /** SearchByConversationResult latestMsgSendTime. */
-                public latestMsgSendTime: (number|Long);
-
-                /** SearchByConversationResult messageCount. */
-                public messageCount: number;
-
-                /** SearchByConversationResult messageList. */
-                public messageList: openim.sdk.shared.IIMMessage[];
-
-                /**
-                 * Creates a new SearchByConversationResult instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SearchByConversationResult instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISearchByConversationResult): openim.sdk.conversation.SearchByConversationResult;
-
-                /**
-                 * Encodes the specified SearchByConversationResult message. Does not implicitly {@link openim.sdk.conversation.SearchByConversationResult.verify|verify} messages.
-                 * @param message SearchByConversationResult message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISearchByConversationResult, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SearchByConversationResult message, length delimited. Does not implicitly {@link openim.sdk.conversation.SearchByConversationResult.verify|verify} messages.
-                 * @param message SearchByConversationResult message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISearchByConversationResult, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SearchByConversationResult message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SearchByConversationResult
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SearchByConversationResult;
-
-                /**
-                 * Decodes a SearchByConversationResult message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SearchByConversationResult
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SearchByConversationResult;
-
-                /**
-                 * Verifies a SearchByConversationResult message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SearchByConversationResult message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SearchByConversationResult
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SearchByConversationResult;
-
-                /**
-                 * Creates a plain object from a SearchByConversationResult message. Also converts values to other types if specified.
-                 * @param message SearchByConversationResult
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SearchByConversationResult, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SearchByConversationResult to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SearchByConversationResult
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
 
             /** Properties of a GetAllConversationListReq. */
             interface IGetAllConversationListReq {
@@ -2900,206 +2574,6 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** Properties of a FindMessageListReq. */
-            interface IFindMessageListReq {
-
-                /** FindMessageListReq conversationsArgs */
-                conversationsArgs?: (openim.sdk.conversation.IConversationArgs[]|null);
-            }
-
-            /** Represents a FindMessageListReq. */
-            class FindMessageListReq implements IFindMessageListReq {
-
-                /**
-                 * Constructs a new FindMessageListReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IFindMessageListReq);
-
-                /** FindMessageListReq conversationsArgs. */
-                public conversationsArgs: openim.sdk.conversation.IConversationArgs[];
-
-                /**
-                 * Creates a new FindMessageListReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns FindMessageListReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IFindMessageListReq): openim.sdk.conversation.FindMessageListReq;
-
-                /**
-                 * Encodes the specified FindMessageListReq message. Does not implicitly {@link openim.sdk.conversation.FindMessageListReq.verify|verify} messages.
-                 * @param message FindMessageListReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IFindMessageListReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified FindMessageListReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.FindMessageListReq.verify|verify} messages.
-                 * @param message FindMessageListReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IFindMessageListReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a FindMessageListReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns FindMessageListReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.FindMessageListReq;
-
-                /**
-                 * Decodes a FindMessageListReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns FindMessageListReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.FindMessageListReq;
-
-                /**
-                 * Verifies a FindMessageListReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a FindMessageListReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns FindMessageListReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.FindMessageListReq;
-
-                /**
-                 * Creates a plain object from a FindMessageListReq message. Also converts values to other types if specified.
-                 * @param message FindMessageListReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.FindMessageListReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this FindMessageListReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for FindMessageListReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a FindMessageListResp. */
-            interface IFindMessageListResp {
-
-                /** FindMessageListResp findResultItems */
-                findResultItems?: (openim.sdk.conversation.ISearchByConversationResult[]|null);
-
-                /** FindMessageListResp totalCount */
-                totalCount?: (number|null);
-            }
-
-            /** Represents a FindMessageListResp. */
-            class FindMessageListResp implements IFindMessageListResp {
-
-                /**
-                 * Constructs a new FindMessageListResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IFindMessageListResp);
-
-                /** FindMessageListResp findResultItems. */
-                public findResultItems: openim.sdk.conversation.ISearchByConversationResult[];
-
-                /** FindMessageListResp totalCount. */
-                public totalCount: number;
-
-                /**
-                 * Creates a new FindMessageListResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns FindMessageListResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IFindMessageListResp): openim.sdk.conversation.FindMessageListResp;
-
-                /**
-                 * Encodes the specified FindMessageListResp message. Does not implicitly {@link openim.sdk.conversation.FindMessageListResp.verify|verify} messages.
-                 * @param message FindMessageListResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IFindMessageListResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified FindMessageListResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.FindMessageListResp.verify|verify} messages.
-                 * @param message FindMessageListResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IFindMessageListResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a FindMessageListResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns FindMessageListResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.FindMessageListResp;
-
-                /**
-                 * Decodes a FindMessageListResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns FindMessageListResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.FindMessageListResp;
-
-                /**
-                 * Verifies a FindMessageListResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a FindMessageListResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns FindMessageListResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.FindMessageListResp;
-
-                /**
-                 * Creates a plain object from a FindMessageListResp message. Also converts values to other types if specified.
-                 * @param message FindMessageListResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.FindMessageListResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this FindMessageListResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for FindMessageListResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
             /** Properties of a MarkConversationMessageAsReadReq. */
             interface IMarkConversationMessageAsReadReq {
 
@@ -3464,200 +2938,6 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for MarkAllConversationMessageAsReadResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a DeleteMessageFromLocalReq. */
-            interface IDeleteMessageFromLocalReq {
-
-                /** DeleteMessageFromLocalReq conversationID */
-                conversationID?: (string|null);
-
-                /** DeleteMessageFromLocalReq clientMsgID */
-                clientMsgID?: (string|null);
-            }
-
-            /** Represents a DeleteMessageFromLocalReq. */
-            class DeleteMessageFromLocalReq implements IDeleteMessageFromLocalReq {
-
-                /**
-                 * Constructs a new DeleteMessageFromLocalReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IDeleteMessageFromLocalReq);
-
-                /** DeleteMessageFromLocalReq conversationID. */
-                public conversationID: string;
-
-                /** DeleteMessageFromLocalReq clientMsgID. */
-                public clientMsgID: string;
-
-                /**
-                 * Creates a new DeleteMessageFromLocalReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns DeleteMessageFromLocalReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IDeleteMessageFromLocalReq): openim.sdk.conversation.DeleteMessageFromLocalReq;
-
-                /**
-                 * Encodes the specified DeleteMessageFromLocalReq message. Does not implicitly {@link openim.sdk.conversation.DeleteMessageFromLocalReq.verify|verify} messages.
-                 * @param message DeleteMessageFromLocalReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IDeleteMessageFromLocalReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified DeleteMessageFromLocalReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.DeleteMessageFromLocalReq.verify|verify} messages.
-                 * @param message DeleteMessageFromLocalReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IDeleteMessageFromLocalReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a DeleteMessageFromLocalReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns DeleteMessageFromLocalReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.DeleteMessageFromLocalReq;
-
-                /**
-                 * Decodes a DeleteMessageFromLocalReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns DeleteMessageFromLocalReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.DeleteMessageFromLocalReq;
-
-                /**
-                 * Verifies a DeleteMessageFromLocalReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a DeleteMessageFromLocalReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns DeleteMessageFromLocalReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.DeleteMessageFromLocalReq;
-
-                /**
-                 * Creates a plain object from a DeleteMessageFromLocalReq message. Also converts values to other types if specified.
-                 * @param message DeleteMessageFromLocalReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.DeleteMessageFromLocalReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this DeleteMessageFromLocalReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for DeleteMessageFromLocalReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a DeleteMessageFromLocalResp. */
-            interface IDeleteMessageFromLocalResp {
-            }
-
-            /** Represents a DeleteMessageFromLocalResp. */
-            class DeleteMessageFromLocalResp implements IDeleteMessageFromLocalResp {
-
-                /**
-                 * Constructs a new DeleteMessageFromLocalResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IDeleteMessageFromLocalResp);
-
-                /**
-                 * Creates a new DeleteMessageFromLocalResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns DeleteMessageFromLocalResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IDeleteMessageFromLocalResp): openim.sdk.conversation.DeleteMessageFromLocalResp;
-
-                /**
-                 * Encodes the specified DeleteMessageFromLocalResp message. Does not implicitly {@link openim.sdk.conversation.DeleteMessageFromLocalResp.verify|verify} messages.
-                 * @param message DeleteMessageFromLocalResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IDeleteMessageFromLocalResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified DeleteMessageFromLocalResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.DeleteMessageFromLocalResp.verify|verify} messages.
-                 * @param message DeleteMessageFromLocalResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IDeleteMessageFromLocalResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a DeleteMessageFromLocalResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns DeleteMessageFromLocalResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.DeleteMessageFromLocalResp;
-
-                /**
-                 * Decodes a DeleteMessageFromLocalResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns DeleteMessageFromLocalResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.DeleteMessageFromLocalResp;
-
-                /**
-                 * Verifies a DeleteMessageFromLocalResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a DeleteMessageFromLocalResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns DeleteMessageFromLocalResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.DeleteMessageFromLocalResp;
-
-                /**
-                 * Creates a plain object from a DeleteMessageFromLocalResp message. Also converts values to other types if specified.
-                 * @param message DeleteMessageFromLocalResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.DeleteMessageFromLocalResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this DeleteMessageFromLocalResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for DeleteMessageFromLocalResp
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -4040,460 +3320,6 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** KeywordListMatchType enum. */
-            enum KeywordListMatchType {
-                KeywordMatchOr = 0,
-                KeywordMatchAnd = 1
-            }
-
-            /** Properties of a SearchLocalMessagesReq. */
-            interface ISearchLocalMessagesReq {
-
-                /** SearchLocalMessagesReq conversationID */
-                conversationID?: (string|null);
-
-                /** SearchLocalMessagesReq keywords */
-                keywords?: (string[]|null);
-
-                /** SearchLocalMessagesReq keywordMatchType */
-                keywordMatchType?: (openim.sdk.conversation.KeywordListMatchType|null);
-
-                /** SearchLocalMessagesReq senderUserIDs */
-                senderUserIDs?: (string[]|null);
-
-                /** SearchLocalMessagesReq messageTypes */
-                messageTypes?: (openim.sdk.common.ContentType[]|null);
-
-                /** SearchLocalMessagesReq searchTimePosition */
-                searchTimePosition?: (number|Long|null);
-
-                /** SearchLocalMessagesReq searchTimePeriod */
-                searchTimePeriod?: (number|Long|null);
-
-                /** SearchLocalMessagesReq pagination */
-                pagination?: (openim.sdk.common.IRequestPagination|null);
-            }
-
-            /** Represents a SearchLocalMessagesReq. */
-            class SearchLocalMessagesReq implements ISearchLocalMessagesReq {
-
-                /**
-                 * Constructs a new SearchLocalMessagesReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISearchLocalMessagesReq);
-
-                /** SearchLocalMessagesReq conversationID. */
-                public conversationID: string;
-
-                /** SearchLocalMessagesReq keywords. */
-                public keywords: string[];
-
-                /** SearchLocalMessagesReq keywordMatchType. */
-                public keywordMatchType: openim.sdk.conversation.KeywordListMatchType;
-
-                /** SearchLocalMessagesReq senderUserIDs. */
-                public senderUserIDs: string[];
-
-                /** SearchLocalMessagesReq messageTypes. */
-                public messageTypes: openim.sdk.common.ContentType[];
-
-                /** SearchLocalMessagesReq searchTimePosition. */
-                public searchTimePosition: (number|Long);
-
-                /** SearchLocalMessagesReq searchTimePeriod. */
-                public searchTimePeriod: (number|Long);
-
-                /** SearchLocalMessagesReq pagination. */
-                public pagination?: (openim.sdk.common.IRequestPagination|null);
-
-                /**
-                 * Creates a new SearchLocalMessagesReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SearchLocalMessagesReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISearchLocalMessagesReq): openim.sdk.conversation.SearchLocalMessagesReq;
-
-                /**
-                 * Encodes the specified SearchLocalMessagesReq message. Does not implicitly {@link openim.sdk.conversation.SearchLocalMessagesReq.verify|verify} messages.
-                 * @param message SearchLocalMessagesReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISearchLocalMessagesReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SearchLocalMessagesReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.SearchLocalMessagesReq.verify|verify} messages.
-                 * @param message SearchLocalMessagesReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISearchLocalMessagesReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SearchLocalMessagesReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SearchLocalMessagesReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SearchLocalMessagesReq;
-
-                /**
-                 * Decodes a SearchLocalMessagesReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SearchLocalMessagesReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SearchLocalMessagesReq;
-
-                /**
-                 * Verifies a SearchLocalMessagesReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SearchLocalMessagesReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SearchLocalMessagesReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SearchLocalMessagesReq;
-
-                /**
-                 * Creates a plain object from a SearchLocalMessagesReq message. Also converts values to other types if specified.
-                 * @param message SearchLocalMessagesReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SearchLocalMessagesReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SearchLocalMessagesReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SearchLocalMessagesReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SearchLocalMessagesResp. */
-            interface ISearchLocalMessagesResp {
-
-                /** SearchLocalMessagesResp count */
-                count?: (number|Long|null);
-
-                /** SearchLocalMessagesResp searchResultItems */
-                searchResultItems?: (openim.sdk.conversation.ISearchByConversationResult[]|null);
-            }
-
-            /** Represents a SearchLocalMessagesResp. */
-            class SearchLocalMessagesResp implements ISearchLocalMessagesResp {
-
-                /**
-                 * Constructs a new SearchLocalMessagesResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISearchLocalMessagesResp);
-
-                /** SearchLocalMessagesResp count. */
-                public count: (number|Long);
-
-                /** SearchLocalMessagesResp searchResultItems. */
-                public searchResultItems: openim.sdk.conversation.ISearchByConversationResult[];
-
-                /**
-                 * Creates a new SearchLocalMessagesResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SearchLocalMessagesResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISearchLocalMessagesResp): openim.sdk.conversation.SearchLocalMessagesResp;
-
-                /**
-                 * Encodes the specified SearchLocalMessagesResp message. Does not implicitly {@link openim.sdk.conversation.SearchLocalMessagesResp.verify|verify} messages.
-                 * @param message SearchLocalMessagesResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISearchLocalMessagesResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SearchLocalMessagesResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.SearchLocalMessagesResp.verify|verify} messages.
-                 * @param message SearchLocalMessagesResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISearchLocalMessagesResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SearchLocalMessagesResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SearchLocalMessagesResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SearchLocalMessagesResp;
-
-                /**
-                 * Decodes a SearchLocalMessagesResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SearchLocalMessagesResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SearchLocalMessagesResp;
-
-                /**
-                 * Verifies a SearchLocalMessagesResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SearchLocalMessagesResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SearchLocalMessagesResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SearchLocalMessagesResp;
-
-                /**
-                 * Creates a plain object from a SearchLocalMessagesResp message. Also converts values to other types if specified.
-                 * @param message SearchLocalMessagesResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SearchLocalMessagesResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SearchLocalMessagesResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SearchLocalMessagesResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SetMessageLocalExReq. */
-            interface ISetMessageLocalExReq {
-
-                /** SetMessageLocalExReq conversationID */
-                conversationID?: (string|null);
-
-                /** SetMessageLocalExReq clientMsgID */
-                clientMsgID?: (string|null);
-
-                /** SetMessageLocalExReq localEx */
-                localEx?: (string|null);
-            }
-
-            /** Represents a SetMessageLocalExReq. */
-            class SetMessageLocalExReq implements ISetMessageLocalExReq {
-
-                /**
-                 * Constructs a new SetMessageLocalExReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISetMessageLocalExReq);
-
-                /** SetMessageLocalExReq conversationID. */
-                public conversationID: string;
-
-                /** SetMessageLocalExReq clientMsgID. */
-                public clientMsgID: string;
-
-                /** SetMessageLocalExReq localEx. */
-                public localEx: string;
-
-                /**
-                 * Creates a new SetMessageLocalExReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SetMessageLocalExReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISetMessageLocalExReq): openim.sdk.conversation.SetMessageLocalExReq;
-
-                /**
-                 * Encodes the specified SetMessageLocalExReq message. Does not implicitly {@link openim.sdk.conversation.SetMessageLocalExReq.verify|verify} messages.
-                 * @param message SetMessageLocalExReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISetMessageLocalExReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SetMessageLocalExReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.SetMessageLocalExReq.verify|verify} messages.
-                 * @param message SetMessageLocalExReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISetMessageLocalExReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SetMessageLocalExReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SetMessageLocalExReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SetMessageLocalExReq;
-
-                /**
-                 * Decodes a SetMessageLocalExReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SetMessageLocalExReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SetMessageLocalExReq;
-
-                /**
-                 * Verifies a SetMessageLocalExReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SetMessageLocalExReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SetMessageLocalExReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SetMessageLocalExReq;
-
-                /**
-                 * Creates a plain object from a SetMessageLocalExReq message. Also converts values to other types if specified.
-                 * @param message SetMessageLocalExReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SetMessageLocalExReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SetMessageLocalExReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SetMessageLocalExReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SetMessageLocalExResp. */
-            interface ISetMessageLocalExResp {
-
-                /** SetMessageLocalExResp success */
-                success?: (boolean|null);
-            }
-
-            /** Represents a SetMessageLocalExResp. */
-            class SetMessageLocalExResp implements ISetMessageLocalExResp {
-
-                /**
-                 * Constructs a new SetMessageLocalExResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISetMessageLocalExResp);
-
-                /** SetMessageLocalExResp success. */
-                public success: boolean;
-
-                /**
-                 * Creates a new SetMessageLocalExResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SetMessageLocalExResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISetMessageLocalExResp): openim.sdk.conversation.SetMessageLocalExResp;
-
-                /**
-                 * Encodes the specified SetMessageLocalExResp message. Does not implicitly {@link openim.sdk.conversation.SetMessageLocalExResp.verify|verify} messages.
-                 * @param message SetMessageLocalExResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISetMessageLocalExResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SetMessageLocalExResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.SetMessageLocalExResp.verify|verify} messages.
-                 * @param message SetMessageLocalExResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISetMessageLocalExResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SetMessageLocalExResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SetMessageLocalExResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SetMessageLocalExResp;
-
-                /**
-                 * Decodes a SetMessageLocalExResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SetMessageLocalExResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SetMessageLocalExResp;
-
-                /**
-                 * Verifies a SetMessageLocalExResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SetMessageLocalExResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SetMessageLocalExResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SetMessageLocalExResp;
-
-                /**
-                 * Creates a plain object from a SetMessageLocalExResp message. Also converts values to other types if specified.
-                 * @param message SetMessageLocalExResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SetMessageLocalExResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SetMessageLocalExResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SetMessageLocalExResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
             /** Properties of a SearchConversationReq. */
             interface ISearchConversationReq {
 
@@ -4682,491 +3508,6 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for SearchConversationResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a UserOnlinePlatform. */
-            interface IUserOnlinePlatform {
-
-                /** UserOnlinePlatform userID */
-                userID?: (string|null);
-
-                /** UserOnlinePlatform platforms */
-                platforms?: (openim.sdk.common.Platform[]|null);
-            }
-
-            /** Represents a UserOnlinePlatform. */
-            class UserOnlinePlatform implements IUserOnlinePlatform {
-
-                /**
-                 * Constructs a new UserOnlinePlatform.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IUserOnlinePlatform);
-
-                /** UserOnlinePlatform userID. */
-                public userID: string;
-
-                /** UserOnlinePlatform platforms. */
-                public platforms: openim.sdk.common.Platform[];
-
-                /**
-                 * Creates a new UserOnlinePlatform instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns UserOnlinePlatform instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IUserOnlinePlatform): openim.sdk.conversation.UserOnlinePlatform;
-
-                /**
-                 * Encodes the specified UserOnlinePlatform message. Does not implicitly {@link openim.sdk.conversation.UserOnlinePlatform.verify|verify} messages.
-                 * @param message UserOnlinePlatform message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IUserOnlinePlatform, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified UserOnlinePlatform message, length delimited. Does not implicitly {@link openim.sdk.conversation.UserOnlinePlatform.verify|verify} messages.
-                 * @param message UserOnlinePlatform message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IUserOnlinePlatform, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a UserOnlinePlatform message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns UserOnlinePlatform
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.UserOnlinePlatform;
-
-                /**
-                 * Decodes a UserOnlinePlatform message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns UserOnlinePlatform
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.UserOnlinePlatform;
-
-                /**
-                 * Verifies a UserOnlinePlatform message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a UserOnlinePlatform message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns UserOnlinePlatform
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.UserOnlinePlatform;
-
-                /**
-                 * Creates a plain object from a UserOnlinePlatform message. Also converts values to other types if specified.
-                 * @param message UserOnlinePlatform
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.UserOnlinePlatform, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this UserOnlinePlatform to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for UserOnlinePlatform
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SubscribeUsersOnlineStatusReq. */
-            interface ISubscribeUsersOnlineStatusReq {
-
-                /** SubscribeUsersOnlineStatusReq userIDs */
-                userIDs?: (string[]|null);
-            }
-
-            /** Represents a SubscribeUsersOnlineStatusReq. */
-            class SubscribeUsersOnlineStatusReq implements ISubscribeUsersOnlineStatusReq {
-
-                /**
-                 * Constructs a new SubscribeUsersOnlineStatusReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISubscribeUsersOnlineStatusReq);
-
-                /** SubscribeUsersOnlineStatusReq userIDs. */
-                public userIDs: string[];
-
-                /**
-                 * Creates a new SubscribeUsersOnlineStatusReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SubscribeUsersOnlineStatusReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISubscribeUsersOnlineStatusReq): openim.sdk.conversation.SubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Encodes the specified SubscribeUsersOnlineStatusReq message. Does not implicitly {@link openim.sdk.conversation.SubscribeUsersOnlineStatusReq.verify|verify} messages.
-                 * @param message SubscribeUsersOnlineStatusReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SubscribeUsersOnlineStatusReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.SubscribeUsersOnlineStatusReq.verify|verify} messages.
-                 * @param message SubscribeUsersOnlineStatusReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SubscribeUsersOnlineStatusReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SubscribeUsersOnlineStatusReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Decodes a SubscribeUsersOnlineStatusReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SubscribeUsersOnlineStatusReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Verifies a SubscribeUsersOnlineStatusReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SubscribeUsersOnlineStatusReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SubscribeUsersOnlineStatusReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Creates a plain object from a SubscribeUsersOnlineStatusReq message. Also converts values to other types if specified.
-                 * @param message SubscribeUsersOnlineStatusReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SubscribeUsersOnlineStatusReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SubscribeUsersOnlineStatusReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SubscribeUsersOnlineStatusReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a SubscribeUsersOnlineStatusResp. */
-            interface ISubscribeUsersOnlineStatusResp {
-
-                /** SubscribeUsersOnlineStatusResp status */
-                status?: (openim.sdk.conversation.IUserOnlinePlatform[]|null);
-            }
-
-            /** Represents a SubscribeUsersOnlineStatusResp. */
-            class SubscribeUsersOnlineStatusResp implements ISubscribeUsersOnlineStatusResp {
-
-                /**
-                 * Constructs a new SubscribeUsersOnlineStatusResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.ISubscribeUsersOnlineStatusResp);
-
-                /** SubscribeUsersOnlineStatusResp status. */
-                public status: openim.sdk.conversation.IUserOnlinePlatform[];
-
-                /**
-                 * Creates a new SubscribeUsersOnlineStatusResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns SubscribeUsersOnlineStatusResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.ISubscribeUsersOnlineStatusResp): openim.sdk.conversation.SubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Encodes the specified SubscribeUsersOnlineStatusResp message. Does not implicitly {@link openim.sdk.conversation.SubscribeUsersOnlineStatusResp.verify|verify} messages.
-                 * @param message SubscribeUsersOnlineStatusResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.ISubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified SubscribeUsersOnlineStatusResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.SubscribeUsersOnlineStatusResp.verify|verify} messages.
-                 * @param message SubscribeUsersOnlineStatusResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.ISubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a SubscribeUsersOnlineStatusResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns SubscribeUsersOnlineStatusResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.SubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Decodes a SubscribeUsersOnlineStatusResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns SubscribeUsersOnlineStatusResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.SubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Verifies a SubscribeUsersOnlineStatusResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a SubscribeUsersOnlineStatusResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns SubscribeUsersOnlineStatusResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.SubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Creates a plain object from a SubscribeUsersOnlineStatusResp message. Also converts values to other types if specified.
-                 * @param message SubscribeUsersOnlineStatusResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.SubscribeUsersOnlineStatusResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this SubscribeUsersOnlineStatusResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for SubscribeUsersOnlineStatusResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of an UnsubscribeUsersOnlineStatusReq. */
-            interface IUnsubscribeUsersOnlineStatusReq {
-
-                /** UnsubscribeUsersOnlineStatusReq userIDs */
-                userIDs?: (string[]|null);
-            }
-
-            /** Represents an UnsubscribeUsersOnlineStatusReq. */
-            class UnsubscribeUsersOnlineStatusReq implements IUnsubscribeUsersOnlineStatusReq {
-
-                /**
-                 * Constructs a new UnsubscribeUsersOnlineStatusReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusReq);
-
-                /** UnsubscribeUsersOnlineStatusReq userIDs. */
-                public userIDs: string[];
-
-                /**
-                 * Creates a new UnsubscribeUsersOnlineStatusReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns UnsubscribeUsersOnlineStatusReq instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusReq): openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Encodes the specified UnsubscribeUsersOnlineStatusReq message. Does not implicitly {@link openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq.verify|verify} messages.
-                 * @param message UnsubscribeUsersOnlineStatusReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified UnsubscribeUsersOnlineStatusReq message, length delimited. Does not implicitly {@link openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq.verify|verify} messages.
-                 * @param message UnsubscribeUsersOnlineStatusReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes an UnsubscribeUsersOnlineStatusReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns UnsubscribeUsersOnlineStatusReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Decodes an UnsubscribeUsersOnlineStatusReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns UnsubscribeUsersOnlineStatusReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Verifies an UnsubscribeUsersOnlineStatusReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates an UnsubscribeUsersOnlineStatusReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns UnsubscribeUsersOnlineStatusReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq;
-
-                /**
-                 * Creates a plain object from an UnsubscribeUsersOnlineStatusReq message. Also converts values to other types if specified.
-                 * @param message UnsubscribeUsersOnlineStatusReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.UnsubscribeUsersOnlineStatusReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this UnsubscribeUsersOnlineStatusReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for UnsubscribeUsersOnlineStatusReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of an UnsubscribeUsersOnlineStatusResp. */
-            interface IUnsubscribeUsersOnlineStatusResp {
-            }
-
-            /** Represents an UnsubscribeUsersOnlineStatusResp. */
-            class UnsubscribeUsersOnlineStatusResp implements IUnsubscribeUsersOnlineStatusResp {
-
-                /**
-                 * Constructs a new UnsubscribeUsersOnlineStatusResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusResp);
-
-                /**
-                 * Creates a new UnsubscribeUsersOnlineStatusResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns UnsubscribeUsersOnlineStatusResp instance
-                 */
-                public static create(properties?: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusResp): openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Encodes the specified UnsubscribeUsersOnlineStatusResp message. Does not implicitly {@link openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp.verify|verify} messages.
-                 * @param message UnsubscribeUsersOnlineStatusResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified UnsubscribeUsersOnlineStatusResp message, length delimited. Does not implicitly {@link openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp.verify|verify} messages.
-                 * @param message UnsubscribeUsersOnlineStatusResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.conversation.IUnsubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes an UnsubscribeUsersOnlineStatusResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns UnsubscribeUsersOnlineStatusResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Decodes an UnsubscribeUsersOnlineStatusResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns UnsubscribeUsersOnlineStatusResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Verifies an UnsubscribeUsersOnlineStatusResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates an UnsubscribeUsersOnlineStatusResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns UnsubscribeUsersOnlineStatusResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp;
-
-                /**
-                 * Creates a plain object from an UnsubscribeUsersOnlineStatusResp message. Also converts values to other types if specified.
-                 * @param message UnsubscribeUsersOnlineStatusResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.conversation.UnsubscribeUsersOnlineStatusResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this UnsubscribeUsersOnlineStatusResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for UnsubscribeUsersOnlineStatusResp
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -5565,6 +3906,470 @@ export namespace openim {
                  * @returns The default type url
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Represents a ConversationService */
+            class ConversationService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new ConversationService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new ConversationService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): ConversationService;
+
+                /**
+                 * Get all conversation list.
+                 * Notice:
+                 * If have lots of conversation, use `GetConversationListSplit` to get page.
+                 * @param request GetAllConversationListReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetAllConversationListResp
+                 */
+                public getAllConversationList(request: openim.sdk.conversation.IGetAllConversationListReq, callback: openim.sdk.conversation.ConversationService.GetAllConversationListCallback): void;
+
+                /**
+                 * Get all conversation list.
+                 * Notice:
+                 * If have lots of conversation, use `GetConversationListSplit` to get page.
+                 * @param request GetAllConversationListReq message or plain object
+                 * @returns Promise
+                 */
+                public getAllConversationList(request: openim.sdk.conversation.IGetAllConversationListReq): Promise<openim.sdk.conversation.GetAllConversationListResp>;
+
+                /**
+                 * Get conversation list by page.
+                 * @param request GetConversationListSplitReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetConversationListSplitResp
+                 */
+                public getConversationListSplit(request: openim.sdk.conversation.IGetConversationListSplitReq, callback: openim.sdk.conversation.ConversationService.GetConversationListSplitCallback): void;
+
+                /**
+                 * Get conversation list by page.
+                 * @param request GetConversationListSplitReq message or plain object
+                 * @returns Promise
+                 */
+                public getConversationListSplit(request: openim.sdk.conversation.IGetConversationListSplitReq): Promise<openim.sdk.conversation.GetConversationListSplitResp>;
+
+                /**
+                 * Hide a local conversation. It will not delete the message in conversation.
+                 * The conversation will redisplay when a new message is received.
+                 * @param request HideConversationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and HideConversationResp
+                 */
+                public hideConversation(request: openim.sdk.conversation.IHideConversationReq, callback: openim.sdk.conversation.ConversationService.HideConversationCallback): void;
+
+                /**
+                 * Hide a local conversation. It will not delete the message in conversation.
+                 * The conversation will redisplay when a new message is received.
+                 * @param request HideConversationReq message or plain object
+                 * @returns Promise
+                 */
+                public hideConversation(request: openim.sdk.conversation.IHideConversationReq): Promise<openim.sdk.conversation.HideConversationResp>;
+
+                /**
+                 * Get at all tag.
+                 * @param request GetAtAllTagReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetAtAllTagResp
+                 */
+                public getAtAllTag(request: openim.sdk.conversation.IGetAtAllTagReq, callback: openim.sdk.conversation.ConversationService.GetAtAllTagCallback): void;
+
+                /**
+                 * Get at all tag.
+                 * @param request GetAtAllTagReq message or plain object
+                 * @returns Promise
+                 */
+                public getAtAllTag(request: openim.sdk.conversation.IGetAtAllTagReq): Promise<openim.sdk.conversation.GetAtAllTagResp>;
+
+                /**
+                 * Get specified conversation info.
+                 * Usually get conversation by friend info or group info, and enter the chat interface will call it.
+                 * @param request GetOneConversationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetOneConversationResp
+                 */
+                public getOneConversation(request: openim.sdk.conversation.IGetOneConversationReq, callback: openim.sdk.conversation.ConversationService.GetOneConversationCallback): void;
+
+                /**
+                 * Get specified conversation info.
+                 * Usually get conversation by friend info or group info, and enter the chat interface will call it.
+                 * @param request GetOneConversationReq message or plain object
+                 * @returns Promise
+                 */
+                public getOneConversation(request: openim.sdk.conversation.IGetOneConversationReq): Promise<openim.sdk.conversation.GetOneConversationResp>;
+
+                /**
+                 * Get specified conversation info list by specified conversation IDs.
+                 * @param request GetMultipleConversationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetMultipleConversationResp
+                 */
+                public getMultipleConversation(request: openim.sdk.conversation.IGetMultipleConversationReq, callback: openim.sdk.conversation.ConversationService.GetMultipleConversationCallback): void;
+
+                /**
+                 * Get specified conversation info list by specified conversation IDs.
+                 * @param request GetMultipleConversationReq message or plain object
+                 * @returns Promise
+                 */
+                public getMultipleConversation(request: openim.sdk.conversation.IGetMultipleConversationReq): Promise<openim.sdk.conversation.GetMultipleConversationResp>;
+
+                /**
+                 * Hide all local conversations. It will not delete the message in conversation.
+                 * The conversation will redisplay when a new message is received.
+                 * @param request HideAllConversationsReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and HideAllConversationsResp
+                 */
+                public hideAllConversations(request: openim.sdk.conversation.IHideAllConversationsReq, callback: openim.sdk.conversation.ConversationService.HideAllConversationsCallback): void;
+
+                /**
+                 * Hide all local conversations. It will not delete the message in conversation.
+                 * The conversation will redisplay when a new message is received.
+                 * @param request HideAllConversationsReq message or plain object
+                 * @returns Promise
+                 */
+                public hideAllConversations(request: openim.sdk.conversation.IHideAllConversationsReq): Promise<openim.sdk.conversation.HideAllConversationsResp>;
+
+                /**
+                 * Set conversation draft.
+                 * Notice:
+                 * Set empty draft text will clear the draft.
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request SetConversationDraftReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SetConversationDraftResp
+                 */
+                public setConversationDraft(request: openim.sdk.conversation.ISetConversationDraftReq, callback: openim.sdk.conversation.ConversationService.SetConversationDraftCallback): void;
+
+                /**
+                 * Set conversation draft.
+                 * Notice:
+                 * Set empty draft text will clear the draft.
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request SetConversationDraftReq message or plain object
+                 * @returns Promise
+                 */
+                public setConversationDraft(request: openim.sdk.conversation.ISetConversationDraftReq): Promise<openim.sdk.conversation.SetConversationDraftResp>;
+
+                /**
+                 * Set conversation info, including isPinned, recvMsgOpt, ex fields.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request SetConversationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SetConversationResp
+                 */
+                public setConversation(request: openim.sdk.conversation.ISetConversationReq, callback: openim.sdk.conversation.ConversationService.SetConversationCallback): void;
+
+                /**
+                 * Set conversation info, including isPinned, recvMsgOpt, ex fields.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request SetConversationReq message or plain object
+                 * @returns Promise
+                 */
+                public setConversation(request: openim.sdk.conversation.ISetConversationReq): Promise<openim.sdk.conversation.SetConversationResp>;
+
+                /**
+                 * Get all conversation unread message count.
+                 * @param request GetTotalUnreadMsgCountReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetTotalUnreadMsgCountResp
+                 */
+                public getTotalUnreadMsgCount(request: openim.sdk.conversation.IGetTotalUnreadMsgCountReq, callback: openim.sdk.conversation.ConversationService.GetTotalUnreadMsgCountCallback): void;
+
+                /**
+                 * Get all conversation unread message count.
+                 * @param request GetTotalUnreadMsgCountReq message or plain object
+                 * @returns Promise
+                 */
+                public getTotalUnreadMsgCount(request: openim.sdk.conversation.IGetTotalUnreadMsgCountReq): Promise<openim.sdk.conversation.GetTotalUnreadMsgCountResp>;
+
+                /**
+                 * Get conversation ID by session type.
+                 * @param request GetConversationIDBySessionTypeReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetConversationIDBySessionTypeResp
+                 */
+                public getConversationIDBySessionType(request: openim.sdk.conversation.IGetConversationIDBySessionTypeReq, callback: openim.sdk.conversation.ConversationService.GetConversationIDBySessionTypeCallback): void;
+
+                /**
+                 * Get conversation ID by session type.
+                 * @param request GetConversationIDBySessionTypeReq message or plain object
+                 * @returns Promise
+                 */
+                public getConversationIDBySessionType(request: openim.sdk.conversation.IGetConversationIDBySessionTypeReq): Promise<openim.sdk.conversation.GetConversationIDBySessionTypeResp>;
+
+                /**
+                 * Mark conversation message as read.
+                 * 1. conversation type is single, use to clear unread count and send isReaded receipt.
+                 * Other user send message isRead status will be updated when call it interface.
+                 * 2. conversation type is group or notification, the interface only use clear unread.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * `onRecvC2CReadReceipt`
+                 * @param request MarkConversationMessageAsReadReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and MarkConversationMessageAsReadResp
+                 */
+                public markConversationMessageAsRead(request: openim.sdk.conversation.IMarkConversationMessageAsReadReq, callback: openim.sdk.conversation.ConversationService.MarkConversationMessageAsReadCallback): void;
+
+                /**
+                 * Mark conversation message as read.
+                 * 1. conversation type is single, use to clear unread count and send isReaded receipt.
+                 * Other user send message isRead status will be updated when call it interface.
+                 * 2. conversation type is group or notification, the interface only use clear unread.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * `onRecvC2CReadReceipt`
+                 * @param request MarkConversationMessageAsReadReq message or plain object
+                 * @returns Promise
+                 */
+                public markConversationMessageAsRead(request: openim.sdk.conversation.IMarkConversationMessageAsReadReq): Promise<openim.sdk.conversation.MarkConversationMessageAsReadResp>;
+
+                /**
+                 * Mark all conversation message as read.
+                 * 1. conversation type is single, use to clear unread count and send isReaded receipt.
+                 * Other user send message isRead status will be updated when call it interface.
+                 * 2. conversation type is group or notification, the interface only use clear unread.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * `onRecvC2CReadReceipt`
+                 * @param request MarkAllConversationMessageAsReadReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and MarkAllConversationMessageAsReadResp
+                 */
+                public markAllConversationMessageAsRead(request: openim.sdk.conversation.IMarkAllConversationMessageAsReadReq, callback: openim.sdk.conversation.ConversationService.MarkAllConversationMessageAsReadCallback): void;
+
+                /**
+                 * Mark all conversation message as read.
+                 * 1. conversation type is single, use to clear unread count and send isReaded receipt.
+                 * Other user send message isRead status will be updated when call it interface.
+                 * 2. conversation type is group or notification, the interface only use clear unread.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * `onRecvC2CReadReceipt`
+                 * @param request MarkAllConversationMessageAsReadReq message or plain object
+                 * @returns Promise
+                 */
+                public markAllConversationMessageAsRead(request: openim.sdk.conversation.IMarkAllConversationMessageAsReadReq): Promise<openim.sdk.conversation.MarkAllConversationMessageAsReadResp>;
+
+                /**
+                 * Delete specified conversation messages in local and server. The conversation will still be retained.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request ClearConversationAndDeleteAllMsgReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ClearConversationAndDeleteAllMsgResp
+                 */
+                public clearConversationAndDeleteAllMsg(request: openim.sdk.conversation.IClearConversationAndDeleteAllMsgReq, callback: openim.sdk.conversation.ConversationService.ClearConversationAndDeleteAllMsgCallback): void;
+
+                /**
+                 * Delete specified conversation messages in local and server. The conversation will still be retained.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request ClearConversationAndDeleteAllMsgReq message or plain object
+                 * @returns Promise
+                 */
+                public clearConversationAndDeleteAllMsg(request: openim.sdk.conversation.IClearConversationAndDeleteAllMsgReq): Promise<openim.sdk.conversation.ClearConversationAndDeleteAllMsgResp>;
+
+                /**
+                 * Delete specified conversation messages in local and server.
+                 * @param request DeleteConversationAndDeleteAllMsgReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteConversationAndDeleteAllMsgResp
+                 */
+                public deleteConversationAndDeleteAllMsg(request: openim.sdk.conversation.IDeleteConversationAndDeleteAllMsgReq, callback: openim.sdk.conversation.ConversationService.DeleteConversationAndDeleteAllMsgCallback): void;
+
+                /**
+                 * Delete specified conversation messages in local and server.
+                 * @param request DeleteConversationAndDeleteAllMsgReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteConversationAndDeleteAllMsg(request: openim.sdk.conversation.IDeleteConversationAndDeleteAllMsgReq): Promise<openim.sdk.conversation.DeleteConversationAndDeleteAllMsgResp>;
+
+                /**
+                 * Search conversation by search param.
+                 * @param request SearchConversationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SearchConversationResp
+                 */
+                public searchConversation(request: openim.sdk.conversation.ISearchConversationReq, callback: openim.sdk.conversation.ConversationService.SearchConversationCallback): void;
+
+                /**
+                 * Search conversation by search param.
+                 * @param request SearchConversationReq message or plain object
+                 * @returns Promise
+                 */
+                public searchConversation(request: openim.sdk.conversation.ISearchConversationReq): Promise<openim.sdk.conversation.SearchConversationResp>;
+
+                /**
+                 * Change input states.
+                 * Notice:
+                 * When input end, set focus to false.
+                 * @param request ChangeInputStatesReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ChangeInputStatesResp
+                 */
+                public changeInputStates(request: openim.sdk.conversation.IChangeInputStatesReq, callback: openim.sdk.conversation.ConversationService.ChangeInputStatesCallback): void;
+
+                /**
+                 * Change input states.
+                 * Notice:
+                 * When input end, set focus to false.
+                 * @param request ChangeInputStatesReq message or plain object
+                 * @returns Promise
+                 */
+                public changeInputStates(request: openim.sdk.conversation.IChangeInputStatesReq): Promise<openim.sdk.conversation.ChangeInputStatesResp>;
+
+                /**
+                 * Get user current input states.
+                 * @param request GetInputStatesReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetInputStatesResp
+                 */
+                public getInputStates(request: openim.sdk.conversation.IGetInputStatesReq, callback: openim.sdk.conversation.ConversationService.GetInputStatesCallback): void;
+
+                /**
+                 * Get user current input states.
+                 * @param request GetInputStatesReq message or plain object
+                 * @returns Promise
+                 */
+                public getInputStates(request: openim.sdk.conversation.IGetInputStatesReq): Promise<openim.sdk.conversation.GetInputStatesResp>;
+            }
+
+            namespace ConversationService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getAllConversationList}.
+                 * @param error Error, if any
+                 * @param [response] GetAllConversationListResp
+                 */
+                type GetAllConversationListCallback = (error: (Error|null), response?: openim.sdk.conversation.GetAllConversationListResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getConversationListSplit}.
+                 * @param error Error, if any
+                 * @param [response] GetConversationListSplitResp
+                 */
+                type GetConversationListSplitCallback = (error: (Error|null), response?: openim.sdk.conversation.GetConversationListSplitResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#hideConversation}.
+                 * @param error Error, if any
+                 * @param [response] HideConversationResp
+                 */
+                type HideConversationCallback = (error: (Error|null), response?: openim.sdk.conversation.HideConversationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getAtAllTag}.
+                 * @param error Error, if any
+                 * @param [response] GetAtAllTagResp
+                 */
+                type GetAtAllTagCallback = (error: (Error|null), response?: openim.sdk.conversation.GetAtAllTagResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getOneConversation}.
+                 * @param error Error, if any
+                 * @param [response] GetOneConversationResp
+                 */
+                type GetOneConversationCallback = (error: (Error|null), response?: openim.sdk.conversation.GetOneConversationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getMultipleConversation}.
+                 * @param error Error, if any
+                 * @param [response] GetMultipleConversationResp
+                 */
+                type GetMultipleConversationCallback = (error: (Error|null), response?: openim.sdk.conversation.GetMultipleConversationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#hideAllConversations}.
+                 * @param error Error, if any
+                 * @param [response] HideAllConversationsResp
+                 */
+                type HideAllConversationsCallback = (error: (Error|null), response?: openim.sdk.conversation.HideAllConversationsResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#setConversationDraft}.
+                 * @param error Error, if any
+                 * @param [response] SetConversationDraftResp
+                 */
+                type SetConversationDraftCallback = (error: (Error|null), response?: openim.sdk.conversation.SetConversationDraftResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#setConversation}.
+                 * @param error Error, if any
+                 * @param [response] SetConversationResp
+                 */
+                type SetConversationCallback = (error: (Error|null), response?: openim.sdk.conversation.SetConversationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getTotalUnreadMsgCount}.
+                 * @param error Error, if any
+                 * @param [response] GetTotalUnreadMsgCountResp
+                 */
+                type GetTotalUnreadMsgCountCallback = (error: (Error|null), response?: openim.sdk.conversation.GetTotalUnreadMsgCountResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getConversationIDBySessionType}.
+                 * @param error Error, if any
+                 * @param [response] GetConversationIDBySessionTypeResp
+                 */
+                type GetConversationIDBySessionTypeCallback = (error: (Error|null), response?: openim.sdk.conversation.GetConversationIDBySessionTypeResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#markConversationMessageAsRead}.
+                 * @param error Error, if any
+                 * @param [response] MarkConversationMessageAsReadResp
+                 */
+                type MarkConversationMessageAsReadCallback = (error: (Error|null), response?: openim.sdk.conversation.MarkConversationMessageAsReadResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#markAllConversationMessageAsRead}.
+                 * @param error Error, if any
+                 * @param [response] MarkAllConversationMessageAsReadResp
+                 */
+                type MarkAllConversationMessageAsReadCallback = (error: (Error|null), response?: openim.sdk.conversation.MarkAllConversationMessageAsReadResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#clearConversationAndDeleteAllMsg}.
+                 * @param error Error, if any
+                 * @param [response] ClearConversationAndDeleteAllMsgResp
+                 */
+                type ClearConversationAndDeleteAllMsgCallback = (error: (Error|null), response?: openim.sdk.conversation.ClearConversationAndDeleteAllMsgResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#deleteConversationAndDeleteAllMsg}.
+                 * @param error Error, if any
+                 * @param [response] DeleteConversationAndDeleteAllMsgResp
+                 */
+                type DeleteConversationAndDeleteAllMsgCallback = (error: (Error|null), response?: openim.sdk.conversation.DeleteConversationAndDeleteAllMsgResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#searchConversation}.
+                 * @param error Error, if any
+                 * @param [response] SearchConversationResp
+                 */
+                type SearchConversationCallback = (error: (Error|null), response?: openim.sdk.conversation.SearchConversationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#changeInputStates}.
+                 * @param error Error, if any
+                 * @param [response] ChangeInputStatesResp
+                 */
+                type ChangeInputStatesCallback = (error: (Error|null), response?: openim.sdk.conversation.ChangeInputStatesResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.conversation.ConversationService#getInputStates}.
+                 * @param error Error, if any
+                 * @param [response] GetInputStatesResp
+                 */
+                type GetInputStatesCallback = (error: (Error|null), response?: openim.sdk.conversation.GetInputStatesResp) => void;
             }
         }
 
@@ -17510,12 +16315,7 @@ export namespace openim {
             /** Properties of a HandleGroupApplicationReq. */
             interface IHandleGroupApplicationReq {
 
-                /**
-                 * group id you want to handle1<br>
-                 * group id you want to handle2<br>
-                 * group id you want to handle3<br>
-                 * group id you want to handle4<br>
-                 */
+                /** HandleGroupApplicationReq groupID */
                 groupID?: (string|null);
 
                 /** HandleGroupApplicationReq fromUserID */
@@ -17537,12 +16337,7 @@ export namespace openim {
                  */
                 constructor(properties?: openim.sdk.group.IHandleGroupApplicationReq);
 
-                /**
-                 * group id you want to handle1<br>
-                 * group id you want to handle2<br>
-                 * group id you want to handle3<br>
-                 * group id you want to handle4<br>
-                 */
+                /** HandleGroupApplicationReq groupID. */
                 public groupID: string;
 
                 /** HandleGroupApplicationReq fromUserID. */
@@ -17747,8 +16542,12 @@ export namespace openim {
                  * The group creator assigns roles and adds members
                  * 1. The creator establishes a group as the group owner, specifying group administrators and ordinary group members. Once successful, all roles immediately join the group.
                  * 2. It's recommended that the number of group members does not exceed 1000 at a time, as larger numbers may result in data packets being rejected by the backend due to their size.
+                 * Notice:
                  * If a groupID is specified, it cannot be duplicated.
                  * If no groupID is specified, the server will generate a unique groupID.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
                  * @param request CreateGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateGroupResp
                  */
@@ -17758,8 +16557,12 @@ export namespace openim {
                  * The group creator assigns roles and adds members
                  * 1. The creator establishes a group as the group owner, specifying group administrators and ordinary group members. Once successful, all roles immediately join the group.
                  * 2. It's recommended that the number of group members does not exceed 1000 at a time, as larger numbers may result in data packets being rejected by the backend due to their size.
+                 * Notice:
                  * If a groupID is specified, it cannot be duplicated.
                  * If no groupID is specified, the server will generate a unique groupID.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
                  * @param request CreateGroupReq message or plain object
                  * @returns Promise
                  */
@@ -17767,7 +16570,12 @@ export namespace openim {
 
                 /**
                  * Apply to join a group
+                 * Notice:
                  * Apply to join the group. If you are allowed to join directly, you can directly enter the group chat. Otherwise, send a request to join the group, which requires the approval of the group administrator or group owner.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
+                 * `onGroupApplicationAdded`
                  * @param request JoinGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and JoinGroupResp
                  */
@@ -17775,7 +16583,12 @@ export namespace openim {
 
                 /**
                  * Apply to join a group
+                 * Notice:
                  * Apply to join the group. If you are allowed to join directly, you can directly enter the group chat. Otherwise, send a request to join the group, which requires the approval of the group administrator or group owner.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
+                 * `onGroupApplicationAdded`
                  * @param request JoinGroupReq message or plain object
                  * @returns Promise
                  */
@@ -17783,7 +16596,11 @@ export namespace openim {
 
                 /**
                  * Leave the group
+                 * Notice:
                  * Administrators and ordinary members can log out directly, but group owners cannot log out.
+                 * Related callbacks:
+                 * `onJoinedGroupDeleted`
+                 * `onGroupMemberDeleted`
                  * @param request QuitGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and QuitGroupResp
                  */
@@ -17791,7 +16608,11 @@ export namespace openim {
 
                 /**
                  * Leave the group
+                 * Notice:
                  * Administrators and ordinary members can log out directly, but group owners cannot log out.
+                 * Related callbacks:
+                 * `onJoinedGroupDeleted`
+                 * `onGroupMemberDeleted`
                  * @param request QuitGroupReq message or plain object
                  * @returns Promise
                  */
@@ -17799,7 +16620,11 @@ export namespace openim {
 
                 /**
                  * Disband the group
-                 * The group status field will be set to "disbanded" in the background. When group members fetch the list of groups they've joined, this group will no longer be returned.
+                 * Notice:
+                 * The group status field will be set to "disbanded" in the background.
+                 * When group members fetch the list of groups they've joined, this group will no longer be returned.
+                 * Related callbacks:
+                 * `onGroupDismissed`
                  * @param request DismissGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and DismissGroupResp
                  */
@@ -17807,7 +16632,11 @@ export namespace openim {
 
                 /**
                  * Disband the group
-                 * The group status field will be set to "disbanded" in the background. When group members fetch the list of groups they've joined, this group will no longer be returned.
+                 * Notice:
+                 * The group status field will be set to "disbanded" in the background.
+                 * When group members fetch the list of groups they've joined, this group will no longer be returned.
+                 * Related callbacks:
+                 * `onGroupDismissed`
                  * @param request DismissGroupReq message or plain object
                  * @returns Promise
                  */
@@ -17815,7 +16644,10 @@ export namespace openim {
 
                 /**
                  * The group owner or group admin changes the mute status of the group.
+                 * Notice:
                  * After being muted, regular members cannot send messages, but the group owner and admins can continue to send messages.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
                  * @param request ChangeGroupMuteReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and ChangeGroupMuteResp
                  */
@@ -17823,7 +16655,10 @@ export namespace openim {
 
                 /**
                  * The group owner or group admin changes the mute status of the group.
+                 * Notice:
                  * After being muted, regular members cannot send messages, but the group owner and admins can continue to send messages.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
                  * @param request ChangeGroupMuteReq message or plain object
                  * @returns Promise
                  */
@@ -17831,7 +16666,10 @@ export namespace openim {
 
                 /**
                  * The group owner or group administrators can change the mute status of group members.
+                 * Notice:
                  * A group owner can mute both administrators and regular members, while an administrator can only mute regular members.
+                 * Related callbacks:
+                 * `onGroupApplicationAccepted`
                  * @param request ChangeGroupMemberMuteReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and ChangeGroupMemberMuteResp
                  */
@@ -17839,7 +16677,10 @@ export namespace openim {
 
                 /**
                  * The group owner or group administrators can change the mute status of group members.
+                 * Notice:
                  * A group owner can mute both administrators and regular members, while an administrator can only mute regular members.
+                 * Related callbacks:
+                 * `onGroupApplicationAccepted`
                  * @param request ChangeGroupMemberMuteReq message or plain object
                  * @returns Promise
                  */
@@ -17847,7 +16688,11 @@ export namespace openim {
 
                 /**
                  * Transfer the group owner status.
+                 * Notice:
                  * Transfer group owner, can only be called by group owner.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
+                 * `onGroupMemberInfoChanged`
                  * @param request TransferGroupOwnerReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and TransferGroupOwnerResp
                  */
@@ -17855,7 +16700,11 @@ export namespace openim {
 
                 /**
                  * Transfer the group owner status.
+                 * Notice:
                  * Transfer group owner, can only be called by group owner.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
+                 * `onGroupMemberInfoChanged`
                  * @param request TransferGroupOwnerReq message or plain object
                  * @returns Promise
                  */
@@ -17863,7 +16712,11 @@ export namespace openim {
 
                 /**
                  * Remove a member from a group.
+                 * Notice:
                  * The group owner and group administrators can remove group members.
+                 * Related callbacks:
+                 * `onJoinedGroupDeleted`
+                 * `onGroupMemberDeleted`
                  * @param request KickGroupMemberReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and KickGroupMemberResp
                  */
@@ -17871,7 +16724,11 @@ export namespace openim {
 
                 /**
                  * Remove a member from a group.
+                 * Notice:
                  * The group owner and group administrators can remove group members.
+                 * Related callbacks:
+                 * `onJoinedGroupDeleted`
+                 * `onGroupMemberDeleted`
                  * @param request KickGroupMemberReq message or plain object
                  * @returns Promise
                  */
@@ -17879,7 +16736,10 @@ export namespace openim {
 
                 /**
                  * Set group information
+                 * Notice:
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
                  * @param request SetGroupInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SetGroupInfoResp
                  */
@@ -17887,7 +16747,10 @@ export namespace openim {
 
                 /**
                  * Set group information
+                 * Notice:
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Related callbacks:
+                 * `onGroupInfoChanged`
                  * @param request SetGroupInfoReq message or plain object
                  * @returns Promise
                  */
@@ -17895,7 +16758,10 @@ export namespace openim {
 
                 /**
                  * Set group information
+                 * Notice:
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Related callbacks:
+                 * `onGroupMemberInfoChanged`
                  * @param request SetGroupMemberInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SetGroupMemberInfoResp
                  */
@@ -17903,7 +16769,10 @@ export namespace openim {
 
                 /**
                  * Set group information
+                 * Notice:
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Related callbacks:
+                 * `onGroupMemberInfoChanged`
                  * @param request SetGroupMemberInfoReq message or plain object
                  * @returns Promise
                  */
@@ -17912,6 +16781,8 @@ export namespace openim {
                 /**
                  * Fetch the list of groups you've joined.
                  * Get joined group chat information.
+                 * Notice:
+                 * If joined group is dismessed, it will not be return the group.
                  * @param request GetJoinedGroupsReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetJoinedGroupsResp
                  */
@@ -17920,6 +16791,8 @@ export namespace openim {
                 /**
                  * Fetch the list of groups you've joined.
                  * Get joined group chat information.
+                 * Notice:
+                 * If joined group is dismessed, it will not be return the group.
                  * @param request GetJoinedGroupsReq message or plain object
                  * @returns Promise
                  */
@@ -17928,6 +16801,8 @@ export namespace openim {
                 /**
                  * Split fetch the list of groups you've joined.
                  * Get joined group chat information.
+                 * Notice:
+                 * count can not hugo. Else, the request time is too long.
                  * @param request GetJoinedGroupsPageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetJoinedGroupsPageResp
                  */
@@ -17936,6 +16811,8 @@ export namespace openim {
                 /**
                  * Split fetch the list of groups you've joined.
                  * Get joined group chat information.
+                 * Notice:
+                 * count can not hugo. Else, the request time is too long.
                  * @param request GetJoinedGroupsPageReq message or plain object
                  * @returns Promise
                  */
@@ -17944,6 +16821,8 @@ export namespace openim {
                 /**
                  * Set group information
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Notice:
+                 * Recommend once to get up to 100.
                  * @param request GetSpecifiedGroupsInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetSpecifiedGroupsInfoResp
                  */
@@ -17952,6 +16831,8 @@ export namespace openim {
                 /**
                  * Set group information
                  * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Notice:
+                 * Recommend once to get up to 100.
                  * @param request GetSpecifiedGroupsInfoReq message or plain object
                  * @returns Promise
                  */
@@ -17959,6 +16840,9 @@ export namespace openim {
 
                 /**
                  * Search for joined groups using keyword
+                 * Notice:
+                 * Must have specific once search type.
+                 * Mulit search type is related in AND or OR.
                  * The list of groups is recommended to have a maximum of 100 at a time.
                  * @param request SearchGroupsReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SearchGroupsResp
@@ -17967,6 +16851,9 @@ export namespace openim {
 
                 /**
                  * Search for joined groups using keyword
+                 * Notice:
+                 * Must have specific once search type.
+                 * Mulit search type is related in AND or OR.
                  * The list of groups is recommended to have a maximum of 100 at a time.
                  * @param request SearchGroupsReq message or plain object
                  * @returns Promise
@@ -17974,160 +16861,206 @@ export namespace openim {
                 public searchGroups(request: openim.sdk.group.ISearchGroupsReq): Promise<openim.sdk.group.SearchGroupsResp>;
 
                 /**
-                 * Search for joined groups using keyword
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group owner and admin.
+                 * Notice:
+                 * Caller must be joined the group can call this interface.
                  * @param request GetGroupMemberOwnerAndAdminReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMemberOwnerAndAdminResp
                  */
                 public getGroupMemberOwnerAndAdmin(request: openim.sdk.group.IGetGroupMemberOwnerAndAdminReq, callback: openim.sdk.group.GroupService.GetGroupMemberOwnerAndAdminCallback): void;
 
                 /**
-                 * Search for joined groups using keyword
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group owner and admin.
+                 * Notice:
+                 * Caller must be joined the group can call this interface.
                  * @param request GetGroupMemberOwnerAndAdminReq message or plain object
                  * @returns Promise
                  */
                 public getGroupMemberOwnerAndAdmin(request: openim.sdk.group.IGetGroupMemberOwnerAndAdminReq): Promise<openim.sdk.group.GetGroupMemberOwnerAndAdminResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group member info. Support filter by join time.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetGroupMembersByJoinTimeFilterReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMembersByJoinTimeFilterResp
                  */
                 public getGroupMembersByJoinTimeFilter(request: openim.sdk.group.IGetGroupMembersByJoinTimeFilterReq, callback: openim.sdk.group.GroupService.GetGroupMembersByJoinTimeFilterCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group member info. Support filter by join time.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetGroupMembersByJoinTimeFilterReq message or plain object
                  * @returns Promise
                  */
                 public getGroupMembersByJoinTimeFilter(request: openim.sdk.group.IGetGroupMembersByJoinTimeFilterReq): Promise<openim.sdk.group.GetGroupMembersByJoinTimeFilterResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified groups and corresponding group members info.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetSpecifiedGroupMembersInfoReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetSpecifiedGroupMembersInfoResp
                  */
                 public getSpecifiedGroupMembersInfo(request: openim.sdk.group.IGetSpecifiedGroupMembersInfoReq, callback: openim.sdk.group.GroupService.GetSpecifiedGroupMembersInfoCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified groups and corresponding group members info.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetSpecifiedGroupMembersInfoReq message or plain object
                  * @returns Promise
                  */
                 public getSpecifiedGroupMembersInfo(request: openim.sdk.group.IGetSpecifiedGroupMembersInfoReq): Promise<openim.sdk.group.GetSpecifiedGroupMembersInfoResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group member info.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetGroupMembersReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupMembersResp
                  */
                 public getGroupMembers(request: openim.sdk.group.IGetGroupMembersReq, callback: openim.sdk.group.GroupService.GetGroupMembersCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Get specified group member info.
+                 * Notice:
+                 * 1. Caller must be joined the group can call this interface.
+                 * 2. Recommend once to get up to 10000.
                  * @param request GetGroupMembersReq message or plain object
                  * @returns Promise
                  */
                 public getGroupMembers(request: openim.sdk.group.IGetGroupMembersReq): Promise<openim.sdk.group.GetGroupMembersResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Group owner or group admin get group application, including request and invit.
+                 * Notice:
+                 * Get all group applications once.
                  * @param request GetGroupApplicationReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetGroupApplicationResp
                  */
                 public getGroupRequest(request: openim.sdk.group.IGetGroupApplicationReq, callback: openim.sdk.group.GroupService.GetGroupRequestCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Group owner or group admin get group application, including request and invit.
+                 * Notice:
+                 * Get all group applications once.
                  * @param request GetGroupApplicationReq message or plain object
                  * @returns Promise
                  */
                 public getGroupRequest(request: openim.sdk.group.IGetGroupApplicationReq): Promise<openim.sdk.group.GetGroupApplicationResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Search specified group's group member using keyword
+                 * Notice:
+                 * Only group member have search permission.
+                 * Must have specific once search type.
+                 * Mulit search type is related in AND or OR.
+                 * The list of groups is recommended to have a maximum of 100 at a time.
                  * @param request SearchGroupMembersReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and SearchGroupMembersResp
                  */
                 public searchGroupMembers(request: openim.sdk.group.ISearchGroupMembersReq, callback: openim.sdk.group.GroupService.SearchGroupMembersCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Search specified group's group member using keyword
+                 * Notice:
+                 * Only group member have search permission.
+                 * Must have specific once search type.
+                 * Mulit search type is related in AND or OR.
+                 * The list of groups is recommended to have a maximum of 100 at a time.
                  * @param request SearchGroupMembersReq message or plain object
                  * @returns Promise
                  */
                 public searchGroupMembers(request: openim.sdk.group.ISearchGroupMembersReq): Promise<openim.sdk.group.SearchGroupMembersResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Check current user is join the group.
                  * @param request IsJoinGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and IsJoinGroupResp
                  */
                 public isJoinGroup(request: openim.sdk.group.IIsJoinGroupReq, callback: openim.sdk.group.GroupService.IsJoinGroupCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Check current user is join the group.
                  * @param request IsJoinGroupReq message or plain object
                  * @returns Promise
                  */
                 public isJoinGroup(request: openim.sdk.group.IIsJoinGroupReq): Promise<openim.sdk.group.IsJoinGroupResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Check specified user is join the group.
                  * @param request GetUsersInGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and GetUsersInGroupResp
                  */
                 public getUsersInGroup(request: openim.sdk.group.IGetUsersInGroupReq, callback: openim.sdk.group.GroupService.GetUsersInGroupCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Check specified user is join the group.
                  * @param request GetUsersInGroupReq message or plain object
                  * @returns Promise
                  */
                 public getUsersInGroup(request: openim.sdk.group.IGetUsersInGroupReq): Promise<openim.sdk.group.GetUsersInGroupResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Invite user to group
+                 * Notice:
+                 * Determine the result of inviting a user to the group based on the caller's identity and the group entry verification options.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
+                 * `onGroupApplicationAdded`
                  * @param request InviteUserToGroupReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and InviteUserToGroupResp
                  */
                 public inviteUserToGroup(request: openim.sdk.group.IInviteUserToGroupReq, callback: openim.sdk.group.GroupService.InviteUserToGroupCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Invite user to group
+                 * Notice:
+                 * Determine the result of inviting a user to the group based on the caller's identity and the group entry verification options.
+                 * Related callbacks:
+                 * `onJoinedGroupAdded`
+                 * `onGroupMemberAdded`
+                 * `onGroupApplicationAdded`
                  * @param request InviteUserToGroupReq message or plain object
                  * @returns Promise
                  */
                 public inviteUserToGroup(request: openim.sdk.group.IInviteUserToGroupReq): Promise<openim.sdk.group.InviteUserToGroupResp>;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Group owner or group admin handle group application.
+                 * Notice:
+                 * Only group owner or group admin have permission call it.
+                 * If the application is handled, group owner and admin can not handle it again.
+                 * Related callbacks:
+                 * `onGroupApplicationAccepted`
+                 * `onGroupMemberAdded`
+                 * `onJoinedGroupAdded`
+                 *
+                 * `onGroupApplicationRejected`
                  * @param request HandleGroupApplicationReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and HandleGroupApplicationResp
                  */
                 public handleGroupRequest(request: openim.sdk.group.IHandleGroupApplicationReq, callback: openim.sdk.group.GroupService.HandleGroupRequestCallback): void;
 
                 /**
-                 * Set group information
-                 * Set group information, including group avatar, name, announcement, introduction, extended fields, etc. Only administrators and group owners have permission to set.
+                 * Group owner or group admin handle group application.
+                 * Notice:
+                 * Only group owner or group admin have permission call it.
+                 * If the application is handled, group owner and admin can not handle it again.
+                 * Related callbacks:
+                 * `onGroupApplicationAccepted`
+                 * `onGroupMemberAdded`
+                 * `onJoinedGroupAdded`
+                 *
+                 * `onGroupApplicationRejected`
                  * @param request HandleGroupApplicationReq message or plain object
                  * @returns Promise
                  */
@@ -19695,6 +18628,12 @@ export namespace openim {
         /** Namespace message. */
         namespace message {
 
+            /** KeywordListMatchType enum. */
+            enum KeywordListMatchType {
+                KeywordMatchOr = 0,
+                KeywordMatchAnd = 1
+            }
+
             /** Properties of a SendMessageReq. */
             interface ISendMessageReq {
 
@@ -20713,6 +19652,200 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for DeleteMessageResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a DeleteMessageFromLocalReq. */
+            interface IDeleteMessageFromLocalReq {
+
+                /** DeleteMessageFromLocalReq conversationID */
+                conversationID?: (string|null);
+
+                /** DeleteMessageFromLocalReq clientMsgID */
+                clientMsgID?: (string|null);
+            }
+
+            /** Represents a DeleteMessageFromLocalReq. */
+            class DeleteMessageFromLocalReq implements IDeleteMessageFromLocalReq {
+
+                /**
+                 * Constructs a new DeleteMessageFromLocalReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.IDeleteMessageFromLocalReq);
+
+                /** DeleteMessageFromLocalReq conversationID. */
+                public conversationID: string;
+
+                /** DeleteMessageFromLocalReq clientMsgID. */
+                public clientMsgID: string;
+
+                /**
+                 * Creates a new DeleteMessageFromLocalReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns DeleteMessageFromLocalReq instance
+                 */
+                public static create(properties?: openim.sdk.message.IDeleteMessageFromLocalReq): openim.sdk.message.DeleteMessageFromLocalReq;
+
+                /**
+                 * Encodes the specified DeleteMessageFromLocalReq message. Does not implicitly {@link openim.sdk.message.DeleteMessageFromLocalReq.verify|verify} messages.
+                 * @param message DeleteMessageFromLocalReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.IDeleteMessageFromLocalReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified DeleteMessageFromLocalReq message, length delimited. Does not implicitly {@link openim.sdk.message.DeleteMessageFromLocalReq.verify|verify} messages.
+                 * @param message DeleteMessageFromLocalReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.IDeleteMessageFromLocalReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a DeleteMessageFromLocalReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns DeleteMessageFromLocalReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.DeleteMessageFromLocalReq;
+
+                /**
+                 * Decodes a DeleteMessageFromLocalReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns DeleteMessageFromLocalReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.DeleteMessageFromLocalReq;
+
+                /**
+                 * Verifies a DeleteMessageFromLocalReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a DeleteMessageFromLocalReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns DeleteMessageFromLocalReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.DeleteMessageFromLocalReq;
+
+                /**
+                 * Creates a plain object from a DeleteMessageFromLocalReq message. Also converts values to other types if specified.
+                 * @param message DeleteMessageFromLocalReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.DeleteMessageFromLocalReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this DeleteMessageFromLocalReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for DeleteMessageFromLocalReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a DeleteMessageFromLocalResp. */
+            interface IDeleteMessageFromLocalResp {
+            }
+
+            /** Represents a DeleteMessageFromLocalResp. */
+            class DeleteMessageFromLocalResp implements IDeleteMessageFromLocalResp {
+
+                /**
+                 * Constructs a new DeleteMessageFromLocalResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.IDeleteMessageFromLocalResp);
+
+                /**
+                 * Creates a new DeleteMessageFromLocalResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns DeleteMessageFromLocalResp instance
+                 */
+                public static create(properties?: openim.sdk.message.IDeleteMessageFromLocalResp): openim.sdk.message.DeleteMessageFromLocalResp;
+
+                /**
+                 * Encodes the specified DeleteMessageFromLocalResp message. Does not implicitly {@link openim.sdk.message.DeleteMessageFromLocalResp.verify|verify} messages.
+                 * @param message DeleteMessageFromLocalResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.IDeleteMessageFromLocalResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified DeleteMessageFromLocalResp message, length delimited. Does not implicitly {@link openim.sdk.message.DeleteMessageFromLocalResp.verify|verify} messages.
+                 * @param message DeleteMessageFromLocalResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.IDeleteMessageFromLocalResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a DeleteMessageFromLocalResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns DeleteMessageFromLocalResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.DeleteMessageFromLocalResp;
+
+                /**
+                 * Decodes a DeleteMessageFromLocalResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns DeleteMessageFromLocalResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.DeleteMessageFromLocalResp;
+
+                /**
+                 * Verifies a DeleteMessageFromLocalResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a DeleteMessageFromLocalResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns DeleteMessageFromLocalResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.DeleteMessageFromLocalResp;
+
+                /**
+                 * Creates a plain object from a DeleteMessageFromLocalResp message. Also converts values to other types if specified.
+                 * @param message DeleteMessageFromLocalResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.DeleteMessageFromLocalResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this DeleteMessageFromLocalResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for DeleteMessageFromLocalResp
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -24585,6 +23718,890 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
+            /** Properties of a ConversationArgs. */
+            interface IConversationArgs {
+
+                /** ConversationArgs conversationID */
+                conversationID?: (string|null);
+
+                /** ConversationArgs clientMsgIDList */
+                clientMsgIDList?: (string[]|null);
+            }
+
+            /** Represents a ConversationArgs. */
+            class ConversationArgs implements IConversationArgs {
+
+                /**
+                 * Constructs a new ConversationArgs.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.IConversationArgs);
+
+                /** ConversationArgs conversationID. */
+                public conversationID: string;
+
+                /** ConversationArgs clientMsgIDList. */
+                public clientMsgIDList: string[];
+
+                /**
+                 * Creates a new ConversationArgs instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns ConversationArgs instance
+                 */
+                public static create(properties?: openim.sdk.message.IConversationArgs): openim.sdk.message.ConversationArgs;
+
+                /**
+                 * Encodes the specified ConversationArgs message. Does not implicitly {@link openim.sdk.message.ConversationArgs.verify|verify} messages.
+                 * @param message ConversationArgs message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.IConversationArgs, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified ConversationArgs message, length delimited. Does not implicitly {@link openim.sdk.message.ConversationArgs.verify|verify} messages.
+                 * @param message ConversationArgs message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.IConversationArgs, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a ConversationArgs message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns ConversationArgs
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.ConversationArgs;
+
+                /**
+                 * Decodes a ConversationArgs message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns ConversationArgs
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.ConversationArgs;
+
+                /**
+                 * Verifies a ConversationArgs message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a ConversationArgs message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns ConversationArgs
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.ConversationArgs;
+
+                /**
+                 * Creates a plain object from a ConversationArgs message. Also converts values to other types if specified.
+                 * @param message ConversationArgs
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.ConversationArgs, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this ConversationArgs to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for ConversationArgs
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SearchByConversationResult. */
+            interface ISearchByConversationResult {
+
+                /** SearchByConversationResult conversationID */
+                conversationID?: (string|null);
+
+                /** SearchByConversationResult conversationType */
+                conversationType?: (number|null);
+
+                /** SearchByConversationResult showName */
+                showName?: (string|null);
+
+                /** SearchByConversationResult faceURL */
+                faceURL?: (string|null);
+
+                /** SearchByConversationResult latestMsgSendTime */
+                latestMsgSendTime?: (number|Long|null);
+
+                /** SearchByConversationResult messageCount */
+                messageCount?: (number|null);
+
+                /** SearchByConversationResult messageList */
+                messageList?: (openim.sdk.shared.IIMMessage[]|null);
+            }
+
+            /** Represents a SearchByConversationResult. */
+            class SearchByConversationResult implements ISearchByConversationResult {
+
+                /**
+                 * Constructs a new SearchByConversationResult.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ISearchByConversationResult);
+
+                /** SearchByConversationResult conversationID. */
+                public conversationID: string;
+
+                /** SearchByConversationResult conversationType. */
+                public conversationType: number;
+
+                /** SearchByConversationResult showName. */
+                public showName: string;
+
+                /** SearchByConversationResult faceURL. */
+                public faceURL: string;
+
+                /** SearchByConversationResult latestMsgSendTime. */
+                public latestMsgSendTime: (number|Long);
+
+                /** SearchByConversationResult messageCount. */
+                public messageCount: number;
+
+                /** SearchByConversationResult messageList. */
+                public messageList: openim.sdk.shared.IIMMessage[];
+
+                /**
+                 * Creates a new SearchByConversationResult instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SearchByConversationResult instance
+                 */
+                public static create(properties?: openim.sdk.message.ISearchByConversationResult): openim.sdk.message.SearchByConversationResult;
+
+                /**
+                 * Encodes the specified SearchByConversationResult message. Does not implicitly {@link openim.sdk.message.SearchByConversationResult.verify|verify} messages.
+                 * @param message SearchByConversationResult message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ISearchByConversationResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SearchByConversationResult message, length delimited. Does not implicitly {@link openim.sdk.message.SearchByConversationResult.verify|verify} messages.
+                 * @param message SearchByConversationResult message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ISearchByConversationResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SearchByConversationResult message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SearchByConversationResult
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.SearchByConversationResult;
+
+                /**
+                 * Decodes a SearchByConversationResult message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SearchByConversationResult
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.SearchByConversationResult;
+
+                /**
+                 * Verifies a SearchByConversationResult message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SearchByConversationResult message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SearchByConversationResult
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.SearchByConversationResult;
+
+                /**
+                 * Creates a plain object from a SearchByConversationResult message. Also converts values to other types if specified.
+                 * @param message SearchByConversationResult
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.SearchByConversationResult, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SearchByConversationResult to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SearchByConversationResult
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a FindMessageListReq. */
+            interface IFindMessageListReq {
+
+                /** FindMessageListReq conversationsArgs */
+                conversationsArgs?: (openim.sdk.message.IConversationArgs[]|null);
+            }
+
+            /** Represents a FindMessageListReq. */
+            class FindMessageListReq implements IFindMessageListReq {
+
+                /**
+                 * Constructs a new FindMessageListReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.IFindMessageListReq);
+
+                /** FindMessageListReq conversationsArgs. */
+                public conversationsArgs: openim.sdk.message.IConversationArgs[];
+
+                /**
+                 * Creates a new FindMessageListReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns FindMessageListReq instance
+                 */
+                public static create(properties?: openim.sdk.message.IFindMessageListReq): openim.sdk.message.FindMessageListReq;
+
+                /**
+                 * Encodes the specified FindMessageListReq message. Does not implicitly {@link openim.sdk.message.FindMessageListReq.verify|verify} messages.
+                 * @param message FindMessageListReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.IFindMessageListReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified FindMessageListReq message, length delimited. Does not implicitly {@link openim.sdk.message.FindMessageListReq.verify|verify} messages.
+                 * @param message FindMessageListReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.IFindMessageListReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a FindMessageListReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns FindMessageListReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.FindMessageListReq;
+
+                /**
+                 * Decodes a FindMessageListReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns FindMessageListReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.FindMessageListReq;
+
+                /**
+                 * Verifies a FindMessageListReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a FindMessageListReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns FindMessageListReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.FindMessageListReq;
+
+                /**
+                 * Creates a plain object from a FindMessageListReq message. Also converts values to other types if specified.
+                 * @param message FindMessageListReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.FindMessageListReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this FindMessageListReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for FindMessageListReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a FindMessageListResp. */
+            interface IFindMessageListResp {
+
+                /** FindMessageListResp findResultItems */
+                findResultItems?: (openim.sdk.message.ISearchByConversationResult[]|null);
+
+                /** FindMessageListResp totalCount */
+                totalCount?: (number|null);
+            }
+
+            /** Represents a FindMessageListResp. */
+            class FindMessageListResp implements IFindMessageListResp {
+
+                /**
+                 * Constructs a new FindMessageListResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.IFindMessageListResp);
+
+                /** FindMessageListResp findResultItems. */
+                public findResultItems: openim.sdk.message.ISearchByConversationResult[];
+
+                /** FindMessageListResp totalCount. */
+                public totalCount: number;
+
+                /**
+                 * Creates a new FindMessageListResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns FindMessageListResp instance
+                 */
+                public static create(properties?: openim.sdk.message.IFindMessageListResp): openim.sdk.message.FindMessageListResp;
+
+                /**
+                 * Encodes the specified FindMessageListResp message. Does not implicitly {@link openim.sdk.message.FindMessageListResp.verify|verify} messages.
+                 * @param message FindMessageListResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.IFindMessageListResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified FindMessageListResp message, length delimited. Does not implicitly {@link openim.sdk.message.FindMessageListResp.verify|verify} messages.
+                 * @param message FindMessageListResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.IFindMessageListResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a FindMessageListResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns FindMessageListResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.FindMessageListResp;
+
+                /**
+                 * Decodes a FindMessageListResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns FindMessageListResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.FindMessageListResp;
+
+                /**
+                 * Verifies a FindMessageListResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a FindMessageListResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns FindMessageListResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.FindMessageListResp;
+
+                /**
+                 * Creates a plain object from a FindMessageListResp message. Also converts values to other types if specified.
+                 * @param message FindMessageListResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.FindMessageListResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this FindMessageListResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for FindMessageListResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SearchLocalMessagesReq. */
+            interface ISearchLocalMessagesReq {
+
+                /** SearchLocalMessagesReq conversationID */
+                conversationID?: (string|null);
+
+                /** SearchLocalMessagesReq keywords */
+                keywords?: (string[]|null);
+
+                /** SearchLocalMessagesReq keywordMatchType */
+                keywordMatchType?: (openim.sdk.message.KeywordListMatchType|null);
+
+                /** SearchLocalMessagesReq senderUserIDs */
+                senderUserIDs?: (string[]|null);
+
+                /** SearchLocalMessagesReq messageTypes */
+                messageTypes?: (openim.sdk.common.ContentType[]|null);
+
+                /** SearchLocalMessagesReq searchTimePosition */
+                searchTimePosition?: (number|Long|null);
+
+                /** SearchLocalMessagesReq searchTimePeriod */
+                searchTimePeriod?: (number|Long|null);
+
+                /** SearchLocalMessagesReq pagination */
+                pagination?: (openim.sdk.common.IRequestPagination|null);
+            }
+
+            /** Represents a SearchLocalMessagesReq. */
+            class SearchLocalMessagesReq implements ISearchLocalMessagesReq {
+
+                /**
+                 * Constructs a new SearchLocalMessagesReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ISearchLocalMessagesReq);
+
+                /** SearchLocalMessagesReq conversationID. */
+                public conversationID: string;
+
+                /** SearchLocalMessagesReq keywords. */
+                public keywords: string[];
+
+                /** SearchLocalMessagesReq keywordMatchType. */
+                public keywordMatchType: openim.sdk.message.KeywordListMatchType;
+
+                /** SearchLocalMessagesReq senderUserIDs. */
+                public senderUserIDs: string[];
+
+                /** SearchLocalMessagesReq messageTypes. */
+                public messageTypes: openim.sdk.common.ContentType[];
+
+                /** SearchLocalMessagesReq searchTimePosition. */
+                public searchTimePosition: (number|Long);
+
+                /** SearchLocalMessagesReq searchTimePeriod. */
+                public searchTimePeriod: (number|Long);
+
+                /** SearchLocalMessagesReq pagination. */
+                public pagination?: (openim.sdk.common.IRequestPagination|null);
+
+                /**
+                 * Creates a new SearchLocalMessagesReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SearchLocalMessagesReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ISearchLocalMessagesReq): openim.sdk.message.SearchLocalMessagesReq;
+
+                /**
+                 * Encodes the specified SearchLocalMessagesReq message. Does not implicitly {@link openim.sdk.message.SearchLocalMessagesReq.verify|verify} messages.
+                 * @param message SearchLocalMessagesReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ISearchLocalMessagesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SearchLocalMessagesReq message, length delimited. Does not implicitly {@link openim.sdk.message.SearchLocalMessagesReq.verify|verify} messages.
+                 * @param message SearchLocalMessagesReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ISearchLocalMessagesReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SearchLocalMessagesReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SearchLocalMessagesReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.SearchLocalMessagesReq;
+
+                /**
+                 * Decodes a SearchLocalMessagesReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SearchLocalMessagesReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.SearchLocalMessagesReq;
+
+                /**
+                 * Verifies a SearchLocalMessagesReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SearchLocalMessagesReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SearchLocalMessagesReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.SearchLocalMessagesReq;
+
+                /**
+                 * Creates a plain object from a SearchLocalMessagesReq message. Also converts values to other types if specified.
+                 * @param message SearchLocalMessagesReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.SearchLocalMessagesReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SearchLocalMessagesReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SearchLocalMessagesReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SearchLocalMessagesResp. */
+            interface ISearchLocalMessagesResp {
+
+                /** SearchLocalMessagesResp count */
+                count?: (number|Long|null);
+
+                /** SearchLocalMessagesResp searchResultItems */
+                searchResultItems?: (openim.sdk.message.ISearchByConversationResult[]|null);
+            }
+
+            /** Represents a SearchLocalMessagesResp. */
+            class SearchLocalMessagesResp implements ISearchLocalMessagesResp {
+
+                /**
+                 * Constructs a new SearchLocalMessagesResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ISearchLocalMessagesResp);
+
+                /** SearchLocalMessagesResp count. */
+                public count: (number|Long);
+
+                /** SearchLocalMessagesResp searchResultItems. */
+                public searchResultItems: openim.sdk.message.ISearchByConversationResult[];
+
+                /**
+                 * Creates a new SearchLocalMessagesResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SearchLocalMessagesResp instance
+                 */
+                public static create(properties?: openim.sdk.message.ISearchLocalMessagesResp): openim.sdk.message.SearchLocalMessagesResp;
+
+                /**
+                 * Encodes the specified SearchLocalMessagesResp message. Does not implicitly {@link openim.sdk.message.SearchLocalMessagesResp.verify|verify} messages.
+                 * @param message SearchLocalMessagesResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ISearchLocalMessagesResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SearchLocalMessagesResp message, length delimited. Does not implicitly {@link openim.sdk.message.SearchLocalMessagesResp.verify|verify} messages.
+                 * @param message SearchLocalMessagesResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ISearchLocalMessagesResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SearchLocalMessagesResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SearchLocalMessagesResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.SearchLocalMessagesResp;
+
+                /**
+                 * Decodes a SearchLocalMessagesResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SearchLocalMessagesResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.SearchLocalMessagesResp;
+
+                /**
+                 * Verifies a SearchLocalMessagesResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SearchLocalMessagesResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SearchLocalMessagesResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.SearchLocalMessagesResp;
+
+                /**
+                 * Creates a plain object from a SearchLocalMessagesResp message. Also converts values to other types if specified.
+                 * @param message SearchLocalMessagesResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.SearchLocalMessagesResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SearchLocalMessagesResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SearchLocalMessagesResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SetMessageLocalExReq. */
+            interface ISetMessageLocalExReq {
+
+                /** SetMessageLocalExReq conversationID */
+                conversationID?: (string|null);
+
+                /** SetMessageLocalExReq clientMsgID */
+                clientMsgID?: (string|null);
+
+                /** SetMessageLocalExReq localEx */
+                localEx?: (string|null);
+            }
+
+            /** Represents a SetMessageLocalExReq. */
+            class SetMessageLocalExReq implements ISetMessageLocalExReq {
+
+                /**
+                 * Constructs a new SetMessageLocalExReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ISetMessageLocalExReq);
+
+                /** SetMessageLocalExReq conversationID. */
+                public conversationID: string;
+
+                /** SetMessageLocalExReq clientMsgID. */
+                public clientMsgID: string;
+
+                /** SetMessageLocalExReq localEx. */
+                public localEx: string;
+
+                /**
+                 * Creates a new SetMessageLocalExReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SetMessageLocalExReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ISetMessageLocalExReq): openim.sdk.message.SetMessageLocalExReq;
+
+                /**
+                 * Encodes the specified SetMessageLocalExReq message. Does not implicitly {@link openim.sdk.message.SetMessageLocalExReq.verify|verify} messages.
+                 * @param message SetMessageLocalExReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ISetMessageLocalExReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SetMessageLocalExReq message, length delimited. Does not implicitly {@link openim.sdk.message.SetMessageLocalExReq.verify|verify} messages.
+                 * @param message SetMessageLocalExReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ISetMessageLocalExReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SetMessageLocalExReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SetMessageLocalExReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.SetMessageLocalExReq;
+
+                /**
+                 * Decodes a SetMessageLocalExReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SetMessageLocalExReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.SetMessageLocalExReq;
+
+                /**
+                 * Verifies a SetMessageLocalExReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SetMessageLocalExReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SetMessageLocalExReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.SetMessageLocalExReq;
+
+                /**
+                 * Creates a plain object from a SetMessageLocalExReq message. Also converts values to other types if specified.
+                 * @param message SetMessageLocalExReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.SetMessageLocalExReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SetMessageLocalExReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SetMessageLocalExReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SetMessageLocalExResp. */
+            interface ISetMessageLocalExResp {
+
+                /** SetMessageLocalExResp success */
+                success?: (boolean|null);
+            }
+
+            /** Represents a SetMessageLocalExResp. */
+            class SetMessageLocalExResp implements ISetMessageLocalExResp {
+
+                /**
+                 * Constructs a new SetMessageLocalExResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ISetMessageLocalExResp);
+
+                /** SetMessageLocalExResp success. */
+                public success: boolean;
+
+                /**
+                 * Creates a new SetMessageLocalExResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SetMessageLocalExResp instance
+                 */
+                public static create(properties?: openim.sdk.message.ISetMessageLocalExResp): openim.sdk.message.SetMessageLocalExResp;
+
+                /**
+                 * Encodes the specified SetMessageLocalExResp message. Does not implicitly {@link openim.sdk.message.SetMessageLocalExResp.verify|verify} messages.
+                 * @param message SetMessageLocalExResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ISetMessageLocalExResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SetMessageLocalExResp message, length delimited. Does not implicitly {@link openim.sdk.message.SetMessageLocalExResp.verify|verify} messages.
+                 * @param message SetMessageLocalExResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ISetMessageLocalExResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SetMessageLocalExResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SetMessageLocalExResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.SetMessageLocalExResp;
+
+                /**
+                 * Decodes a SetMessageLocalExResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SetMessageLocalExResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.SetMessageLocalExResp;
+
+                /**
+                 * Verifies a SetMessageLocalExResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SetMessageLocalExResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SetMessageLocalExResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.SetMessageLocalExResp;
+
+                /**
+                 * Creates a plain object from a SetMessageLocalExResp message. Also converts values to other types if specified.
+                 * @param message SetMessageLocalExResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.SetMessageLocalExResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SetMessageLocalExResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SetMessageLocalExResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
             /** Represents a MessageService */
             class MessageService extends $protobuf.rpc.Service {
 
@@ -24606,71 +24623,620 @@ export namespace openim {
                 public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): MessageService;
 
                 /**
-                 * create a picture message
-                 * in the js environment, filepath is a file object
+                 * Get history message in conversation. Such as sroll up to load history message.
+                 * Use `isReverse` to control the order of the message list.
+                 * @param request GetHistoryMessageListReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetHistoryMessageListResp
+                 */
+                public getHistoryMessageList(request: openim.sdk.message.IGetHistoryMessageListReq, callback: openim.sdk.message.MessageService.GetHistoryMessageListCallback): void;
+
+                /**
+                 * Get history message in conversation. Such as sroll up to load history message.
+                 * Use `isReverse` to control the order of the message list.
+                 * @param request GetHistoryMessageListReq message or plain object
+                 * @returns Promise
+                 */
+                public getHistoryMessageList(request: openim.sdk.message.IGetHistoryMessageListReq): Promise<openim.sdk.message.GetHistoryMessageListResp>;
+
+                /**
+                 * Revoke a message. Support revoke self message, and group owner and group admin can revoke group member message.
+                 * Notice:
+                 * Original message will be transfer ContentType to 2101 when revoke message.
+                 * Related callbacks:
+                 * `onNewRecvMessageRevoked`
+                 * `onConversationChanged`
+                 * If revoke message is a latest message, the conversation last message will be update.
+                 * @param request RevokeMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and RevokeMessageResp
+                 */
+                public revokeMessage(request: openim.sdk.message.IRevokeMessageReq, callback: openim.sdk.message.MessageService.RevokeMessageCallback): void;
+
+                /**
+                 * Revoke a message. Support revoke self message, and group owner and group admin can revoke group member message.
+                 * Notice:
+                 * Original message will be transfer ContentType to 2101 when revoke message.
+                 * Related callbacks:
+                 * `onNewRecvMessageRevoked`
+                 * `onConversationChanged`
+                 * If revoke message is a latest message, the conversation last message will be update.
+                 * @param request RevokeMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public revokeMessage(request: openim.sdk.message.IRevokeMessageReq): Promise<openim.sdk.message.RevokeMessageResp>;
+
+                /**
+                 * Send typing status, the recipient will receive it only if they are online on IM.
+                 * Notice:
+                 * Related callbacks:
+                 * `onRecvNewMessage`
+                 * `onRecvNewMessages`
+                 * @param request TypingStatusUpdateReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and TypingStatusUpdateResp
+                 */
+                public typingStatusUpdate(request: openim.sdk.message.ITypingStatusUpdateReq, callback: openim.sdk.message.MessageService.TypingStatusUpdateCallback): void;
+
+                /**
+                 * Send typing status, the recipient will receive it only if they are online on IM.
+                 * Notice:
+                 * Related callbacks:
+                 * `onRecvNewMessage`
+                 * `onRecvNewMessages`
+                 * @param request TypingStatusUpdateReq message or plain object
+                 * @returns Promise
+                 */
+                public typingStatusUpdate(request: openim.sdk.message.ITypingStatusUpdateReq): Promise<openim.sdk.message.TypingStatusUpdateResp>;
+
+                /**
+                 * Delete a message from local and server.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If delete message is a latest message, the conversation last message will be update.
+                 * @param request DeleteMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteMessageResp
+                 */
+                public deleteMessage(request: openim.sdk.message.IDeleteMessageReq, callback: openim.sdk.message.MessageService.DeleteMessageCallback): void;
+
+                /**
+                 * Delete a message from local and server.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If delete message is a latest message, the conversation last message will be update.
+                 * @param request DeleteMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteMessage(request: openim.sdk.message.IDeleteMessageReq): Promise<openim.sdk.message.DeleteMessageResp>;
+
+                /**
+                 * Delete a message from local. The message will be retained when reinstall app.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If delete message is a latest message, the conversation last message will be update.
+                 * @param request DeleteMessageFromLocalReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteMessageFromLocalResp
+                 */
+                public deleteMessageFromLocal(request: openim.sdk.message.IDeleteMessageFromLocalReq, callback: openim.sdk.message.MessageService.DeleteMessageFromLocalCallback): void;
+
+                /**
+                 * Delete a message from local. The message will be retained when reinstall app.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If delete message is a latest message, the conversation last message will be update.
+                 * @param request DeleteMessageFromLocalReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteMessageFromLocal(request: openim.sdk.message.IDeleteMessageFromLocalReq): Promise<openim.sdk.message.DeleteMessageFromLocalResp>;
+
+                /**
+                 * Delete all message from local and server. The conversation will still be retained.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request DeleteAllMsgFromLocalAndServerReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteAllMsgFromLocalAndServerResp
+                 */
+                public deleteAllMsgFromLocalAndServer(request: openim.sdk.message.IDeleteAllMsgFromLocalAndServerReq, callback: openim.sdk.message.MessageService.DeleteAllMsgFromLocalAndServerCallback): void;
+
+                /**
+                 * Delete all message from local and server. The conversation will still be retained.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request DeleteAllMsgFromLocalAndServerReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteAllMsgFromLocalAndServer(request: openim.sdk.message.IDeleteAllMsgFromLocalAndServerReq): Promise<openim.sdk.message.DeleteAllMsgFromLocalAndServerResp>;
+
+                /**
+                 * Delete all message from all local conversation. The conversation will still be retained.
+                 * You still can get the message when reinstall the app.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request DeleteAllMessageFromLocalReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteAllMessageFromLocalResp
+                 */
+                public deleteAllMessageFromLocal(request: openim.sdk.message.IDeleteAllMessageFromLocalReq, callback: openim.sdk.message.MessageService.DeleteAllMessageFromLocalCallback): void;
+
+                /**
+                 * Delete all message from all local conversation. The conversation will still be retained.
+                 * You still can get the message when reinstall the app.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * @param request DeleteAllMessageFromLocalReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteAllMessageFromLocal(request: openim.sdk.message.IDeleteAllMessageFromLocalReq): Promise<openim.sdk.message.DeleteAllMessageFromLocalResp>;
+
+                /**
+                 * Insert a single message to local. Only current device can see it.
+                 * Can't sync to other platforms.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * Only current device can see it.
+                 * @param request InsertSingleMessageToLocalReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and InsertSingleMessageToLocalResp
+                 */
+                public insertSingleMessageToLocal(request: openim.sdk.message.IInsertSingleMessageToLocalReq, callback: openim.sdk.message.MessageService.InsertSingleMessageToLocalCallback): void;
+
+                /**
+                 * Insert a single message to local. Only current device can see it.
+                 * Can't sync to other platforms.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * Only current device can see it.
+                 * @param request InsertSingleMessageToLocalReq message or plain object
+                 * @returns Promise
+                 */
+                public insertSingleMessageToLocal(request: openim.sdk.message.IInsertSingleMessageToLocalReq): Promise<openim.sdk.message.InsertSingleMessageToLocalResp>;
+
+                /**
+                 * Insert a group message to local. Only current device can see it.
+                 * Can't sync to other platforms.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * Only current device can see it.
+                 * @param request InsertGroupMessageToLocalReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and InsertGroupMessageToLocalResp
+                 */
+                public insertGroupMessageToLocal(request: openim.sdk.message.IInsertGroupMessageToLocalReq, callback: openim.sdk.message.MessageService.InsertGroupMessageToLocalCallback): void;
+
+                /**
+                 * Insert a group message to local. Only current device can see it.
+                 * Can't sync to other platforms.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * Only current device can see it.
+                 * @param request InsertGroupMessageToLocalReq message or plain object
+                 * @returns Promise
+                 */
+                public insertGroupMessageToLocal(request: openim.sdk.message.IInsertGroupMessageToLocalReq): Promise<openim.sdk.message.InsertGroupMessageToLocalResp>;
+
+                /**
+                 * create a text message.
+                 * @param request CreateTextMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateTextMessageResp
+                 */
+                public createTextMessage(request: openim.sdk.message.ICreateTextMessageReq, callback: openim.sdk.message.MessageService.CreateTextMessageCallback): void;
+
+                /**
+                 * create a text message.
+                 * @param request CreateTextMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createTextMessage(request: openim.sdk.message.ICreateTextMessageReq): Promise<openim.sdk.message.CreateTextMessageResp>;
+
+                /**
+                 * create a text message with advanced features.
+                 * @param request CreateAdvancedTextMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateAdvancedTextMessageResp
+                 */
+                public createAdvancedTextMessage(request: openim.sdk.message.ICreateAdvancedTextMessageReq, callback: openim.sdk.message.MessageService.CreateAdvancedTextMessageCallback): void;
+
+                /**
+                 * create a text message with advanced features.
+                 * @param request CreateAdvancedTextMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createAdvancedTextMessage(request: openim.sdk.message.ICreateAdvancedTextMessageReq): Promise<openim.sdk.message.CreateAdvancedTextMessageResp>;
+
+                /**
+                 * create a At message.
+                 * Now only support 10 users in one message.
+                 * If you want to at all users, you need use a `AtAllTag` tag in userID field.
+                 * Meanwhile, if you need to at user and quote a message, you need to pass the referenced message as a parameter.
+                 * @param request CreateTextAtMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateTextAtMessageResp
+                 */
+                public createTextAtMessage(request: openim.sdk.message.ICreateTextAtMessageReq, callback: openim.sdk.message.MessageService.CreateTextAtMessageCallback): void;
+
+                /**
+                 * create a At message.
+                 * Now only support 10 users in one message.
+                 * If you want to at all users, you need use a `AtAllTag` tag in userID field.
+                 * Meanwhile, if you need to at user and quote a message, you need to pass the referenced message as a parameter.
+                 * @param request CreateTextAtMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createTextAtMessage(request: openim.sdk.message.ICreateTextAtMessageReq): Promise<openim.sdk.message.CreateTextAtMessageResp>;
+
+                /**
+                 * create a location message. Including longitude and latitude.
+                 * Notice:
+                 * The longitude and latitude need you get it.
+                 * @param request CreateLocationMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateLocationMessageResp
+                 */
+                public createLocationMessage(request: openim.sdk.message.ICreateLocationMessageReq, callback: openim.sdk.message.MessageService.CreateLocationMessageCallback): void;
+
+                /**
+                 * create a location message. Including longitude and latitude.
+                 * Notice:
+                 * The longitude and latitude need you get it.
+                 * @param request CreateLocationMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createLocationMessage(request: openim.sdk.message.ICreateLocationMessageReq): Promise<openim.sdk.message.CreateLocationMessageResp>;
+
+                /**
+                 * create a custom message.
+                 * All fields are you defination. SDK only send it.
+                 * @param request CreateCustomMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateCustomMessageResp
+                 */
+                public createCustomMessage(request: openim.sdk.message.ICreateCustomMessageReq, callback: openim.sdk.message.MessageService.CreateCustomMessageCallback): void;
+
+                /**
+                 * create a custom message.
+                 * All fields are you defination. SDK only send it.
+                 * @param request CreateCustomMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createCustomMessage(request: openim.sdk.message.ICreateCustomMessageReq): Promise<openim.sdk.message.CreateCustomMessageResp>;
+
+                /**
+                 * create a quote message.
+                 * @param request CreateQuoteMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateQuoteMessageResp
+                 */
+                public createQuoteMessage(request: openim.sdk.message.ICreateQuoteMessageReq, callback: openim.sdk.message.MessageService.CreateQuoteMessageCallback): void;
+
+                /**
+                 * create a quote message.
+                 * @param request CreateQuoteMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createQuoteMessage(request: openim.sdk.message.ICreateQuoteMessageReq): Promise<openim.sdk.message.CreateQuoteMessageResp>;
+
+                /**
+                 * create a advanced quote message.
+                 * @param request CreateAdvancedQuoteMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateAdvancedQuoteMessageResp
+                 */
+                public createAdvancedQuoteMessage(request: openim.sdk.message.ICreateAdvancedQuoteMessageReq, callback: openim.sdk.message.MessageService.CreateAdvancedQuoteMessageCallback): void;
+
+                /**
+                 * create a advanced quote message.
+                 * @param request CreateAdvancedQuoteMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createAdvancedQuoteMessage(request: openim.sdk.message.ICreateAdvancedQuoteMessageReq): Promise<openim.sdk.message.CreateAdvancedQuoteMessageResp>;
+
+                /**
+                 * create a card message.
+                 * @param request CreateCardMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateCardMessageResp
+                 */
+                public createCardMessage(request: openim.sdk.message.ICreateCardMessageReq, callback: openim.sdk.message.MessageService.CreateCardMessageCallback): void;
+
+                /**
+                 * create a card message.
+                 * @param request CreateCardMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createCardMessage(request: openim.sdk.message.ICreateCardMessageReq): Promise<openim.sdk.message.CreateCardMessageResp>;
+
+                /**
+                 * create a picture message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateImageMessageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateImageMessageResp
                  */
                 public createImageMessage(request: openim.sdk.message.ICreateImageMessageReq, callback: openim.sdk.message.MessageService.CreateImageMessageCallback): void;
 
                 /**
-                 * create a picture message
-                 * in the js environment, filepath is a file object
+                 * create a picture message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateImageMessageReq message or plain object
                  * @returns Promise
                  */
                 public createImageMessage(request: openim.sdk.message.ICreateImageMessageReq): Promise<openim.sdk.message.CreateImageMessageResp>;
 
                 /**
-                 * create a sound message
-                 * in the js environment, filepath is a file object
+                 * create a sound message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateSoundMessageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateSoundMessageResp
                  */
                 public createSoundMessage(request: openim.sdk.message.ICreateSoundMessageReq, callback: openim.sdk.message.MessageService.CreateSoundMessageCallback): void;
 
                 /**
-                 * create a sound message
-                 * in the js environment, filepath is a file object
+                 * create a sound message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateSoundMessageReq message or plain object
                  * @returns Promise
                  */
                 public createSoundMessage(request: openim.sdk.message.ICreateSoundMessageReq): Promise<openim.sdk.message.CreateSoundMessageResp>;
 
                 /**
-                 * create a video message
-                 * in the js environment, filepath is a file object
+                 * create a video message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateVideoMessageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateVideoMessageResp
                  */
                 public createVideoMessage(request: openim.sdk.message.ICreateVideoMessageReq, callback: openim.sdk.message.MessageService.CreateVideoMessageCallback): void;
 
                 /**
-                 * create a video message
-                 * in the js environment, filepath is a file object
+                 * create a video message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateVideoMessageReq message or plain object
                  * @returns Promise
                  */
                 public createVideoMessage(request: openim.sdk.message.ICreateVideoMessageReq): Promise<openim.sdk.message.CreateVideoMessageResp>;
 
                 /**
-                 * create a file message
-                 * in the js environment, filepath is a file object
+                 * create a file message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateFileMessageReq message or plain object
                  * @param callback Node-style callback called with the error, if any, and CreateFileMessageResp
                  */
                 public createFileMessage(request: openim.sdk.message.ICreateFileMessageReq, callback: openim.sdk.message.MessageService.CreateFileMessageCallback): void;
 
                 /**
-                 * create a file message
-                 * in the js environment, filepath is a file object
+                 * create a file message.
+                 * in the js environment, filepath is a file object.
                  * @param request CreateFileMessageReq message or plain object
                  * @returns Promise
                  */
                 public createFileMessage(request: openim.sdk.message.ICreateFileMessageReq): Promise<openim.sdk.message.CreateFileMessageResp>;
+
+                /**
+                 * create a merger message.
+                 * The merger message is a message that contains multiple messages.
+                 * The parameter include title, summaries and multiple messages.
+                 * Notice:
+                 * It is recommended that the number of merged messages does not exceed 100.
+                 * @param request CreateMergerMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateMergerMessageResp
+                 */
+                public createMergerMessage(request: openim.sdk.message.ICreateMergerMessageReq, callback: openim.sdk.message.MessageService.CreateMergerMessageCallback): void;
+
+                /**
+                 * create a merger message.
+                 * The merger message is a message that contains multiple messages.
+                 * The parameter include title, summaries and multiple messages.
+                 * Notice:
+                 * It is recommended that the number of merged messages does not exceed 100.
+                 * @param request CreateMergerMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createMergerMessage(request: openim.sdk.message.ICreateMergerMessageReq): Promise<openim.sdk.message.CreateMergerMessageResp>;
+
+                /**
+                 * create a face message.
+                 * Notice:
+                 * The face message is include a mod face and gif face.
+                 * If you want to all platform is same, use `index` arg.
+                 * If you want to not same, use `data` arg. And recommend to set `index` to -1.
+                 * @param request CreateFaceMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateFaceMessageResp
+                 */
+                public createFaceMessage(request: openim.sdk.message.ICreateFaceMessageReq, callback: openim.sdk.message.MessageService.CreateFaceMessageCallback): void;
+
+                /**
+                 * create a face message.
+                 * Notice:
+                 * The face message is include a mod face and gif face.
+                 * If you want to all platform is same, use `index` arg.
+                 * If you want to not same, use `data` arg. And recommend to set `index` to -1.
+                 * @param request CreateFaceMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createFaceMessage(request: openim.sdk.message.ICreateFaceMessageReq): Promise<openim.sdk.message.CreateFaceMessageResp>;
+
+                /**
+                 * create a forward message.
+                 * @param request CreateForwardMessageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CreateForwardMessageResp
+                 */
+                public createForwardMessage(request: openim.sdk.message.ICreateForwardMessageReq, callback: openim.sdk.message.MessageService.CreateForwardMessageCallback): void;
+
+                /**
+                 * create a forward message.
+                 * @param request CreateForwardMessageReq message or plain object
+                 * @returns Promise
+                 */
+                public createForwardMessage(request: openim.sdk.message.ICreateForwardMessageReq): Promise<openim.sdk.message.CreateForwardMessageResp>;
+
+                /**
+                 * Find message list by conversation args.
+                 * @param request FindMessageListReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and FindMessageListResp
+                 */
+                public findMessageList(request: openim.sdk.message.IFindMessageListReq, callback: openim.sdk.message.MessageService.FindMessageListCallback): void;
+
+                /**
+                 * Find message list by conversation args.
+                 * @param request FindMessageListReq message or plain object
+                 * @returns Promise
+                 */
+                public findMessageList(request: openim.sdk.message.IFindMessageListReq): Promise<openim.sdk.message.FindMessageListResp>;
+
+                /**
+                 * Search local messages.
+                 * @param request SearchLocalMessagesReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SearchLocalMessagesResp
+                 */
+                public searchLocalMessages(request: openim.sdk.message.ISearchLocalMessagesReq, callback: openim.sdk.message.MessageService.SearchLocalMessagesCallback): void;
+
+                /**
+                 * Search local messages.
+                 * @param request SearchLocalMessagesReq message or plain object
+                 * @returns Promise
+                 */
+                public searchLocalMessages(request: openim.sdk.message.ISearchLocalMessagesReq): Promise<openim.sdk.message.SearchLocalMessagesResp>;
+
+                /**
+                 * Set local extension field for a message. Such as save file path after download file.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If update message is a latest message, the conversation last message will be update.
+                 * @param request SetMessageLocalExReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SetMessageLocalExResp
+                 */
+                public setMessageLocalEx(request: openim.sdk.message.ISetMessageLocalExReq, callback: openim.sdk.message.MessageService.SetMessageLocalExCallback): void;
+
+                /**
+                 * Set local extension field for a message. Such as save file path after download file.
+                 * Notice:
+                 * Related callbacks:
+                 * `onConversationChanged`
+                 * If update message is a latest message, the conversation last message will be update.
+                 * @param request SetMessageLocalExReq message or plain object
+                 * @returns Promise
+                 */
+                public setMessageLocalEx(request: openim.sdk.message.ISetMessageLocalExReq): Promise<openim.sdk.message.SetMessageLocalExResp>;
             }
 
             namespace MessageService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#getHistoryMessageList}.
+                 * @param error Error, if any
+                 * @param [response] GetHistoryMessageListResp
+                 */
+                type GetHistoryMessageListCallback = (error: (Error|null), response?: openim.sdk.message.GetHistoryMessageListResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#revokeMessage}.
+                 * @param error Error, if any
+                 * @param [response] RevokeMessageResp
+                 */
+                type RevokeMessageCallback = (error: (Error|null), response?: openim.sdk.message.RevokeMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#typingStatusUpdate}.
+                 * @param error Error, if any
+                 * @param [response] TypingStatusUpdateResp
+                 */
+                type TypingStatusUpdateCallback = (error: (Error|null), response?: openim.sdk.message.TypingStatusUpdateResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#deleteMessage}.
+                 * @param error Error, if any
+                 * @param [response] DeleteMessageResp
+                 */
+                type DeleteMessageCallback = (error: (Error|null), response?: openim.sdk.message.DeleteMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#deleteMessageFromLocal}.
+                 * @param error Error, if any
+                 * @param [response] DeleteMessageFromLocalResp
+                 */
+                type DeleteMessageFromLocalCallback = (error: (Error|null), response?: openim.sdk.message.DeleteMessageFromLocalResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#deleteAllMsgFromLocalAndServer}.
+                 * @param error Error, if any
+                 * @param [response] DeleteAllMsgFromLocalAndServerResp
+                 */
+                type DeleteAllMsgFromLocalAndServerCallback = (error: (Error|null), response?: openim.sdk.message.DeleteAllMsgFromLocalAndServerResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#deleteAllMessageFromLocal}.
+                 * @param error Error, if any
+                 * @param [response] DeleteAllMessageFromLocalResp
+                 */
+                type DeleteAllMessageFromLocalCallback = (error: (Error|null), response?: openim.sdk.message.DeleteAllMessageFromLocalResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#insertSingleMessageToLocal}.
+                 * @param error Error, if any
+                 * @param [response] InsertSingleMessageToLocalResp
+                 */
+                type InsertSingleMessageToLocalCallback = (error: (Error|null), response?: openim.sdk.message.InsertSingleMessageToLocalResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#insertGroupMessageToLocal}.
+                 * @param error Error, if any
+                 * @param [response] InsertGroupMessageToLocalResp
+                 */
+                type InsertGroupMessageToLocalCallback = (error: (Error|null), response?: openim.sdk.message.InsertGroupMessageToLocalResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createTextMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateTextMessageResp
+                 */
+                type CreateTextMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateTextMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createAdvancedTextMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateAdvancedTextMessageResp
+                 */
+                type CreateAdvancedTextMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateAdvancedTextMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createTextAtMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateTextAtMessageResp
+                 */
+                type CreateTextAtMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateTextAtMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createLocationMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateLocationMessageResp
+                 */
+                type CreateLocationMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateLocationMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createCustomMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateCustomMessageResp
+                 */
+                type CreateCustomMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateCustomMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createQuoteMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateQuoteMessageResp
+                 */
+                type CreateQuoteMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateQuoteMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createAdvancedQuoteMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateAdvancedQuoteMessageResp
+                 */
+                type CreateAdvancedQuoteMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateAdvancedQuoteMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createCardMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateCardMessageResp
+                 */
+                type CreateCardMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateCardMessageResp) => void;
 
                 /**
                  * Callback as used by {@link openim.sdk.message.MessageService#createImageMessage}.
@@ -24699,6 +25265,48 @@ export namespace openim {
                  * @param [response] CreateFileMessageResp
                  */
                 type CreateFileMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateFileMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createMergerMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateMergerMessageResp
+                 */
+                type CreateMergerMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateMergerMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createFaceMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateFaceMessageResp
+                 */
+                type CreateFaceMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateFaceMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#createForwardMessage}.
+                 * @param error Error, if any
+                 * @param [response] CreateForwardMessageResp
+                 */
+                type CreateForwardMessageCallback = (error: (Error|null), response?: openim.sdk.message.CreateForwardMessageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#findMessageList}.
+                 * @param error Error, if any
+                 * @param [response] FindMessageListResp
+                 */
+                type FindMessageListCallback = (error: (Error|null), response?: openim.sdk.message.FindMessageListResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#searchLocalMessages}.
+                 * @param error Error, if any
+                 * @param [response] SearchLocalMessagesResp
+                 */
+                type SearchLocalMessagesCallback = (error: (Error|null), response?: openim.sdk.message.SearchLocalMessagesResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.message.MessageService#setMessageLocalEx}.
+                 * @param error Error, if any
+                 * @param [response] SetMessageLocalExResp
+                 */
+                type SetMessageLocalExCallback = (error: (Error|null), response?: openim.sdk.message.SetMessageLocalExResp) => void;
             }
         }
 
@@ -25108,7 +25716,10 @@ export namespace openim {
             /** Properties of a GetFriendApplicationReq. */
             interface IGetFriendApplicationReq {
 
-                /** GetFriendApplicationReq send */
+                /**
+                 * true: user sended friend request.
+                 * false: user received friend request.
+                 */
                 send?: (boolean|null);
             }
 
@@ -25121,7 +25732,10 @@ export namespace openim {
                  */
                 constructor(properties?: openim.sdk.relation.IGetFriendApplicationReq);
 
-                /** GetFriendApplicationReq send. */
+                /**
+                 * true: user sended friend request.
+                 * false: user received friend request.
+                 */
                 public send: boolean;
 
                 /**
@@ -27480,6 +28094,375 @@ export namespace openim {
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
+
+            /** Represents a RelationService */
+            class RelationService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new RelationService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new RelationService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): RelationService;
+
+                /**
+                 * Get specified friend info, including nickname, avatar, remark.
+                 * This func get it from local. Recommend once to get up to 10000.
+                 * @param request GetSpecifiedFriendsReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetSpecifiedFriendsResp
+                 */
+                public getSpecifiedFriends(request: openim.sdk.relation.IGetSpecifiedFriendsReq, callback: openim.sdk.relation.RelationService.GetSpecifiedFriendsCallback): void;
+
+                /**
+                 * Get specified friend info, including nickname, avatar, remark.
+                 * This func get it from local. Recommend once to get up to 10000.
+                 * @param request GetSpecifiedFriendsReq message or plain object
+                 * @returns Promise
+                 */
+                public getSpecifiedFriends(request: openim.sdk.relation.IGetSpecifiedFriendsReq): Promise<openim.sdk.relation.GetSpecifiedFriendsResp>;
+
+                /**
+                 * Send a friend request to add someone as a friend.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendApplicationAdded`
+                 * @param request AddFriendReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and AddFriendResp
+                 */
+                public addFriend(request: openim.sdk.relation.IAddFriendReq, callback: openim.sdk.relation.RelationService.AddFriendCallback): void;
+
+                /**
+                 * Send a friend request to add someone as a friend.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendApplicationAdded`
+                 * @param request AddFriendReq message or plain object
+                 * @returns Promise
+                 */
+                public addFriend(request: openim.sdk.relation.IAddFriendReq): Promise<openim.sdk.relation.AddFriendResp>;
+
+                /**
+                 * Get friend request list, including send of receive.
+                 * If `send` is true, get user send friend request list, else get user received friend request list.
+                 * @param request GetFriendApplicationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetFriendApplicationResp
+                 */
+                public getFriendApplication(request: openim.sdk.relation.IGetFriendApplicationReq, callback: openim.sdk.relation.RelationService.GetFriendApplicationCallback): void;
+
+                /**
+                 * Get friend request list, including send of receive.
+                 * If `send` is true, get user send friend request list, else get user received friend request list.
+                 * @param request GetFriendApplicationReq message or plain object
+                 * @returns Promise
+                 */
+                public getFriendApplication(request: openim.sdk.relation.IGetFriendApplicationReq): Promise<openim.sdk.relation.GetFriendApplicationResp>;
+
+                /**
+                 * Handle another user sended friend request.
+                 * Including `approval_statues` have a accept and refuse(1 and -1).
+                 * If you accept the request, the user is a double direction friendship.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendApplicationAccepted`
+                 * `onFriendAdded`
+                 *
+                 * `onFriendApplicationRejected`
+                 * @param request HandleFriendApplicationReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and HandleFriendApplicationResp
+                 */
+                public handleFriendApplication(request: openim.sdk.relation.IHandleFriendApplicationReq, callback: openim.sdk.relation.RelationService.HandleFriendApplicationCallback): void;
+
+                /**
+                 * Handle another user sended friend request.
+                 * Including `approval_statues` have a accept and refuse(1 and -1).
+                 * If you accept the request, the user is a double direction friendship.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendApplicationAccepted`
+                 * `onFriendAdded`
+                 *
+                 * `onFriendApplicationRejected`
+                 * @param request HandleFriendApplicationReq message or plain object
+                 * @returns Promise
+                 */
+                public handleFriendApplication(request: openim.sdk.relation.IHandleFriendApplicationReq): Promise<openim.sdk.relation.HandleFriendApplicationResp>;
+
+                /**
+                 * Check the user is a friend.
+                 * If user is not in friend list or in black list, return `NotFriend`.
+                 * If only check the user is in friend list, please use `GetSpecifiedFriends`.
+                 * Notice:
+                 * The friendship is a double direction, so this function can't check you have in other user friend list.
+                 * @param request CheckFriendReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and CheckFriendResp
+                 */
+                public checkFriend(request: openim.sdk.relation.ICheckFriendReq, callback: openim.sdk.relation.RelationService.CheckFriendCallback): void;
+
+                /**
+                 * Check the user is a friend.
+                 * If user is not in friend list or in black list, return `NotFriend`.
+                 * If only check the user is in friend list, please use `GetSpecifiedFriends`.
+                 * Notice:
+                 * The friendship is a double direction, so this function can't check you have in other user friend list.
+                 * @param request CheckFriendReq message or plain object
+                 * @returns Promise
+                 */
+                public checkFriend(request: openim.sdk.relation.ICheckFriendReq): Promise<openim.sdk.relation.CheckFriendResp>;
+
+                /**
+                 * Get all friends list.
+                 * @param request GetFriendsReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetFriendsResp
+                 */
+                public getFriends(request: openim.sdk.relation.IGetFriendsReq, callback: openim.sdk.relation.RelationService.GetFriendsCallback): void;
+
+                /**
+                 * Get all friends list.
+                 * @param request GetFriendsReq message or plain object
+                 * @returns Promise
+                 */
+                public getFriends(request: openim.sdk.relation.IGetFriendsReq): Promise<openim.sdk.relation.GetFriendsResp>;
+
+                /**
+                 * Delete a friend.
+                 * Notice:
+                 * The friendship is a double direction, so this function remove the user from your friend list only.
+                 * Related callbacks:
+                 * `onFriendDeleted`
+                 * @param request DeleteFriendReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteFriendResp
+                 */
+                public deleteFriend(request: openim.sdk.relation.IDeleteFriendReq, callback: openim.sdk.relation.RelationService.DeleteFriendCallback): void;
+
+                /**
+                 * Delete a friend.
+                 * Notice:
+                 * The friendship is a double direction, so this function remove the user from your friend list only.
+                 * Related callbacks:
+                 * `onFriendDeleted`
+                 * @param request DeleteFriendReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteFriend(request: openim.sdk.relation.IDeleteFriendReq): Promise<openim.sdk.relation.DeleteFriendResp>;
+
+                /**
+                 * Get friend list by page.
+                 * Recommend the sum is not hugo.
+                 * @param request GetFriendsPageReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetFriendsPageResp
+                 */
+                public getFriendsPage(request: openim.sdk.relation.IGetFriendsPageReq, callback: openim.sdk.relation.RelationService.GetFriendsPageCallback): void;
+
+                /**
+                 * Get friend list by page.
+                 * Recommend the sum is not hugo.
+                 * @param request GetFriendsPageReq message or plain object
+                 * @returns Promise
+                 */
+                public getFriendsPage(request: openim.sdk.relation.IGetFriendsPageReq): Promise<openim.sdk.relation.GetFriendsPageResp>;
+
+                /**
+                 * Search friends by keyword in the friend list.
+                 * Notice:
+                 * A search condition must be sepcified.
+                 * Multiple search conditions are combined with an `OR` relationship.
+                 * @param request SearchFriendsReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SearchFriendsResp
+                 */
+                public searchFriends(request: openim.sdk.relation.ISearchFriendsReq, callback: openim.sdk.relation.RelationService.SearchFriendsCallback): void;
+
+                /**
+                 * Search friends by keyword in the friend list.
+                 * Notice:
+                 * A search condition must be sepcified.
+                 * Multiple search conditions are combined with an `OR` relationship.
+                 * @param request SearchFriendsReq message or plain object
+                 * @returns Promise
+                 */
+                public searchFriends(request: openim.sdk.relation.ISearchFriendsReq): Promise<openim.sdk.relation.SearchFriendsResp>;
+
+                /**
+                 * Add a user to the black list.
+                 * Notice:
+                 * The mean of you can send message to the user, but the user can't send message to you.
+                 * Related callbacks:
+                 * `onBlackAdded`
+                 * @param request AddBlackReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and AddBlackResp
+                 */
+                public addBlack(request: openim.sdk.relation.IAddBlackReq, callback: openim.sdk.relation.RelationService.AddBlackCallback): void;
+
+                /**
+                 * Add a user to the black list.
+                 * Notice:
+                 * The mean of you can send message to the user, but the user can't send message to you.
+                 * Related callbacks:
+                 * `onBlackAdded`
+                 * @param request AddBlackReq message or plain object
+                 * @returns Promise
+                 */
+                public addBlack(request: openim.sdk.relation.IAddBlackReq): Promise<openim.sdk.relation.AddBlackResp>;
+
+                /**
+                 * Delete a user from the black list.
+                 * Notice:
+                 * Related callbacks:
+                 * `onBlackDeleted`
+                 * @param request DeleteBlackReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and DeleteBlackResp
+                 */
+                public deleteBlack(request: openim.sdk.relation.IDeleteBlackReq, callback: openim.sdk.relation.RelationService.DeleteBlackCallback): void;
+
+                /**
+                 * Delete a user from the black list.
+                 * Notice:
+                 * Related callbacks:
+                 * `onBlackDeleted`
+                 * @param request DeleteBlackReq message or plain object
+                 * @returns Promise
+                 */
+                public deleteBlack(request: openim.sdk.relation.IDeleteBlackReq): Promise<openim.sdk.relation.DeleteBlackResp>;
+
+                /**
+                 * Get the black list.
+                 * @param request GetBlacksReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetBlacksResp
+                 */
+                public getBlacks(request: openim.sdk.relation.IGetBlacksReq, callback: openim.sdk.relation.RelationService.GetBlacksCallback): void;
+
+                /**
+                 * Get the black list.
+                 * @param request GetBlacksReq message or plain object
+                 * @returns Promise
+                 */
+                public getBlacks(request: openim.sdk.relation.IGetBlacksReq): Promise<openim.sdk.relation.GetBlacksResp>;
+
+                /**
+                 * Update friend info, including remark, pinned, ex field.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendInfoChanged`
+                 * `onConversationChanged`
+                 * @param request UpdateFriendReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and UpdateFriendResp
+                 */
+                public updateFriend(request: openim.sdk.relation.IUpdateFriendReq, callback: openim.sdk.relation.RelationService.UpdateFriendCallback): void;
+
+                /**
+                 * Update friend info, including remark, pinned, ex field.
+                 * Notice:
+                 * Related callbacks:
+                 * `onFriendInfoChanged`
+                 * `onConversationChanged`
+                 * @param request UpdateFriendReq message or plain object
+                 * @returns Promise
+                 */
+                public updateFriend(request: openim.sdk.relation.IUpdateFriendReq): Promise<openim.sdk.relation.UpdateFriendResp>;
+            }
+
+            namespace RelationService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#getSpecifiedFriends}.
+                 * @param error Error, if any
+                 * @param [response] GetSpecifiedFriendsResp
+                 */
+                type GetSpecifiedFriendsCallback = (error: (Error|null), response?: openim.sdk.relation.GetSpecifiedFriendsResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#addFriend}.
+                 * @param error Error, if any
+                 * @param [response] AddFriendResp
+                 */
+                type AddFriendCallback = (error: (Error|null), response?: openim.sdk.relation.AddFriendResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#getFriendApplication}.
+                 * @param error Error, if any
+                 * @param [response] GetFriendApplicationResp
+                 */
+                type GetFriendApplicationCallback = (error: (Error|null), response?: openim.sdk.relation.GetFriendApplicationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#handleFriendApplication}.
+                 * @param error Error, if any
+                 * @param [response] HandleFriendApplicationResp
+                 */
+                type HandleFriendApplicationCallback = (error: (Error|null), response?: openim.sdk.relation.HandleFriendApplicationResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#checkFriend}.
+                 * @param error Error, if any
+                 * @param [response] CheckFriendResp
+                 */
+                type CheckFriendCallback = (error: (Error|null), response?: openim.sdk.relation.CheckFriendResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#getFriends}.
+                 * @param error Error, if any
+                 * @param [response] GetFriendsResp
+                 */
+                type GetFriendsCallback = (error: (Error|null), response?: openim.sdk.relation.GetFriendsResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#deleteFriend}.
+                 * @param error Error, if any
+                 * @param [response] DeleteFriendResp
+                 */
+                type DeleteFriendCallback = (error: (Error|null), response?: openim.sdk.relation.DeleteFriendResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#getFriendsPage}.
+                 * @param error Error, if any
+                 * @param [response] GetFriendsPageResp
+                 */
+                type GetFriendsPageCallback = (error: (Error|null), response?: openim.sdk.relation.GetFriendsPageResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#searchFriends}.
+                 * @param error Error, if any
+                 * @param [response] SearchFriendsResp
+                 */
+                type SearchFriendsCallback = (error: (Error|null), response?: openim.sdk.relation.SearchFriendsResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#addBlack}.
+                 * @param error Error, if any
+                 * @param [response] AddBlackResp
+                 */
+                type AddBlackCallback = (error: (Error|null), response?: openim.sdk.relation.AddBlackResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#deleteBlack}.
+                 * @param error Error, if any
+                 * @param [response] DeleteBlackResp
+                 */
+                type DeleteBlackCallback = (error: (Error|null), response?: openim.sdk.relation.DeleteBlackResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#getBlacks}.
+                 * @param error Error, if any
+                 * @param [response] GetBlacksResp
+                 */
+                type GetBlacksCallback = (error: (Error|null), response?: openim.sdk.relation.GetBlacksResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.relation.RelationService#updateFriend}.
+                 * @param error Error, if any
+                 * @param [response] UpdateFriendResp
+                 */
+                type UpdateFriendCallback = (error: (Error|null), response?: openim.sdk.relation.UpdateFriendResp) => void;
+            }
         }
 
         /** Namespace third. */
@@ -28635,6 +29618,70 @@ export namespace openim {
                  * @returns Promise
                  */
                 public uploadFile(request: openim.sdk.third.IUploadFileReq): Promise<openim.sdk.third.UploadFileResp>;
+
+                /**
+                 * upload sdk data to server. including line, ex, mode.
+                 * mode have a 3 types. 1: upload log, 2: upload db, 3: upload log and db.
+                 * upload all log when line is 0.
+                 * @param request UploadSDKDataReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and UploadSDKDataResp
+                 */
+                public uploadSDKData(request: openim.sdk.third.IUploadSDKDataReq, callback: openim.sdk.third.ThirdService.UploadSDKDataCallback): void;
+
+                /**
+                 * upload sdk data to server. including line, ex, mode.
+                 * mode have a 3 types. 1: upload log, 2: upload db, 3: upload log and db.
+                 * upload all log when line is 0.
+                 * @param request UploadSDKDataReq message or plain object
+                 * @returns Promise
+                 */
+                public uploadSDKData(request: openim.sdk.third.IUploadSDKDataReq): Promise<openim.sdk.third.UploadSDKDataResp>;
+
+                /**
+                 * print sdk stabndard log in client. Simplify unified issue analysis and troubleshooting.
+                 * log level have a 6 types. 0: fatal, 1: panic, 2: error, 3: warn, 4: info, 5: debug, 6: debug with sql.
+                 * The higher is contained in the lower level output.
+                 * @param request LogReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and LogResp
+                 */
+                public log(request: openim.sdk.third.ILogReq, callback: openim.sdk.third.ThirdService.LogCallback): void;
+
+                /**
+                 * print sdk stabndard log in client. Simplify unified issue analysis and troubleshooting.
+                 * log level have a 6 types. 0: fatal, 1: panic, 2: error, 3: warn, 4: info, 5: debug, 6: debug with sql.
+                 * The higher is contained in the lower level output.
+                 * @param request LogReq message or plain object
+                 * @returns Promise
+                 */
+                public log(request: openim.sdk.third.ILogReq): Promise<openim.sdk.third.LogResp>;
+
+                /**
+                 * update the Firebase user token on the server.
+                 * @param request UpdateFcmTokenReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and UpdateFcmTokenResp
+                 */
+                public updateFcmToken(request: openim.sdk.third.IUpdateFcmTokenReq, callback: openim.sdk.third.ThirdService.UpdateFcmTokenCallback): void;
+
+                /**
+                 * update the Firebase user token on the server.
+                 * @param request UpdateFcmTokenReq message or plain object
+                 * @returns Promise
+                 */
+                public updateFcmToken(request: openim.sdk.third.IUpdateFcmTokenReq): Promise<openim.sdk.third.UpdateFcmTokenResp>;
+
+                /**
+                 * set app unread badge, used to display the unread count badge for offline push notifications.
+                 * @param request SetAppBadgeReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SetAppBadgeResp
+                 */
+                public setAppBadge(request: openim.sdk.third.ISetAppBadgeReq, callback: openim.sdk.third.ThirdService.SetAppBadgeCallback): void;
+
+                /**
+                 * set app unread badge, used to display the unread count badge for offline push notifications.
+                 * @param request SetAppBadgeReq message or plain object
+                 * @returns Promise
+                 */
+                public setAppBadge(request: openim.sdk.third.ISetAppBadgeReq): Promise<openim.sdk.third.SetAppBadgeResp>;
             }
 
             namespace ThirdService {
@@ -28645,6 +29692,34 @@ export namespace openim {
                  * @param [response] UploadFileResp
                  */
                 type UploadFileCallback = (error: (Error|null), response?: openim.sdk.third.UploadFileResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.third.ThirdService#uploadSDKData}.
+                 * @param error Error, if any
+                 * @param [response] UploadSDKDataResp
+                 */
+                type UploadSDKDataCallback = (error: (Error|null), response?: openim.sdk.third.UploadSDKDataResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.third.ThirdService#log}.
+                 * @param error Error, if any
+                 * @param [response] LogResp
+                 */
+                type LogCallback = (error: (Error|null), response?: openim.sdk.third.LogResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.third.ThirdService#updateFcmToken}.
+                 * @param error Error, if any
+                 * @param [response] UpdateFcmTokenResp
+                 */
+                type UpdateFcmTokenCallback = (error: (Error|null), response?: openim.sdk.third.UpdateFcmTokenResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.third.ThirdService#setAppBadge}.
+                 * @param error Error, if any
+                 * @param [response] SetAppBadgeResp
+                 */
+                type SetAppBadgeCallback = (error: (Error|null), response?: openim.sdk.third.SetAppBadgeResp) => void;
             }
         }
 
@@ -30055,6 +31130,722 @@ export namespace openim {
                  * @returns The default type url
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a UserOnlinePlatform. */
+            interface IUserOnlinePlatform {
+
+                /** UserOnlinePlatform userID */
+                userID?: (string|null);
+
+                /** UserOnlinePlatform platforms */
+                platforms?: (openim.sdk.common.Platform[]|null);
+            }
+
+            /** Represents a UserOnlinePlatform. */
+            class UserOnlinePlatform implements IUserOnlinePlatform {
+
+                /**
+                 * Constructs a new UserOnlinePlatform.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.user.IUserOnlinePlatform);
+
+                /** UserOnlinePlatform userID. */
+                public userID: string;
+
+                /** UserOnlinePlatform platforms. */
+                public platforms: openim.sdk.common.Platform[];
+
+                /**
+                 * Creates a new UserOnlinePlatform instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns UserOnlinePlatform instance
+                 */
+                public static create(properties?: openim.sdk.user.IUserOnlinePlatform): openim.sdk.user.UserOnlinePlatform;
+
+                /**
+                 * Encodes the specified UserOnlinePlatform message. Does not implicitly {@link openim.sdk.user.UserOnlinePlatform.verify|verify} messages.
+                 * @param message UserOnlinePlatform message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.user.IUserOnlinePlatform, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified UserOnlinePlatform message, length delimited. Does not implicitly {@link openim.sdk.user.UserOnlinePlatform.verify|verify} messages.
+                 * @param message UserOnlinePlatform message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.user.IUserOnlinePlatform, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a UserOnlinePlatform message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns UserOnlinePlatform
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.UserOnlinePlatform;
+
+                /**
+                 * Decodes a UserOnlinePlatform message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns UserOnlinePlatform
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.UserOnlinePlatform;
+
+                /**
+                 * Verifies a UserOnlinePlatform message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a UserOnlinePlatform message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns UserOnlinePlatform
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.user.UserOnlinePlatform;
+
+                /**
+                 * Creates a plain object from a UserOnlinePlatform message. Also converts values to other types if specified.
+                 * @param message UserOnlinePlatform
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.user.UserOnlinePlatform, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this UserOnlinePlatform to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for UserOnlinePlatform
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SubscribeUsersOnlineStatusReq. */
+            interface ISubscribeUsersOnlineStatusReq {
+
+                /** SubscribeUsersOnlineStatusReq userIDs */
+                userIDs?: (string[]|null);
+            }
+
+            /** Represents a SubscribeUsersOnlineStatusReq. */
+            class SubscribeUsersOnlineStatusReq implements ISubscribeUsersOnlineStatusReq {
+
+                /**
+                 * Constructs a new SubscribeUsersOnlineStatusReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.user.ISubscribeUsersOnlineStatusReq);
+
+                /** SubscribeUsersOnlineStatusReq userIDs. */
+                public userIDs: string[];
+
+                /**
+                 * Creates a new SubscribeUsersOnlineStatusReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SubscribeUsersOnlineStatusReq instance
+                 */
+                public static create(properties?: openim.sdk.user.ISubscribeUsersOnlineStatusReq): openim.sdk.user.SubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Encodes the specified SubscribeUsersOnlineStatusReq message. Does not implicitly {@link openim.sdk.user.SubscribeUsersOnlineStatusReq.verify|verify} messages.
+                 * @param message SubscribeUsersOnlineStatusReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.user.ISubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SubscribeUsersOnlineStatusReq message, length delimited. Does not implicitly {@link openim.sdk.user.SubscribeUsersOnlineStatusReq.verify|verify} messages.
+                 * @param message SubscribeUsersOnlineStatusReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.user.ISubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SubscribeUsersOnlineStatusReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SubscribeUsersOnlineStatusReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.SubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Decodes a SubscribeUsersOnlineStatusReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SubscribeUsersOnlineStatusReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.SubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Verifies a SubscribeUsersOnlineStatusReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SubscribeUsersOnlineStatusReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SubscribeUsersOnlineStatusReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.user.SubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Creates a plain object from a SubscribeUsersOnlineStatusReq message. Also converts values to other types if specified.
+                 * @param message SubscribeUsersOnlineStatusReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.user.SubscribeUsersOnlineStatusReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SubscribeUsersOnlineStatusReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SubscribeUsersOnlineStatusReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a SubscribeUsersOnlineStatusResp. */
+            interface ISubscribeUsersOnlineStatusResp {
+
+                /** SubscribeUsersOnlineStatusResp status */
+                status?: (openim.sdk.user.IUserOnlinePlatform[]|null);
+            }
+
+            /** Represents a SubscribeUsersOnlineStatusResp. */
+            class SubscribeUsersOnlineStatusResp implements ISubscribeUsersOnlineStatusResp {
+
+                /**
+                 * Constructs a new SubscribeUsersOnlineStatusResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.user.ISubscribeUsersOnlineStatusResp);
+
+                /** SubscribeUsersOnlineStatusResp status. */
+                public status: openim.sdk.user.IUserOnlinePlatform[];
+
+                /**
+                 * Creates a new SubscribeUsersOnlineStatusResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns SubscribeUsersOnlineStatusResp instance
+                 */
+                public static create(properties?: openim.sdk.user.ISubscribeUsersOnlineStatusResp): openim.sdk.user.SubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Encodes the specified SubscribeUsersOnlineStatusResp message. Does not implicitly {@link openim.sdk.user.SubscribeUsersOnlineStatusResp.verify|verify} messages.
+                 * @param message SubscribeUsersOnlineStatusResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.user.ISubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified SubscribeUsersOnlineStatusResp message, length delimited. Does not implicitly {@link openim.sdk.user.SubscribeUsersOnlineStatusResp.verify|verify} messages.
+                 * @param message SubscribeUsersOnlineStatusResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.user.ISubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a SubscribeUsersOnlineStatusResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns SubscribeUsersOnlineStatusResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.SubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Decodes a SubscribeUsersOnlineStatusResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns SubscribeUsersOnlineStatusResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.SubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Verifies a SubscribeUsersOnlineStatusResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a SubscribeUsersOnlineStatusResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns SubscribeUsersOnlineStatusResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.user.SubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Creates a plain object from a SubscribeUsersOnlineStatusResp message. Also converts values to other types if specified.
+                 * @param message SubscribeUsersOnlineStatusResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.user.SubscribeUsersOnlineStatusResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this SubscribeUsersOnlineStatusResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for SubscribeUsersOnlineStatusResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of an UnsubscribeUsersOnlineStatusReq. */
+            interface IUnsubscribeUsersOnlineStatusReq {
+
+                /** UnsubscribeUsersOnlineStatusReq userIDs */
+                userIDs?: (string[]|null);
+            }
+
+            /** Represents an UnsubscribeUsersOnlineStatusReq. */
+            class UnsubscribeUsersOnlineStatusReq implements IUnsubscribeUsersOnlineStatusReq {
+
+                /**
+                 * Constructs a new UnsubscribeUsersOnlineStatusReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq);
+
+                /** UnsubscribeUsersOnlineStatusReq userIDs. */
+                public userIDs: string[];
+
+                /**
+                 * Creates a new UnsubscribeUsersOnlineStatusReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns UnsubscribeUsersOnlineStatusReq instance
+                 */
+                public static create(properties?: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq): openim.sdk.user.UnsubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Encodes the specified UnsubscribeUsersOnlineStatusReq message. Does not implicitly {@link openim.sdk.user.UnsubscribeUsersOnlineStatusReq.verify|verify} messages.
+                 * @param message UnsubscribeUsersOnlineStatusReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified UnsubscribeUsersOnlineStatusReq message, length delimited. Does not implicitly {@link openim.sdk.user.UnsubscribeUsersOnlineStatusReq.verify|verify} messages.
+                 * @param message UnsubscribeUsersOnlineStatusReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes an UnsubscribeUsersOnlineStatusReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns UnsubscribeUsersOnlineStatusReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.UnsubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Decodes an UnsubscribeUsersOnlineStatusReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns UnsubscribeUsersOnlineStatusReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.UnsubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Verifies an UnsubscribeUsersOnlineStatusReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates an UnsubscribeUsersOnlineStatusReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns UnsubscribeUsersOnlineStatusReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.user.UnsubscribeUsersOnlineStatusReq;
+
+                /**
+                 * Creates a plain object from an UnsubscribeUsersOnlineStatusReq message. Also converts values to other types if specified.
+                 * @param message UnsubscribeUsersOnlineStatusReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.user.UnsubscribeUsersOnlineStatusReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this UnsubscribeUsersOnlineStatusReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for UnsubscribeUsersOnlineStatusReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of an UnsubscribeUsersOnlineStatusResp. */
+            interface IUnsubscribeUsersOnlineStatusResp {
+            }
+
+            /** Represents an UnsubscribeUsersOnlineStatusResp. */
+            class UnsubscribeUsersOnlineStatusResp implements IUnsubscribeUsersOnlineStatusResp {
+
+                /**
+                 * Constructs a new UnsubscribeUsersOnlineStatusResp.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.user.IUnsubscribeUsersOnlineStatusResp);
+
+                /**
+                 * Creates a new UnsubscribeUsersOnlineStatusResp instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns UnsubscribeUsersOnlineStatusResp instance
+                 */
+                public static create(properties?: openim.sdk.user.IUnsubscribeUsersOnlineStatusResp): openim.sdk.user.UnsubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Encodes the specified UnsubscribeUsersOnlineStatusResp message. Does not implicitly {@link openim.sdk.user.UnsubscribeUsersOnlineStatusResp.verify|verify} messages.
+                 * @param message UnsubscribeUsersOnlineStatusResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.user.IUnsubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified UnsubscribeUsersOnlineStatusResp message, length delimited. Does not implicitly {@link openim.sdk.user.UnsubscribeUsersOnlineStatusResp.verify|verify} messages.
+                 * @param message UnsubscribeUsersOnlineStatusResp message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.user.IUnsubscribeUsersOnlineStatusResp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes an UnsubscribeUsersOnlineStatusResp message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns UnsubscribeUsersOnlineStatusResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.UnsubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Decodes an UnsubscribeUsersOnlineStatusResp message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns UnsubscribeUsersOnlineStatusResp
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.UnsubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Verifies an UnsubscribeUsersOnlineStatusResp message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates an UnsubscribeUsersOnlineStatusResp message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns UnsubscribeUsersOnlineStatusResp
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.user.UnsubscribeUsersOnlineStatusResp;
+
+                /**
+                 * Creates a plain object from an UnsubscribeUsersOnlineStatusResp message. Also converts values to other types if specified.
+                 * @param message UnsubscribeUsersOnlineStatusResp
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.user.UnsubscribeUsersOnlineStatusResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this UnsubscribeUsersOnlineStatusResp to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for UnsubscribeUsersOnlineStatusResp
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Represents a UserService */
+            class UserService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new UserService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new UserService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): UserService;
+
+                /**
+                 * Get the information of the currently login user
+                 * @param request GetSelfUserInfoReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetSelfUserInfoResp
+                 */
+                public getSelfUserInfo(request: openim.sdk.user.IGetSelfUserInfoReq, callback: openim.sdk.user.UserService.GetSelfUserInfoCallback): void;
+
+                /**
+                 * Get the information of the currently login user
+                 * @param request GetSelfUserInfoReq message or plain object
+                 * @returns Promise
+                 */
+                public getSelfUserInfo(request: openim.sdk.user.IGetSelfUserInfoReq): Promise<openim.sdk.user.GetSelfUserInfoResp>;
+
+                /**
+                 * Set the information of the currently login user, including `ex`.
+                 * Notice:
+                 * Related callbacks:
+                 * `onSelfInfoUpdated`
+                 * @param request SetSelfInfoReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SetSelfInfoResp
+                 */
+                public setSelfInfo(request: openim.sdk.user.ISetSelfInfoReq, callback: openim.sdk.user.UserService.SetSelfInfoCallback): void;
+
+                /**
+                 * Set the information of the currently login user, including `ex`.
+                 * Notice:
+                 * Related callbacks:
+                 * `onSelfInfoUpdated`
+                 * @param request SetSelfInfoReq message or plain object
+                 * @returns Promise
+                 */
+                public setSelfInfo(request: openim.sdk.user.ISetSelfInfoReq): Promise<openim.sdk.user.SetSelfInfoResp>;
+
+                /**
+                 * Get the public information of the specified users, including `nickname`, `faceURL`.
+                 * @param request GetUsersInfoReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and GetUsersInfoResp
+                 */
+                public getUsersInfo(request: openim.sdk.user.IGetUsersInfoReq, callback: openim.sdk.user.UserService.GetUsersInfoCallback): void;
+
+                /**
+                 * Get the public information of the specified users, including `nickname`, `faceURL`.
+                 * @param request GetUsersInfoReq message or plain object
+                 * @returns Promise
+                 */
+                public getUsersInfo(request: openim.sdk.user.IGetUsersInfoReq): Promise<openim.sdk.user.GetUsersInfoResp>;
+
+                /**
+                 * Subscribe specified users online status. And return the online status.
+                 * Notice:
+                 * Everyone user can not subscribe more than 3000 users. If more than 3000, will unsubscribe users by subscribe time.
+                 * Related callbacks:
+                 * `onUserStatusChanged`
+                 * @param request SubscribeUsersOnlineStatusReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and SubscribeUsersOnlineStatusResp
+                 */
+                public subscribeUsersOnlineStatus(request: openim.sdk.user.ISubscribeUsersOnlineStatusReq, callback: openim.sdk.user.UserService.SubscribeUsersOnlineStatusCallback): void;
+
+                /**
+                 * Subscribe specified users online status. And return the online status.
+                 * Notice:
+                 * Everyone user can not subscribe more than 3000 users. If more than 3000, will unsubscribe users by subscribe time.
+                 * Related callbacks:
+                 * `onUserStatusChanged`
+                 * @param request SubscribeUsersOnlineStatusReq message or plain object
+                 * @returns Promise
+                 */
+                public subscribeUsersOnlineStatus(request: openim.sdk.user.ISubscribeUsersOnlineStatusReq): Promise<openim.sdk.user.SubscribeUsersOnlineStatusResp>;
+
+                /**
+                 * Unsubscribe specified users online status.
+                 * Notice:
+                 * It will not notify other user online and offline when unsubscribe.
+                 * @param request UnsubscribeUsersOnlineStatusReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and UnsubscribeUsersOnlineStatusResp
+                 */
+                public unsubscribeUsersOnlineStatus(request: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq, callback: openim.sdk.user.UserService.UnsubscribeUsersOnlineStatusCallback): void;
+
+                /**
+                 * Unsubscribe specified users online status.
+                 * Notice:
+                 * It will not notify other user online and offline when unsubscribe.
+                 * @param request UnsubscribeUsersOnlineStatusReq message or plain object
+                 * @returns Promise
+                 */
+                public unsubscribeUsersOnlineStatus(request: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq): Promise<openim.sdk.user.UnsubscribeUsersOnlineStatusResp>;
+
+                /**
+                 * Calls ProcessUserCommandAdd.
+                 * @param request ProcessUserCommandAddReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandAddResp
+                 */
+                public processUserCommandAdd(request: openim.sdk.user.IProcessUserCommandAddReq, callback: openim.sdk.user.UserService.ProcessUserCommandAddCallback): void;
+
+                /**
+                 * Calls ProcessUserCommandAdd.
+                 * @param request ProcessUserCommandAddReq message or plain object
+                 * @returns Promise
+                 */
+                public processUserCommandAdd(request: openim.sdk.user.IProcessUserCommandAddReq): Promise<openim.sdk.user.ProcessUserCommandAddResp>;
+
+                /**
+                 * Calls ProcessUserCommandDelete.
+                 * @param request ProcessUserCommandDeleteReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandDeleteResp
+                 */
+                public processUserCommandDelete(request: openim.sdk.user.IProcessUserCommandDeleteReq, callback: openim.sdk.user.UserService.ProcessUserCommandDeleteCallback): void;
+
+                /**
+                 * Calls ProcessUserCommandDelete.
+                 * @param request ProcessUserCommandDeleteReq message or plain object
+                 * @returns Promise
+                 */
+                public processUserCommandDelete(request: openim.sdk.user.IProcessUserCommandDeleteReq): Promise<openim.sdk.user.ProcessUserCommandDeleteResp>;
+
+                /**
+                 * Calls ProcessUserCommandUpdate.
+                 * @param request ProcessUserCommandUpdateReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandUpdateResp
+                 */
+                public processUserCommandUpdate(request: openim.sdk.user.IProcessUserCommandUpdateReq, callback: openim.sdk.user.UserService.ProcessUserCommandUpdateCallback): void;
+
+                /**
+                 * Calls ProcessUserCommandUpdate.
+                 * @param request ProcessUserCommandUpdateReq message or plain object
+                 * @returns Promise
+                 */
+                public processUserCommandUpdate(request: openim.sdk.user.IProcessUserCommandUpdateReq): Promise<openim.sdk.user.ProcessUserCommandUpdateResp>;
+
+                /**
+                 * Calls ProcessUserCommandGetAll.
+                 * @param request ProcessUserCommandGetAllReq message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandGetAllResp
+                 */
+                public processUserCommandGetAll(request: openim.sdk.user.IProcessUserCommandGetAllReq, callback: openim.sdk.user.UserService.ProcessUserCommandGetAllCallback): void;
+
+                /**
+                 * Calls ProcessUserCommandGetAll.
+                 * @param request ProcessUserCommandGetAllReq message or plain object
+                 * @returns Promise
+                 */
+                public processUserCommandGetAll(request: openim.sdk.user.IProcessUserCommandGetAllReq): Promise<openim.sdk.user.ProcessUserCommandGetAllResp>;
+            }
+
+            namespace UserService {
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#getSelfUserInfo}.
+                 * @param error Error, if any
+                 * @param [response] GetSelfUserInfoResp
+                 */
+                type GetSelfUserInfoCallback = (error: (Error|null), response?: openim.sdk.user.GetSelfUserInfoResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#setSelfInfo}.
+                 * @param error Error, if any
+                 * @param [response] SetSelfInfoResp
+                 */
+                type SetSelfInfoCallback = (error: (Error|null), response?: openim.sdk.user.SetSelfInfoResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#getUsersInfo}.
+                 * @param error Error, if any
+                 * @param [response] GetUsersInfoResp
+                 */
+                type GetUsersInfoCallback = (error: (Error|null), response?: openim.sdk.user.GetUsersInfoResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#subscribeUsersOnlineStatus}.
+                 * @param error Error, if any
+                 * @param [response] SubscribeUsersOnlineStatusResp
+                 */
+                type SubscribeUsersOnlineStatusCallback = (error: (Error|null), response?: openim.sdk.user.SubscribeUsersOnlineStatusResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#unsubscribeUsersOnlineStatus}.
+                 * @param error Error, if any
+                 * @param [response] UnsubscribeUsersOnlineStatusResp
+                 */
+                type UnsubscribeUsersOnlineStatusCallback = (error: (Error|null), response?: openim.sdk.user.UnsubscribeUsersOnlineStatusResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandAdd}.
+                 * @param error Error, if any
+                 * @param [response] ProcessUserCommandAddResp
+                 */
+                type ProcessUserCommandAddCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandAddResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandDelete}.
+                 * @param error Error, if any
+                 * @param [response] ProcessUserCommandDeleteResp
+                 */
+                type ProcessUserCommandDeleteCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandDeleteResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandUpdate}.
+                 * @param error Error, if any
+                 * @param [response] ProcessUserCommandUpdateResp
+                 */
+                type ProcessUserCommandUpdateCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandUpdateResp) => void;
+
+                /**
+                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandGetAll}.
+                 * @param error Error, if any
+                 * @param [response] ProcessUserCommandGetAllResp
+                 */
+                type ProcessUserCommandGetAllCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandGetAllResp) => void;
             }
         }
     }
@@ -35713,9 +37504,6 @@ export namespace openim {
 
         /** Properties of an InitSDKResp. */
         interface IInitSDKResp {
-
-            /** InitSDKResp suc */
-            suc?: (boolean|null);
         }
 
         /** Represents an InitSDKResp. */
@@ -35726,9 +37514,6 @@ export namespace openim {
              * @param [properties] Properties to set
              */
             constructor(properties?: openim.init.IInitSDKResp);
-
-            /** InitSDKResp suc. */
-            public suc: boolean;
 
             /**
              * Creates a new InitSDKResp instance using the specified properties.
@@ -36928,6 +38713,227 @@ export namespace openim {
              * @returns The default type url
              */
             public static getTypeUrl(typeUrlPrefix?: string): string;
+        }
+
+        /** Represents an initService */
+        class initService extends $protobuf.rpc.Service {
+
+            /**
+             * Constructs a new initService service.
+             * @param rpcImpl RPC implementation
+             * @param [requestDelimited=false] Whether requests are length-delimited
+             * @param [responseDelimited=false] Whether responses are length-delimited
+             */
+            constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+            /**
+             * Creates new initService service using the specified rpc implementation.
+             * @param rpcImpl RPC implementation
+             * @param [requestDelimited=false] Whether requests are length-delimited
+             * @param [responseDelimited=false] Whether responses are length-delimited
+             * @returns RPC service. Useful where requests and/or responses are streamed.
+             */
+            public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): initService;
+
+            /**
+             * Init SDK is the first for the client call SDK.
+             * Only call once in the lifecycle of the APP. Duplicate calls will a unknown error.
+             * Notice:
+             * 1. After initSDK is successful, set the listener and login.
+             * Ensure that call other API when wait login callback success.
+             * 2. Client log will save in specified path. Used to debug. But not recommanded to enable in production environment.
+             * @param request InitSDKReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and InitSDKResp
+             */
+            public initSDK(request: openim.init.IInitSDKReq, callback: openim.init.initService.InitSDKCallback): void;
+
+            /**
+             * Init SDK is the first for the client call SDK.
+             * Only call once in the lifecycle of the APP. Duplicate calls will a unknown error.
+             * Notice:
+             * 1. After initSDK is successful, set the listener and login.
+             * Ensure that call other API when wait login callback success.
+             * 2. Client log will save in specified path. Used to debug. But not recommanded to enable in production environment.
+             * @param request InitSDKReq message or plain object
+             * @returns Promise
+             */
+            public initSDK(request: openim.init.IInitSDKReq): Promise<openim.init.InitSDKResp>;
+
+            /**
+             * User login. You need to wait for the success callback before calling other APIs.
+             * You need to call the login interface in the following scenarios:
+             * 1. After the APP starts, after re-acquiring the token from the server.
+             * 2. After the token expires post-login, after re-acquiring the token from the server.
+             * 3. After being forcibly logged out by the APP administrator, after re-acquiring the token from the server.
+             * 4. After the user voluntarily logs out, after re-acquiring the token from the server.
+             * Notice:
+             * 1. If a failure callback, you need to check error message and check args and fix it error after continue login.
+             * 2. The SDK does not support multiple accounts logging in simultaneously in one app. You need to call logout first before logging in with another account.
+             * 3. All interfaces, except for setting listeners, initialization, and getting login status, must be called after the SDK login callback is successful.
+             * 4.  A successful login callback does not necessarily mean that IM is truly logged in.
+             * You need to observe the IM connection status callback. Only when onConnectSuccess is received does it indicate that the login and IM connection are successful.
+             * @param request LoginReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and LoginResp
+             */
+            public login(request: openim.init.ILoginReq, callback: openim.init.initService.LoginCallback): void;
+
+            /**
+             * User login. You need to wait for the success callback before calling other APIs.
+             * You need to call the login interface in the following scenarios:
+             * 1. After the APP starts, after re-acquiring the token from the server.
+             * 2. After the token expires post-login, after re-acquiring the token from the server.
+             * 3. After being forcibly logged out by the APP administrator, after re-acquiring the token from the server.
+             * 4. After the user voluntarily logs out, after re-acquiring the token from the server.
+             * Notice:
+             * 1. If a failure callback, you need to check error message and check args and fix it error after continue login.
+             * 2. The SDK does not support multiple accounts logging in simultaneously in one app. You need to call logout first before logging in with another account.
+             * 3. All interfaces, except for setting listeners, initialization, and getting login status, must be called after the SDK login callback is successful.
+             * 4.  A successful login callback does not necessarily mean that IM is truly logged in.
+             * You need to observe the IM connection status callback. Only when onConnectSuccess is received does it indicate that the login and IM connection are successful.
+             * @param request LoginReq message or plain object
+             * @returns Promise
+             */
+            public login(request: openim.init.ILoginReq): Promise<openim.init.LoginResp>;
+
+            /**
+             * App need wait for logout callback success.
+             * If logout success, it will receive other user sent new message.
+             * If you want to switch user, you need to wait user A logout callback success, then call user B login.
+             * If APP lifecycle is same as SDK, you can call logout when user exit APP.
+             * Notice:
+             * When receive `onKickedOffline` and `onUserTokenExpired` callback,
+             * means user is kicked offline or user token expired.
+             * The SDK will automatically logout internally after triggering these events.
+             * So there is no need to call the logout function externally.
+             * @param request LogoutReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and LogoutResp
+             */
+            public logout(request: openim.init.ILogoutReq, callback: openim.init.initService.LogoutCallback): void;
+
+            /**
+             * App need wait for logout callback success.
+             * If logout success, it will receive other user sent new message.
+             * If you want to switch user, you need to wait user A logout callback success, then call user B login.
+             * If APP lifecycle is same as SDK, you can call logout when user exit APP.
+             * Notice:
+             * When receive `onKickedOffline` and `onUserTokenExpired` callback,
+             * means user is kicked offline or user token expired.
+             * The SDK will automatically logout internally after triggering these events.
+             * So there is no need to call the logout function externally.
+             * @param request LogoutReq message or plain object
+             * @returns Promise
+             */
+            public logout(request: openim.init.ILogoutReq): Promise<openim.init.LogoutResp>;
+
+            /**
+             * Set app background status.
+             * @param request SetAppBackgroundStatusReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and SetAppBackgroundStatusResp
+             */
+            public setAppBackgroundStatus(request: openim.init.ISetAppBackgroundStatusReq, callback: openim.init.initService.SetAppBackgroundStatusCallback): void;
+
+            /**
+             * Set app background status.
+             * @param request SetAppBackgroundStatusReq message or plain object
+             * @returns Promise
+             */
+            public setAppBackgroundStatus(request: openim.init.ISetAppBackgroundStatusReq): Promise<openim.init.SetAppBackgroundStatusResp>;
+
+            /**
+             * Network status changed.
+             * @param request NetworkStatusChangedReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and NetworkStatusChangedResp
+             */
+            public networkStatusChanged(request: openim.init.INetworkStatusChangedReq, callback: openim.init.initService.NetworkStatusChangedCallback): void;
+
+            /**
+             * Network status changed.
+             * @param request NetworkStatusChangedReq message or plain object
+             * @returns Promise
+             */
+            public networkStatusChanged(request: openim.init.INetworkStatusChangedReq): Promise<openim.init.NetworkStatusChangedResp>;
+
+            /**
+             * Get user login status.
+             * If this function is call before initSDK, it will return -1001(Uninitialized).
+             * @param request GetLoginStatusReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and GetLoginStatusResp
+             */
+            public getLoginStatus(request: openim.init.IGetLoginStatusReq, callback: openim.init.initService.GetLoginStatusCallback): void;
+
+            /**
+             * Get user login status.
+             * If this function is call before initSDK, it will return -1001(Uninitialized).
+             * @param request GetLoginStatusReq message or plain object
+             * @returns Promise
+             */
+            public getLoginStatus(request: openim.init.IGetLoginStatusReq): Promise<openim.init.GetLoginStatusResp>;
+
+            /**
+             * Get SDK version.
+             * @param request VersionReq message or plain object
+             * @param callback Node-style callback called with the error, if any, and VersionResp
+             */
+            public version(request: openim.init.IVersionReq, callback: openim.init.initService.VersionCallback): void;
+
+            /**
+             * Get SDK version.
+             * @param request VersionReq message or plain object
+             * @returns Promise
+             */
+            public version(request: openim.init.IVersionReq): Promise<openim.init.VersionResp>;
+        }
+
+        namespace initService {
+
+            /**
+             * Callback as used by {@link openim.init.initService#initSDK}.
+             * @param error Error, if any
+             * @param [response] InitSDKResp
+             */
+            type InitSDKCallback = (error: (Error|null), response?: openim.init.InitSDKResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#login}.
+             * @param error Error, if any
+             * @param [response] LoginResp
+             */
+            type LoginCallback = (error: (Error|null), response?: openim.init.LoginResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#logout}.
+             * @param error Error, if any
+             * @param [response] LogoutResp
+             */
+            type LogoutCallback = (error: (Error|null), response?: openim.init.LogoutResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#setAppBackgroundStatus}.
+             * @param error Error, if any
+             * @param [response] SetAppBackgroundStatusResp
+             */
+            type SetAppBackgroundStatusCallback = (error: (Error|null), response?: openim.init.SetAppBackgroundStatusResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#networkStatusChanged}.
+             * @param error Error, if any
+             * @param [response] NetworkStatusChangedResp
+             */
+            type NetworkStatusChangedCallback = (error: (Error|null), response?: openim.init.NetworkStatusChangedResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#getLoginStatus}.
+             * @param error Error, if any
+             * @param [response] GetLoginStatusResp
+             */
+            type GetLoginStatusCallback = (error: (Error|null), response?: openim.init.GetLoginStatusResp) => void;
+
+            /**
+             * Callback as used by {@link openim.init.initService#version}.
+             * @param error Error, if any
+             * @param [response] VersionResp
+             */
+            type VersionCallback = (error: (Error|null), response?: openim.init.VersionResp) => void;
         }
     }
 }

@@ -444,15 +444,15 @@ export namespace imsdk {
   }
 
   export function FindMessageList(cb: (count: number,
-    data: proto.sdk.conversation.ISearchByConversationResult[]) => void,
-    args: proto.sdk.conversation.IConversationArgs[]) {
+    data: proto.sdk.message.ISearchByConversationResult[]) => void,
+    args: proto.sdk.message.IConversationArgs[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.conversation.FindMessageListReq.create({
+    let req = proto.sdk.message.FindMessageListReq.create({
       conversationsArgs: args
     });
     call(handleId, proto.event.FuncRequestEventName.FindMessageList,
-      proto.sdk.conversation.FindMessageListReq.encode(req)
+      proto.sdk.message.FindMessageListReq.encode(req)
         .finish());
   }
 
@@ -606,12 +606,12 @@ export namespace imsdk {
   }
 
   export function SearchLocalMessages(cb: (count: number,
-    data: proto.sdk.conversation.ISearchByConversationResult[]) => void,
-    req: proto.sdk.conversation.SearchLocalMessagesReq) {
+    data: proto.sdk.message.ISearchByConversationResult[]) => void,
+    req: proto.sdk.message.SearchLocalMessagesReq) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     call(handleId, proto.event.FuncRequestEventName.SearchLocalMessages,
-      proto.sdk.conversation.SearchLocalMessagesReq.encode(req)
+      proto.sdk.message.SearchLocalMessagesReq.encode(req)
         .finish())
   }
 
@@ -631,13 +631,13 @@ export namespace imsdk {
     localEx: string) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.conversation.SetMessageLocalExReq.create({
+    let req = proto.sdk.message.SetMessageLocalExReq.create({
       conversationID: conversationId,
       clientMsgID: clientMsgId,
       localEx: localEx
     })
     call(handleId, proto.event.FuncRequestEventName.SetMessageLocalEx,
-      proto.sdk.conversation.SetMessageLocalExReq.encode(req)
+      proto.sdk.message.SetMessageLocalExReq.encode(req)
         .finish())
   }
 
@@ -666,26 +666,26 @@ export namespace imsdk {
       .finish());
   }
 
-  export function SubscribeUsersOnlineStatus(cb: (platforms: proto.sdk.conversation.UserOnlinePlatform[]) => void,
+  export function SubscribeUsersOnlineStatus(cb: (platforms: proto.sdk.user.UserOnlinePlatform[]) => void,
     userIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.conversation.SubscribeUsersOnlineStatusReq.create({
+    let req = proto.sdk.user.SubscribeUsersOnlineStatusReq.create({
       userIDs: userIds
     })
     call(handleId, proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus,
-      proto.sdk.conversation.SubscribeUsersOnlineStatusReq.encode(req)
+      proto.sdk.user.SubscribeUsersOnlineStatusReq.encode(req)
         .finish());
   }
 
   export function UnsubscribeUsersOnlineStatus(cb: (suc: boolean) => void, userIds: string[]) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.create({
+    let req = proto.sdk.user.UnsubscribeUsersOnlineStatusReq.create({
       userIDs: userIds
     })
     call(handleId, proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus,
-      proto.sdk.conversation.UnsubscribeUsersOnlineStatusReq.encode(req)
+      proto.sdk.user.UnsubscribeUsersOnlineStatusReq.encode(req)
         .finish());
   }
 

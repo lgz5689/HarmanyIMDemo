@@ -79,7 +79,7 @@ export namespace event {
         break;
       case proto.event.FuncRequestEventName.InitSDK: {
         let resp = proto.init.InitSDKResp.decode(data);
-        callBack?.(resp.suc);
+        callBack?.(suc);
       }
         break;
 
@@ -769,7 +769,7 @@ export namespace event {
         break;
 
       case proto.event.FuncRequestEventName.FindMessageList: {
-        let resp = proto.sdk.conversation.FindMessageListResp.decode(data);
+        let resp = proto.sdk.message.FindMessageListResp.decode(data);
         callBack?.(resp.totalCount, resp.findResultItems);
       }
         break;
@@ -852,13 +852,13 @@ export namespace event {
         break;
 
       case proto.event.FuncRequestEventName.SearchLocalMessages: {
-        let resp = proto.sdk.conversation.SearchLocalMessagesResp.decode(data);
+        let resp = proto.sdk.message.SearchLocalMessagesResp.decode(data);
         callBack?.(resp.count, resp.searchResultItems);
       }
         break;
 
       case proto.event.FuncRequestEventName.SetMessageLocalEx: {
-        let resp = proto.sdk.conversation.SetMessageLocalExResp.decode(data);
+        let resp = proto.sdk.message.SetMessageLocalExResp.decode(data);
         callBack?.(resp.success);
       }
         break;
@@ -1003,13 +1003,13 @@ export namespace event {
         break;
 
       case proto.event.FuncRequestEventName.SubscribeUsersOnlineStatus: {
-        let resp = proto.sdk.conversation.SubscribeUsersOnlineStatusResp.decode(data);
+        let resp = proto.sdk.user.SubscribeUsersOnlineStatusResp.decode(data);
         callBack?.(resp.status);
       }
         break;
 
       case proto.event.FuncRequestEventName.UnsubscribeUsersOnlineStatus: {
-        let resp = proto.sdk.conversation.UnsubscribeUsersOnlineStatusResp.decode(data);
+        let resp = proto.sdk.user.UnsubscribeUsersOnlineStatusResp.decode(data);
         callBack?.(suc);
       }
         break;
