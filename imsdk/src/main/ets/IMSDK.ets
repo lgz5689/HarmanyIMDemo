@@ -127,12 +127,11 @@ export namespace imsdk {
   }
 
   export function CreateTextAtMessage(cb: (msg: proto.sdk.shared.IIMMessage) => void, text: string,
-    atUserList: string[], atUsersInfo: proto.sdk.shared.IAtInfo[], message: proto.sdk.shared.IIMMessage) {
+    atUsersInfo: proto.sdk.shared.IAtInfo[], message: proto.sdk.shared.IIMMessage) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateTextAtMessageReq.create({
       text: text,
-      userIDList: atUserList,
       usersInfo: atUsersInfo,
       quoteMessage: message
     })

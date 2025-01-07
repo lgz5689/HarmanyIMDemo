@@ -7693,8 +7693,8 @@ export namespace openim {
                 /** MergeElem multiMessage */
                 multiMessage?: (openim.sdk.shared.IIMMessage[]|null);
 
-                /** MergeElem messageEntityList */
-                messageEntityList?: (openim.sdk.shared.IMessageEntity[]|null);
+                /** MergeElem messageEntities */
+                messageEntities?: (openim.sdk.shared.IMessageEntity[]|null);
             }
 
             /** Represents a MergeElem. */
@@ -7715,8 +7715,8 @@ export namespace openim {
                 /** MergeElem multiMessage. */
                 public multiMessage: openim.sdk.shared.IIMMessage[];
 
-                /** MergeElem messageEntityList. */
-                public messageEntityList: openim.sdk.shared.IMessageEntity[];
+                /** MergeElem messageEntities. */
+                public messageEntities: openim.sdk.shared.IMessageEntity[];
 
                 /**
                  * Creates a new MergeElem instance using the specified properties.
@@ -7802,17 +7802,11 @@ export namespace openim {
                 /** AtTextElem text */
                 text?: (string|null);
 
-                /** AtTextElem atUserList */
-                atUserList?: (string[]|null);
-
                 /** AtTextElem atUsersInfo */
                 atUsersInfo?: (openim.sdk.shared.IAtInfo[]|null);
 
                 /** AtTextElem quoteMessage */
                 quoteMessage?: (openim.sdk.shared.IIMMessage|null);
-
-                /** AtTextElem isAtSelf */
-                isAtSelf?: (boolean|null);
             }
 
             /** Represents an AtTextElem. */
@@ -7827,17 +7821,11 @@ export namespace openim {
                 /** AtTextElem text. */
                 public text: string;
 
-                /** AtTextElem atUserList. */
-                public atUserList: string[];
-
                 /** AtTextElem atUsersInfo. */
                 public atUsersInfo: openim.sdk.shared.IAtInfo[];
 
                 /** AtTextElem quoteMessage. */
                 public quoteMessage?: (openim.sdk.shared.IIMMessage|null);
-
-                /** AtTextElem isAtSelf. */
-                public isAtSelf: boolean;
 
                 /**
                  * Creates a new AtTextElem instance using the specified properties.
@@ -8247,8 +8235,8 @@ export namespace openim {
                 /** QuoteElem quoteMessage */
                 quoteMessage?: (openim.sdk.shared.IIMMessage|null);
 
-                /** QuoteElem messageEntityList */
-                messageEntityList?: (openim.sdk.shared.IMessageEntity[]|null);
+                /** QuoteElem messageEntities */
+                messageEntities?: (openim.sdk.shared.IMessageEntity[]|null);
             }
 
             /** Represents a QuoteElem. */
@@ -8266,8 +8254,8 @@ export namespace openim {
                 /** QuoteElem quoteMessage. */
                 public quoteMessage?: (openim.sdk.shared.IIMMessage|null);
 
-                /** QuoteElem messageEntityList. */
-                public messageEntityList: openim.sdk.shared.IMessageEntity[];
+                /** QuoteElem messageEntities. */
+                public messageEntities: openim.sdk.shared.IMessageEntity[];
 
                 /**
                  * Creates a new QuoteElem instance using the specified properties.
@@ -8353,8 +8341,8 @@ export namespace openim {
                 /** AdvancedTextElem text */
                 text?: (string|null);
 
-                /** AdvancedTextElem messageEntityList */
-                messageEntityList?: (openim.sdk.shared.IMessageEntity[]|null);
+                /** AdvancedTextElem messageEntities */
+                messageEntities?: (openim.sdk.shared.IMessageEntity[]|null);
             }
 
             /** Represents an AdvancedTextElem. */
@@ -8369,8 +8357,8 @@ export namespace openim {
                 /** AdvancedTextElem text. */
                 public text: string;
 
-                /** AdvancedTextElem messageEntityList. */
-                public messageEntityList: openim.sdk.shared.IMessageEntity[];
+                /** AdvancedTextElem messageEntities. */
+                public messageEntities: openim.sdk.shared.IMessageEntity[];
 
                 /**
                  * Creates a new AdvancedTextElem instance using the specified properties.
@@ -21028,9 +21016,6 @@ export namespace openim {
                 /** CreateTextAtMessageReq text */
                 text?: (string|null);
 
-                /** CreateTextAtMessageReq userIDList */
-                userIDList?: (string[]|null);
-
                 /** CreateTextAtMessageReq usersInfo */
                 usersInfo?: (openim.sdk.shared.IAtInfo[]|null);
 
@@ -21049,9 +21034,6 @@ export namespace openim {
 
                 /** CreateTextAtMessageReq text. */
                 public text: string;
-
-                /** CreateTextAtMessageReq userIDList. */
-                public userIDList: string[];
 
                 /** CreateTextAtMessageReq usersInfo. */
                 public usersInfo: openim.sdk.shared.IAtInfo[];
