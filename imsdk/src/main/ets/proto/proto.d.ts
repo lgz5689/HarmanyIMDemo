@@ -70,7 +70,7 @@ export namespace openim {
 
             /** ContentType enum. */
             enum ContentType {
-                ContentType_ = 0,
+                Error = 0,
                 Text = 101,
                 Picture = 102,
                 Sound = 103,
@@ -7460,11 +7460,14 @@ export namespace openim {
             /** Properties of an ErrorElem. */
             interface IErrorElem {
 
-                /** ErrorElem type */
-                type?: (string|null);
+                /** ErrorElem contentType */
+                contentType?: (openim.sdk.common.ContentType|null);
 
-                /** ErrorElem data */
-                data?: (string|null);
+                /** ErrorElem content */
+                content?: (string|null);
+
+                /** ErrorElem cause */
+                cause?: (string|null);
             }
 
             /** Represents an ErrorElem. */
@@ -7476,11 +7479,14 @@ export namespace openim {
                  */
                 constructor(properties?: openim.sdk.shared.IErrorElem);
 
-                /** ErrorElem type. */
-                public type: string;
+                /** ErrorElem contentType. */
+                public contentType: openim.sdk.common.ContentType;
 
-                /** ErrorElem data. */
-                public data: string;
+                /** ErrorElem content. */
+                public content: string;
+
+                /** ErrorElem cause. */
+                public cause: string;
 
                 /**
                  * Creates a new ErrorElem instance using the specified properties.
@@ -11206,8 +11212,8 @@ export namespace openim {
                 /** IMMessage revokedTips */
                 revokedTips?: (openim.sdk.shared.IRevokedTips|null);
 
-                /** IMMessage errorTips */
-                errorTips?: (openim.sdk.shared.IErrorElem|null);
+                /** IMMessage errorElem */
+                errorElem?: (openim.sdk.shared.IErrorElem|null);
 
                 /** IMMessage groupCreatedTips */
                 groupCreatedTips?: (openim.sdk.shared.IGroupCreatedTips|null);
@@ -11378,8 +11384,8 @@ export namespace openim {
                 /** IMMessage revokedTips. */
                 public revokedTips?: (openim.sdk.shared.IRevokedTips|null);
 
-                /** IMMessage errorTips. */
-                public errorTips?: (openim.sdk.shared.IErrorElem|null);
+                /** IMMessage errorElem. */
+                public errorElem?: (openim.sdk.shared.IErrorElem|null);
 
                 /** IMMessage groupCreatedTips. */
                 public groupCreatedTips?: (openim.sdk.shared.IGroupCreatedTips|null);
@@ -11433,7 +11439,7 @@ export namespace openim {
                 public oaTips?: (openim.sdk.shared.IOaTips|null);
 
                 /** IMMessage content. */
-                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"errorTips"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oaTips");
+                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"errorElem"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oaTips");
 
                 /**
                  * Creates a new IMMessage instance using the specified properties.
