@@ -18628,6 +18628,12 @@ export namespace openim {
                 KeywordMatchAnd = 1
             }
 
+            /** ViewType enum. */
+            enum ViewType {
+                ViewHistory = 0,
+                ViewSearch = 1
+            }
+
             /** Properties of a SendMessageReq. */
             interface ISendMessageReq {
 
@@ -18854,6 +18860,9 @@ export namespace openim {
 
                 /** GetHistoryMessageListReq isReverse */
                 isReverse?: (boolean|null);
+
+                /** GetHistoryMessageListReq viewType */
+                viewType?: (openim.sdk.message.ViewType|null);
             }
 
             /** Represents a GetHistoryMessageListReq. */
@@ -18876,6 +18885,9 @@ export namespace openim {
 
                 /** GetHistoryMessageListReq isReverse. */
                 public isReverse: boolean;
+
+                /** GetHistoryMessageListReq viewType. */
+                public viewType: openim.sdk.message.ViewType;
 
                 /**
                  * Creates a new GetHistoryMessageListReq instance using the specified properties.
@@ -36411,6 +36423,27 @@ export namespace openim {
         /** Properties of an EventOnRecvCustomBusinessMessageData. */
         interface IEventOnRecvCustomBusinessMessageData {
 
+            /** EventOnRecvCustomBusinessMessageData clientMsgID */
+            clientMsgID?: (string|null);
+
+            /** EventOnRecvCustomBusinessMessageData serverMsgID */
+            serverMsgID?: (string|null);
+
+            /** EventOnRecvCustomBusinessMessageData createTime */
+            createTime?: (number|Long|null);
+
+            /** EventOnRecvCustomBusinessMessageData sendTime */
+            sendTime?: (number|Long|null);
+
+            /** EventOnRecvCustomBusinessMessageData sessionType */
+            sessionType?: (openim.sdk.common.SessionType|null);
+
+            /** EventOnRecvCustomBusinessMessageData sendID */
+            sendID?: (string|null);
+
+            /** EventOnRecvCustomBusinessMessageData recvID */
+            recvID?: (string|null);
+
             /** EventOnRecvCustomBusinessMessageData businessMessage */
             businessMessage?: (string|null);
         }
@@ -36423,6 +36456,27 @@ export namespace openim {
              * @param [properties] Properties to set
              */
             constructor(properties?: openim.event.IEventOnRecvCustomBusinessMessageData);
+
+            /** EventOnRecvCustomBusinessMessageData clientMsgID. */
+            public clientMsgID: string;
+
+            /** EventOnRecvCustomBusinessMessageData serverMsgID. */
+            public serverMsgID: string;
+
+            /** EventOnRecvCustomBusinessMessageData createTime. */
+            public createTime: (number|Long);
+
+            /** EventOnRecvCustomBusinessMessageData sendTime. */
+            public sendTime: (number|Long);
+
+            /** EventOnRecvCustomBusinessMessageData sessionType. */
+            public sessionType: openim.sdk.common.SessionType;
+
+            /** EventOnRecvCustomBusinessMessageData sendID. */
+            public sendID: string;
+
+            /** EventOnRecvCustomBusinessMessageData recvID. */
+            public recvID: string;
 
             /** EventOnRecvCustomBusinessMessageData businessMessage. */
             public businessMessage: string;
