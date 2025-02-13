@@ -211,17 +211,13 @@ export namespace imsdk {
   }
 
   export function CreateImageMessage(cb: (suc: proto.sdk.shared.IIMMessage) => void, sourcePath: string,
-    bigPath: string | null, snapShotPath: string | null, sourcePicture: proto.sdk.shared.IPictureBaseInfo | null,
-    bigPicture: proto.sdk.shared.IPictureBaseInfo | null, snapShotPicture: proto.sdk.shared.IPictureBaseInfo | null) {
+    bigPath: string | null, snapShotPath: string | null) {
     let handleId = genHandleId();
     event.RegisterCallBack(handleId, cb);
     let req = proto.sdk.message.CreateImageMessageReq.create({
       sourcePath: sourcePath,
       bigPath: bigPath,
       snapshotPath: snapShotPath,
-      sourcePicture: sourcePicture,
-      bigPicture: bigPicture,
-      snapshotPicture: snapShotPicture
     })
     call(handleId, proto.event.FuncRequestEventName.CreateImageMessage,
       proto.sdk.message.CreateImageMessageReq.encode(req)
@@ -688,60 +684,6 @@ export namespace imsdk {
         .finish());
   }
 
-  export function ProcessUserCommandGetAll(cb: (commands: proto.sdk.shared.ICommandInfo[]) => void) {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.user.ProcessUserCommandGetAllReq.create()
-    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandGetAll,
-      proto.sdk.user.ProcessUserCommandGetAllReq.encode(req)
-        .finish())
-  }
-
-  export function ProcessUserCommandAdd(cb: (suc: boolean) => void, userId: string, type: number, uuid: string,
-    value: string, ex: string) {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.user.ProcessUserCommandAddReq.create({
-      userID: userId,
-      type: type,
-      uuid: uuid,
-      value: value,
-      ex: ex
-    })
-    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandAdd,
-      proto.sdk.user.ProcessUserCommandAddReq.encode(req)
-        .finish())
-  }
-
-  export function ProcessUserCommandDelete(cb: (suc: boolean) => void, userId: string, type: number, uuid: string) {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.user.ProcessUserCommandDeleteReq.create({
-      userID: userId,
-      type: type,
-      uuid: uuid,
-    })
-    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandDelete,
-      proto.sdk.user.ProcessUserCommandDeleteReq.encode(req)
-        .finish())
-  }
-
-  export function ProcessUserCommandUpdate(cb: (suc: boolean) => void, userId: string, type: number, uuid: string,
-    value: string, ex: string) {
-    let handleId = genHandleId();
-    event.RegisterCallBack(handleId, cb);
-    let req = proto.sdk.user.ProcessUserCommandUpdateReq.create({
-      userID: userId,
-      type: type,
-      uuid: uuid,
-      value: value,
-      ex: ex
-    })
-    call(handleId, proto.event.FuncRequestEventName.ProcessUserCommandUpdate,
-      proto.sdk.user.ProcessUserCommandUpdateReq.encode(req)
-        .finish())
-  }
-
   export function GetSpecifiedFriends(cb: (friends: proto.sdk.shared.IIMFriend[]) => void, userIdList: string[],
     filterBlack: boolean) {
     let handleId = genHandleId();
@@ -1201,7 +1143,7 @@ export namespace imsdk {
       .finish());
   }
 
-  export function UploadLogs(cb: listener.IUploadLogs, line: number, ex: string,
+  export function UploadSDKData(cb: listener.IUploadLogs, line: number, ex: string,
     mode: proto.sdk.common.UploadSDKDataMode) {
     let handleId = genHandleId();
     event.RegisterUploadLogsCallBack(handleId, cb);
@@ -1210,7 +1152,7 @@ export namespace imsdk {
       ex: ex,
       mode: mode
     })
-    call(handleId, proto.event.FuncRequestEventName.UploadLogs, proto.sdk.third.UploadSDKDataReq.encode(req)
+    call(handleId, proto.event.FuncRequestEventName.UploadSDKData, proto.sdk.third.UploadSDKDataReq.encode(req)
       .finish())
   }
 

@@ -133,7 +133,7 @@ export namespace event {
       }
         break;
 
-      case proto.event.FuncRequestEventName.UploadLogs: {
+      case proto.event.FuncRequestEventName.UploadSDKData: {
         let uploadLogCallBack = uploadLogsCallBackDic.get(handleId)
         if (uploadLogCallBack != undefined) {
           let resp = proto.sdk.third.UploadSDKDataResp.decode(data);
@@ -189,10 +189,10 @@ export namespace event {
 
         break;
 
-      case proto.event.FuncRequestEventName.EventOnUploadLogsProgress: {
+      case proto.event.FuncRequestEventName.EventOnUploadSDKDataProgress: {
         let uploadLogCallBack = uploadLogsCallBackDic.get(handleId)
         if (uploadLogCallBack != undefined) {
-          let resp = proto.event.EventOnUploadFileProgressData.decode(data);
+          let resp = proto.event.EventOnUploadSDKDataProgressData.decode(data);
           uploadLogCallBack.onProgress(resp.progress);
         }
       }
@@ -459,24 +459,6 @@ export namespace event {
       case proto.event.FuncRequestEventName.EventOnUserOnlineStatusChanged: {
         let resp = proto.event.EventOnUserOnlineStatusChangedData.decode(data);
         userListener?.onUserOnlineStatusChanged(resp.userID, resp.platforms)
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.EventOnUserCommandAdd: {
-        let resp = proto.event.EventOnUserCommandAddData.decode(data);
-        userListener?.onUserCommandAdd(resp.command);
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.EventOnUserCommandDelete: {
-        let resp = proto.event.EventOnUserCommandDeleteData.decode(data);
-        userListener?.onUserCommandDelete(resp.command);
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.EventOnUserCommandUpdate: {
-        let resp = proto.event.EventOnUserCommandUpdateData.decode(data);
-        userListener?.onUserCommandUpdate(resp.command);
       }
         break;
 
@@ -960,12 +942,6 @@ export namespace event {
       }
         break;
 
-      case proto.event.FuncRequestEventName.ProcessUserCommandGetAll: {
-        let resp = proto.sdk.user.ProcessUserCommandGetAllResp.decode(data);
-        callBack?.(resp.commands);
-      }
-        break;
-
       case proto.event.FuncRequestEventName.GetSelfUserInfo: {
         let resp = proto.sdk.user.GetSelfUserInfoResp.decode(data);
         callBack?.(resp.user);
@@ -974,24 +950,6 @@ export namespace event {
 
       case proto.event.FuncRequestEventName.SetSelfInfo: {
         let resp = proto.sdk.user.SetSelfInfoResp.decode(data);
-        callBack?.(suc);
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.ProcessUserCommandAdd: {
-        let resp = proto.sdk.user.ProcessUserCommandAddResp.decode(data);
-        callBack?.(suc);
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.ProcessUserCommandDelete: {
-        let resp = proto.sdk.user.ProcessUserCommandDeleteResp.decode(data);
-        callBack?.(suc);
-      }
-        break;
-
-      case proto.event.FuncRequestEventName.ProcessUserCommandUpdate: {
-        let resp = proto.sdk.user.ProcessUserCommandUpdateResp.decode(data);
         callBack?.(suc);
       }
         break;

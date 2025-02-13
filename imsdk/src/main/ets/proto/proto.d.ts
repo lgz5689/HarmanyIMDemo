@@ -101,6 +101,7 @@ export namespace openim {
                 GroupMemberCancelMutedNotification = 1513,
                 GroupMutedNotification = 1514,
                 GroupCancelMutedNotification = 1515,
+                GroupMemberInfoChangedNotification = 1516,
                 GroupInfoSetAnnouncementNotification = 1519,
                 GroupInfoSetNameNotification = 1520,
                 ConversationPrivateChatNotification = 1701,
@@ -8886,157 +8887,157 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** Properties of an OaTips. */
-            interface IOaTips {
+            /** Properties of a OATips. */
+            interface IOATips {
 
-                /** OaTips notificationName */
+                /** OATips notificationName */
                 notificationName?: (string|null);
 
-                /** OaTips notificationFaceURL */
+                /** OATips notificationFaceURL */
                 notificationFaceURL?: (string|null);
 
-                /** OaTips notificationType */
+                /** OATips notificationType */
                 notificationType?: (number|null);
 
-                /** OaTips text */
+                /** OATips text */
                 text?: (string|null);
 
-                /** OaTips url */
+                /** OATips url */
                 url?: (string|null);
 
-                /** OaTips mixType */
+                /** OATips mixType */
                 mixType?: (number|null);
 
-                /** OaTips pictureElem */
+                /** OATips pictureElem */
                 pictureElem?: (openim.sdk.shared.IPictureElem|null);
 
-                /** OaTips soundElem */
+                /** OATips soundElem */
                 soundElem?: (openim.sdk.shared.ISoundElem|null);
 
-                /** OaTips videoElem */
+                /** OATips videoElem */
                 videoElem?: (openim.sdk.shared.IVideoElem|null);
 
-                /** OaTips fileElem */
+                /** OATips fileElem */
                 fileElem?: (openim.sdk.shared.IFileElem|null);
 
-                /** OaTips ex */
+                /** OATips ex */
                 ex?: (string|null);
             }
 
-            /** Represents an OaTips. */
-            class OaTips implements IOaTips {
+            /** Represents a OATips. */
+            class OATips implements IOATips {
 
                 /**
-                 * Constructs a new OaTips.
+                 * Constructs a new OATips.
                  * @param [properties] Properties to set
                  */
-                constructor(properties?: openim.sdk.shared.IOaTips);
+                constructor(properties?: openim.sdk.shared.IOATips);
 
-                /** OaTips notificationName. */
+                /** OATips notificationName. */
                 public notificationName: string;
 
-                /** OaTips notificationFaceURL. */
+                /** OATips notificationFaceURL. */
                 public notificationFaceURL: string;
 
-                /** OaTips notificationType. */
+                /** OATips notificationType. */
                 public notificationType: number;
 
-                /** OaTips text. */
+                /** OATips text. */
                 public text: string;
 
-                /** OaTips url. */
+                /** OATips url. */
                 public url: string;
 
-                /** OaTips mixType. */
+                /** OATips mixType. */
                 public mixType: number;
 
-                /** OaTips pictureElem. */
+                /** OATips pictureElem. */
                 public pictureElem?: (openim.sdk.shared.IPictureElem|null);
 
-                /** OaTips soundElem. */
+                /** OATips soundElem. */
                 public soundElem?: (openim.sdk.shared.ISoundElem|null);
 
-                /** OaTips videoElem. */
+                /** OATips videoElem. */
                 public videoElem?: (openim.sdk.shared.IVideoElem|null);
 
-                /** OaTips fileElem. */
+                /** OATips fileElem. */
                 public fileElem?: (openim.sdk.shared.IFileElem|null);
 
-                /** OaTips ex. */
+                /** OATips ex. */
                 public ex: string;
 
                 /**
-                 * Creates a new OaTips instance using the specified properties.
+                 * Creates a new OATips instance using the specified properties.
                  * @param [properties] Properties to set
-                 * @returns OaTips instance
+                 * @returns OATips instance
                  */
-                public static create(properties?: openim.sdk.shared.IOaTips): openim.sdk.shared.OaTips;
+                public static create(properties?: openim.sdk.shared.IOATips): openim.sdk.shared.OATips;
 
                 /**
-                 * Encodes the specified OaTips message. Does not implicitly {@link openim.sdk.shared.OaTips.verify|verify} messages.
-                 * @param message OaTips message or plain object to encode
+                 * Encodes the specified OATips message. Does not implicitly {@link openim.sdk.shared.OATips.verify|verify} messages.
+                 * @param message OATips message or plain object to encode
                  * @param [writer] Writer to encode to
                  * @returns Writer
                  */
-                public static encode(message: openim.sdk.shared.IOaTips, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static encode(message: openim.sdk.shared.IOATips, writer?: $protobuf.Writer): $protobuf.Writer;
 
                 /**
-                 * Encodes the specified OaTips message, length delimited. Does not implicitly {@link openim.sdk.shared.OaTips.verify|verify} messages.
-                 * @param message OaTips message or plain object to encode
+                 * Encodes the specified OATips message, length delimited. Does not implicitly {@link openim.sdk.shared.OATips.verify|verify} messages.
+                 * @param message OATips message or plain object to encode
                  * @param [writer] Writer to encode to
                  * @returns Writer
                  */
-                public static encodeDelimited(message: openim.sdk.shared.IOaTips, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static encodeDelimited(message: openim.sdk.shared.IOATips, writer?: $protobuf.Writer): $protobuf.Writer;
 
                 /**
-                 * Decodes an OaTips message from the specified reader or buffer.
+                 * Decodes a OATips message from the specified reader or buffer.
                  * @param reader Reader or buffer to decode from
                  * @param [length] Message length if known beforehand
-                 * @returns OaTips
+                 * @returns OATips
                  * @throws {Error} If the payload is not a reader or valid buffer
                  * @throws {$protobuf.util.ProtocolError} If required fields are missing
                  */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.shared.OaTips;
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.shared.OATips;
 
                 /**
-                 * Decodes an OaTips message from the specified reader or buffer, length delimited.
+                 * Decodes a OATips message from the specified reader or buffer, length delimited.
                  * @param reader Reader or buffer to decode from
-                 * @returns OaTips
+                 * @returns OATips
                  * @throws {Error} If the payload is not a reader or valid buffer
                  * @throws {$protobuf.util.ProtocolError} If required fields are missing
                  */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.shared.OaTips;
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.shared.OATips;
 
                 /**
-                 * Verifies an OaTips message.
+                 * Verifies a OATips message.
                  * @param message Plain object to verify
                  * @returns `null` if valid, otherwise the reason why it is not
                  */
                 public static verify(message: { [k: string]: any }): (string|null);
 
                 /**
-                 * Creates an OaTips message from a plain object. Also converts values to their respective internal types.
+                 * Creates a OATips message from a plain object. Also converts values to their respective internal types.
                  * @param object Plain object
-                 * @returns OaTips
+                 * @returns OATips
                  */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.shared.OaTips;
+                public static fromObject(object: { [k: string]: any }): openim.sdk.shared.OATips;
 
                 /**
-                 * Creates a plain object from an OaTips message. Also converts values to other types if specified.
-                 * @param message OaTips
+                 * Creates a plain object from a OATips message. Also converts values to other types if specified.
+                 * @param message OATips
                  * @param [options] Conversion options
                  * @returns Plain object
                  */
-                public static toObject(message: openim.sdk.shared.OaTips, options?: $protobuf.IConversionOptions): { [k: string]: any };
+                public static toObject(message: openim.sdk.shared.OATips, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
                 /**
-                 * Converts this OaTips to JSON.
+                 * Converts this OATips to JSON.
                  * @returns JSON object
                  */
                 public toJSON(): { [k: string]: any };
 
                 /**
-                 * Gets the default type url for OaTips
+                 * Gets the default type url for OATips
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -10526,6 +10527,115 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
+            /** Properties of a GroupMemberInfoChangedTips. */
+            interface IGroupMemberInfoChangedTips {
+
+                /** GroupMemberInfoChangedTips group */
+                group?: (openim.sdk.shared.IIMGroup|null);
+
+                /** GroupMemberInfoChangedTips opUser */
+                opUser?: (openim.sdk.shared.IIMGroupMember|null);
+
+                /** GroupMemberInfoChangedTips changedUser */
+                changedUser?: (openim.sdk.shared.IIMGroupMember|null);
+            }
+
+            /** Represents a GroupMemberInfoChangedTips. */
+            class GroupMemberInfoChangedTips implements IGroupMemberInfoChangedTips {
+
+                /**
+                 * Constructs a new GroupMemberInfoChangedTips.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.shared.IGroupMemberInfoChangedTips);
+
+                /** GroupMemberInfoChangedTips group. */
+                public group?: (openim.sdk.shared.IIMGroup|null);
+
+                /** GroupMemberInfoChangedTips opUser. */
+                public opUser?: (openim.sdk.shared.IIMGroupMember|null);
+
+                /** GroupMemberInfoChangedTips changedUser. */
+                public changedUser?: (openim.sdk.shared.IIMGroupMember|null);
+
+                /**
+                 * Creates a new GroupMemberInfoChangedTips instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns GroupMemberInfoChangedTips instance
+                 */
+                public static create(properties?: openim.sdk.shared.IGroupMemberInfoChangedTips): openim.sdk.shared.GroupMemberInfoChangedTips;
+
+                /**
+                 * Encodes the specified GroupMemberInfoChangedTips message. Does not implicitly {@link openim.sdk.shared.GroupMemberInfoChangedTips.verify|verify} messages.
+                 * @param message GroupMemberInfoChangedTips message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.shared.IGroupMemberInfoChangedTips, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified GroupMemberInfoChangedTips message, length delimited. Does not implicitly {@link openim.sdk.shared.GroupMemberInfoChangedTips.verify|verify} messages.
+                 * @param message GroupMemberInfoChangedTips message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.shared.IGroupMemberInfoChangedTips, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a GroupMemberInfoChangedTips message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns GroupMemberInfoChangedTips
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.shared.GroupMemberInfoChangedTips;
+
+                /**
+                 * Decodes a GroupMemberInfoChangedTips message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns GroupMemberInfoChangedTips
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.shared.GroupMemberInfoChangedTips;
+
+                /**
+                 * Verifies a GroupMemberInfoChangedTips message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a GroupMemberInfoChangedTips message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns GroupMemberInfoChangedTips
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.shared.GroupMemberInfoChangedTips;
+
+                /**
+                 * Creates a plain object from a GroupMemberInfoChangedTips message. Also converts values to other types if specified.
+                 * @param message GroupMemberInfoChangedTips
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.shared.GroupMemberInfoChangedTips, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this GroupMemberInfoChangedTips to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for GroupMemberInfoChangedTips
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
             /** Properties of a FromToUserID. */
             interface IFromToUserID {
 
@@ -11254,6 +11364,9 @@ export namespace openim {
                 /** IMMessage groupCancelMutedTips */
                 groupCancelMutedTips?: (openim.sdk.shared.IGroupCancelMutedTips|null);
 
+                /** IMMessage groupMemberInfoChangedTips */
+                groupMemberInfoChangedTips?: (openim.sdk.shared.IGroupMemberInfoChangedTips|null);
+
                 /** IMMessage friendApplicationApprovedTips */
                 friendApplicationApprovedTips?: (openim.sdk.shared.IFriendApplicationApprovedTips|null);
 
@@ -11263,8 +11376,8 @@ export namespace openim {
                 /** IMMessage businessTips */
                 businessTips?: (openim.sdk.shared.IBusinessTips|null);
 
-                /** IMMessage oaTips */
-                oaTips?: (openim.sdk.shared.IOaTips|null);
+                /** IMMessage oATips */
+                oATips?: (openim.sdk.shared.IOATips|null);
             }
 
             /** Represents a IMMessage. */
@@ -11426,6 +11539,9 @@ export namespace openim {
                 /** IMMessage groupCancelMutedTips. */
                 public groupCancelMutedTips?: (openim.sdk.shared.IGroupCancelMutedTips|null);
 
+                /** IMMessage groupMemberInfoChangedTips. */
+                public groupMemberInfoChangedTips?: (openim.sdk.shared.IGroupMemberInfoChangedTips|null);
+
                 /** IMMessage friendApplicationApprovedTips. */
                 public friendApplicationApprovedTips?: (openim.sdk.shared.IFriendApplicationApprovedTips|null);
 
@@ -11435,11 +11551,11 @@ export namespace openim {
                 /** IMMessage businessTips. */
                 public businessTips?: (openim.sdk.shared.IBusinessTips|null);
 
-                /** IMMessage oaTips. */
-                public oaTips?: (openim.sdk.shared.IOaTips|null);
+                /** IMMessage oATips. */
+                public oATips?: (openim.sdk.shared.IOATips|null);
 
                 /** IMMessage content. */
-                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"errorElem"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oaTips");
+                public content?: ("textElem"|"cardElem"|"pictureElem"|"soundElem"|"videoElem"|"fileElem"|"mergeElem"|"atTextElem"|"faceElem"|"locationElem"|"customElem"|"quoteElem"|"advancedTextElem"|"typingElem"|"streamElem"|"revokedTips"|"errorElem"|"groupCreatedTips"|"groupInfoSetNameTips"|"groupInfoSetAnnouncementTips"|"memberQuitTips"|"groupOwnerTransferredTips"|"memberKickedTips"|"memberInvitedTips"|"memberEnterTips"|"groupDismissedTips"|"groupMemberMutedTips"|"groupMemberCancelMutedTips"|"groupMutedTips"|"groupCancelMutedTips"|"groupMemberInfoChangedTips"|"friendApplicationApprovedTips"|"conversationPrivateChatTips"|"businessTips"|"oATips");
 
                 /**
                  * Creates a new IMMessage instance using the specified properties.
@@ -11587,7 +11703,8 @@ export namespace openim {
                 SrvDatabase = 90002,
                 SrvNetwork = 90004,
                 SrvData = 90007,
-                SrvCallback = 80000
+                SrvCallback = 80000,
+                RefuseToAddFriend = 10013
             }
         }
 
@@ -18977,7 +19094,7 @@ export namespace openim {
                 isEnd?: (boolean|null);
 
                 /** GetHistoryMessageListResp errCode */
-                errCode?: (number|null);
+                errCode?: (openim.sdk.error.ErrorCode|null);
 
                 /** GetHistoryMessageListResp errMsg */
                 errMsg?: (string|null);
@@ -18999,7 +19116,7 @@ export namespace openim {
                 public isEnd: boolean;
 
                 /** GetHistoryMessageListResp errCode. */
-                public errCode: number;
+                public errCode: openim.sdk.error.ErrorCode;
 
                 /** GetHistoryMessageListResp errMsg. */
                 public errMsg: string;
@@ -22275,15 +22392,6 @@ export namespace openim {
 
                 /** CreateImageMessageReq snapshotPath */
                 snapshotPath?: (string|null);
-
-                /** CreateImageMessageReq sourcePicture */
-                sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
-
-                /** CreateImageMessageReq bigPicture */
-                bigPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
-
-                /** CreateImageMessageReq snapshotPicture */
-                snapshotPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
             }
 
             /** Represents a CreateImageMessageReq. */
@@ -22303,15 +22411,6 @@ export namespace openim {
 
                 /** CreateImageMessageReq snapshotPath. */
                 public snapshotPath?: (string|null);
-
-                /** CreateImageMessageReq sourcePicture. */
-                public sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
-
-                /** CreateImageMessageReq bigPicture. */
-                public bigPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
-
-                /** CreateImageMessageReq snapshotPicture. */
-                public snapshotPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
 
                 /**
                  * Creates a new CreateImageMessageReq instance using the specified properties.
@@ -22385,6 +22484,133 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for CreateImageMessageReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a CreateImageMessageByURLReq. */
+            interface ICreateImageMessageByURLReq {
+
+                /** CreateImageMessageByURLReq sourcePath */
+                sourcePath?: (string|null);
+
+                /** CreateImageMessageByURLReq bigPath */
+                bigPath?: (string|null);
+
+                /** CreateImageMessageByURLReq snapshotPath */
+                snapshotPath?: (string|null);
+
+                /** CreateImageMessageByURLReq sourcePicture */
+                sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+
+                /** CreateImageMessageByURLReq bigPicture */
+                bigPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+
+                /** CreateImageMessageByURLReq snapshotPicture */
+                snapshotPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+            }
+
+            /** Represents a CreateImageMessageByURLReq. */
+            class CreateImageMessageByURLReq implements ICreateImageMessageByURLReq {
+
+                /**
+                 * Constructs a new CreateImageMessageByURLReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ICreateImageMessageByURLReq);
+
+                /** CreateImageMessageByURLReq sourcePath. */
+                public sourcePath?: (string|null);
+
+                /** CreateImageMessageByURLReq bigPath. */
+                public bigPath?: (string|null);
+
+                /** CreateImageMessageByURLReq snapshotPath. */
+                public snapshotPath?: (string|null);
+
+                /** CreateImageMessageByURLReq sourcePicture. */
+                public sourcePicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+
+                /** CreateImageMessageByURLReq bigPicture. */
+                public bigPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+
+                /** CreateImageMessageByURLReq snapshotPicture. */
+                public snapshotPicture?: (openim.sdk.shared.IPictureBaseInfo|null);
+
+                /**
+                 * Creates a new CreateImageMessageByURLReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns CreateImageMessageByURLReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ICreateImageMessageByURLReq): openim.sdk.message.CreateImageMessageByURLReq;
+
+                /**
+                 * Encodes the specified CreateImageMessageByURLReq message. Does not implicitly {@link openim.sdk.message.CreateImageMessageByURLReq.verify|verify} messages.
+                 * @param message CreateImageMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ICreateImageMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified CreateImageMessageByURLReq message, length delimited. Does not implicitly {@link openim.sdk.message.CreateImageMessageByURLReq.verify|verify} messages.
+                 * @param message CreateImageMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ICreateImageMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a CreateImageMessageByURLReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns CreateImageMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.CreateImageMessageByURLReq;
+
+                /**
+                 * Decodes a CreateImageMessageByURLReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns CreateImageMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.CreateImageMessageByURLReq;
+
+                /**
+                 * Verifies a CreateImageMessageByURLReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a CreateImageMessageByURLReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns CreateImageMessageByURLReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.CreateImageMessageByURLReq;
+
+                /**
+                 * Creates a plain object from a CreateImageMessageByURLReq message. Also converts values to other types if specified.
+                 * @param message CreateImageMessageByURLReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.CreateImageMessageByURLReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this CreateImageMessageByURLReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for CreateImageMessageByURLReq
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -22496,9 +22722,6 @@ export namespace openim {
 
                 /** CreateSoundMessageReq duration */
                 duration?: (number|Long|null);
-
-                /** CreateSoundMessageReq soundElem */
-                soundElem?: (openim.sdk.shared.ISoundBaseInfo|null);
             }
 
             /** Represents a CreateSoundMessageReq. */
@@ -22515,9 +22738,6 @@ export namespace openim {
 
                 /** CreateSoundMessageReq duration. */
                 public duration: (number|Long);
-
-                /** CreateSoundMessageReq soundElem. */
-                public soundElem?: (openim.sdk.shared.ISoundBaseInfo|null);
 
                 /**
                  * Creates a new CreateSoundMessageReq instance using the specified properties.
@@ -22591,6 +22811,133 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for CreateSoundMessageReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a CreateSoundMessageByURLReq. */
+            interface ICreateSoundMessageByURLReq {
+
+                /** CreateSoundMessageByURLReq uuid */
+                uuid?: (string|null);
+
+                /** CreateSoundMessageByURLReq soundPath */
+                soundPath?: (string|null);
+
+                /** CreateSoundMessageByURLReq sourceURL */
+                sourceURL?: (string|null);
+
+                /** CreateSoundMessageByURLReq dataSize */
+                dataSize?: (number|Long|null);
+
+                /** CreateSoundMessageByURLReq duration */
+                duration?: (number|Long|null);
+
+                /** CreateSoundMessageByURLReq soundType */
+                soundType?: (string|null);
+            }
+
+            /** Represents a CreateSoundMessageByURLReq. */
+            class CreateSoundMessageByURLReq implements ICreateSoundMessageByURLReq {
+
+                /**
+                 * Constructs a new CreateSoundMessageByURLReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ICreateSoundMessageByURLReq);
+
+                /** CreateSoundMessageByURLReq uuid. */
+                public uuid: string;
+
+                /** CreateSoundMessageByURLReq soundPath. */
+                public soundPath: string;
+
+                /** CreateSoundMessageByURLReq sourceURL. */
+                public sourceURL: string;
+
+                /** CreateSoundMessageByURLReq dataSize. */
+                public dataSize: (number|Long);
+
+                /** CreateSoundMessageByURLReq duration. */
+                public duration: (number|Long);
+
+                /** CreateSoundMessageByURLReq soundType. */
+                public soundType: string;
+
+                /**
+                 * Creates a new CreateSoundMessageByURLReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns CreateSoundMessageByURLReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ICreateSoundMessageByURLReq): openim.sdk.message.CreateSoundMessageByURLReq;
+
+                /**
+                 * Encodes the specified CreateSoundMessageByURLReq message. Does not implicitly {@link openim.sdk.message.CreateSoundMessageByURLReq.verify|verify} messages.
+                 * @param message CreateSoundMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ICreateSoundMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified CreateSoundMessageByURLReq message, length delimited. Does not implicitly {@link openim.sdk.message.CreateSoundMessageByURLReq.verify|verify} messages.
+                 * @param message CreateSoundMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ICreateSoundMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a CreateSoundMessageByURLReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns CreateSoundMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.CreateSoundMessageByURLReq;
+
+                /**
+                 * Decodes a CreateSoundMessageByURLReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns CreateSoundMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.CreateSoundMessageByURLReq;
+
+                /**
+                 * Verifies a CreateSoundMessageByURLReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a CreateSoundMessageByURLReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns CreateSoundMessageByURLReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.CreateSoundMessageByURLReq;
+
+                /**
+                 * Creates a plain object from a CreateSoundMessageByURLReq message. Also converts values to other types if specified.
+                 * @param message CreateSoundMessageByURLReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.CreateSoundMessageByURLReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this CreateSoundMessageByURLReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for CreateSoundMessageByURLReq
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -22708,9 +23055,6 @@ export namespace openim {
 
                 /** CreateVideoMessageReq snapshotSourcePath */
                 snapshotSourcePath?: (string|null);
-
-                /** CreateVideoMessageReq videoElem */
-                videoElem?: (openim.sdk.shared.IVideoBaseInfo|null);
             }
 
             /** Represents a CreateVideoMessageReq. */
@@ -22733,9 +23077,6 @@ export namespace openim {
 
                 /** CreateVideoMessageReq snapshotSourcePath. */
                 public snapshotSourcePath: string;
-
-                /** CreateVideoMessageReq videoElem. */
-                public videoElem?: (openim.sdk.shared.IVideoBaseInfo|null);
 
                 /**
                  * Creates a new CreateVideoMessageReq instance using the specified properties.
@@ -22809,6 +23150,175 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for CreateVideoMessageReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a CreateVideoMessageByURLReq. */
+            interface ICreateVideoMessageByURLReq {
+
+                /** CreateVideoMessageByURLReq videoPath */
+                videoPath?: (string|null);
+
+                /** CreateVideoMessageByURLReq videoUUID */
+                videoUUID?: (string|null);
+
+                /** CreateVideoMessageByURLReq videoURL */
+                videoURL?: (string|null);
+
+                /** CreateVideoMessageByURLReq videoType */
+                videoType?: (string|null);
+
+                /** CreateVideoMessageByURLReq videoSize */
+                videoSize?: (number|Long|null);
+
+                /** CreateVideoMessageByURLReq duration */
+                duration?: (number|Long|null);
+
+                /** CreateVideoMessageByURLReq snapshotPath */
+                snapshotPath?: (string|null);
+
+                /** CreateVideoMessageByURLReq snapshotUUID */
+                snapshotUUID?: (string|null);
+
+                /** CreateVideoMessageByURLReq snapshotSize */
+                snapshotSize?: (number|Long|null);
+
+                /** CreateVideoMessageByURLReq snapshotURL */
+                snapshotURL?: (string|null);
+
+                /** CreateVideoMessageByURLReq snapshotWidth */
+                snapshotWidth?: (number|null);
+
+                /** CreateVideoMessageByURLReq snapshotHeight */
+                snapshotHeight?: (number|null);
+
+                /** CreateVideoMessageByURLReq snapshotType */
+                snapshotType?: (string|null);
+            }
+
+            /** Represents a CreateVideoMessageByURLReq. */
+            class CreateVideoMessageByURLReq implements ICreateVideoMessageByURLReq {
+
+                /**
+                 * Constructs a new CreateVideoMessageByURLReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ICreateVideoMessageByURLReq);
+
+                /** CreateVideoMessageByURLReq videoPath. */
+                public videoPath: string;
+
+                /** CreateVideoMessageByURLReq videoUUID. */
+                public videoUUID: string;
+
+                /** CreateVideoMessageByURLReq videoURL. */
+                public videoURL: string;
+
+                /** CreateVideoMessageByURLReq videoType. */
+                public videoType: string;
+
+                /** CreateVideoMessageByURLReq videoSize. */
+                public videoSize: (number|Long);
+
+                /** CreateVideoMessageByURLReq duration. */
+                public duration: (number|Long);
+
+                /** CreateVideoMessageByURLReq snapshotPath. */
+                public snapshotPath: string;
+
+                /** CreateVideoMessageByURLReq snapshotUUID. */
+                public snapshotUUID: string;
+
+                /** CreateVideoMessageByURLReq snapshotSize. */
+                public snapshotSize: (number|Long);
+
+                /** CreateVideoMessageByURLReq snapshotURL. */
+                public snapshotURL: string;
+
+                /** CreateVideoMessageByURLReq snapshotWidth. */
+                public snapshotWidth: number;
+
+                /** CreateVideoMessageByURLReq snapshotHeight. */
+                public snapshotHeight: number;
+
+                /** CreateVideoMessageByURLReq snapshotType. */
+                public snapshotType: string;
+
+                /**
+                 * Creates a new CreateVideoMessageByURLReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns CreateVideoMessageByURLReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ICreateVideoMessageByURLReq): openim.sdk.message.CreateVideoMessageByURLReq;
+
+                /**
+                 * Encodes the specified CreateVideoMessageByURLReq message. Does not implicitly {@link openim.sdk.message.CreateVideoMessageByURLReq.verify|verify} messages.
+                 * @param message CreateVideoMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ICreateVideoMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified CreateVideoMessageByURLReq message, length delimited. Does not implicitly {@link openim.sdk.message.CreateVideoMessageByURLReq.verify|verify} messages.
+                 * @param message CreateVideoMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ICreateVideoMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a CreateVideoMessageByURLReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns CreateVideoMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.CreateVideoMessageByURLReq;
+
+                /**
+                 * Decodes a CreateVideoMessageByURLReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns CreateVideoMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.CreateVideoMessageByURLReq;
+
+                /**
+                 * Verifies a CreateVideoMessageByURLReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a CreateVideoMessageByURLReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns CreateVideoMessageByURLReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.CreateVideoMessageByURLReq;
+
+                /**
+                 * Creates a plain object from a CreateVideoMessageByURLReq message. Also converts values to other types if specified.
+                 * @param message CreateVideoMessageByURLReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.CreateVideoMessageByURLReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this CreateVideoMessageByURLReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for CreateVideoMessageByURLReq
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -22920,9 +23430,6 @@ export namespace openim {
 
                 /** CreateFileMessageReq fileName */
                 fileName?: (string|null);
-
-                /** CreateFileMessageReq fileElem */
-                fileElem?: (openim.sdk.shared.IFileBaseInfo|null);
             }
 
             /** Represents a CreateFileMessageReq. */
@@ -22939,9 +23446,6 @@ export namespace openim {
 
                 /** CreateFileMessageReq fileName. */
                 public fileName: string;
-
-                /** CreateFileMessageReq fileElem. */
-                public fileElem?: (openim.sdk.shared.IFileBaseInfo|null);
 
                 /**
                  * Creates a new CreateFileMessageReq instance using the specified properties.
@@ -23015,6 +23519,133 @@ export namespace openim {
 
                 /**
                  * Gets the default type url for CreateFileMessageReq
+                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns The default type url
+                 */
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
+
+            /** Properties of a CreateFileMessageByURLReq. */
+            interface ICreateFileMessageByURLReq {
+
+                /** CreateFileMessageByURLReq filePath */
+                filePath?: (string|null);
+
+                /** CreateFileMessageByURLReq uuid */
+                uuid?: (string|null);
+
+                /** CreateFileMessageByURLReq sourceURL */
+                sourceURL?: (string|null);
+
+                /** CreateFileMessageByURLReq fileName */
+                fileName?: (string|null);
+
+                /** CreateFileMessageByURLReq fileSize */
+                fileSize?: (number|Long|null);
+
+                /** CreateFileMessageByURLReq fileType */
+                fileType?: (string|null);
+            }
+
+            /** Represents a CreateFileMessageByURLReq. */
+            class CreateFileMessageByURLReq implements ICreateFileMessageByURLReq {
+
+                /**
+                 * Constructs a new CreateFileMessageByURLReq.
+                 * @param [properties] Properties to set
+                 */
+                constructor(properties?: openim.sdk.message.ICreateFileMessageByURLReq);
+
+                /** CreateFileMessageByURLReq filePath. */
+                public filePath: string;
+
+                /** CreateFileMessageByURLReq uuid. */
+                public uuid: string;
+
+                /** CreateFileMessageByURLReq sourceURL. */
+                public sourceURL: string;
+
+                /** CreateFileMessageByURLReq fileName. */
+                public fileName: string;
+
+                /** CreateFileMessageByURLReq fileSize. */
+                public fileSize: (number|Long);
+
+                /** CreateFileMessageByURLReq fileType. */
+                public fileType: string;
+
+                /**
+                 * Creates a new CreateFileMessageByURLReq instance using the specified properties.
+                 * @param [properties] Properties to set
+                 * @returns CreateFileMessageByURLReq instance
+                 */
+                public static create(properties?: openim.sdk.message.ICreateFileMessageByURLReq): openim.sdk.message.CreateFileMessageByURLReq;
+
+                /**
+                 * Encodes the specified CreateFileMessageByURLReq message. Does not implicitly {@link openim.sdk.message.CreateFileMessageByURLReq.verify|verify} messages.
+                 * @param message CreateFileMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encode(message: openim.sdk.message.ICreateFileMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Encodes the specified CreateFileMessageByURLReq message, length delimited. Does not implicitly {@link openim.sdk.message.CreateFileMessageByURLReq.verify|verify} messages.
+                 * @param message CreateFileMessageByURLReq message or plain object to encode
+                 * @param [writer] Writer to encode to
+                 * @returns Writer
+                 */
+                public static encodeDelimited(message: openim.sdk.message.ICreateFileMessageByURLReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+                /**
+                 * Decodes a CreateFileMessageByURLReq message from the specified reader or buffer.
+                 * @param reader Reader or buffer to decode from
+                 * @param [length] Message length if known beforehand
+                 * @returns CreateFileMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.message.CreateFileMessageByURLReq;
+
+                /**
+                 * Decodes a CreateFileMessageByURLReq message from the specified reader or buffer, length delimited.
+                 * @param reader Reader or buffer to decode from
+                 * @returns CreateFileMessageByURLReq
+                 * @throws {Error} If the payload is not a reader or valid buffer
+                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
+                 */
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.message.CreateFileMessageByURLReq;
+
+                /**
+                 * Verifies a CreateFileMessageByURLReq message.
+                 * @param message Plain object to verify
+                 * @returns `null` if valid, otherwise the reason why it is not
+                 */
+                public static verify(message: { [k: string]: any }): (string|null);
+
+                /**
+                 * Creates a CreateFileMessageByURLReq message from a plain object. Also converts values to their respective internal types.
+                 * @param object Plain object
+                 * @returns CreateFileMessageByURLReq
+                 */
+                public static fromObject(object: { [k: string]: any }): openim.sdk.message.CreateFileMessageByURLReq;
+
+                /**
+                 * Creates a plain object from a CreateFileMessageByURLReq message. Also converts values to other types if specified.
+                 * @param message CreateFileMessageByURLReq
+                 * @param [options] Conversion options
+                 * @returns Plain object
+                 */
+                public static toObject(message: openim.sdk.message.CreateFileMessageByURLReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+                /**
+                 * Converts this CreateFileMessageByURLReq to JSON.
+                 * @returns JSON object
+                 */
+                public toJSON(): { [k: string]: any };
+
+                /**
+                 * Gets the default type url for CreateFileMessageByURLReq
                  * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
                  * @returns The default type url
                  */
@@ -30126,818 +30757,6 @@ export namespace openim {
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
 
-            /** Properties of a ProcessUserCommandAddReq. */
-            interface IProcessUserCommandAddReq {
-
-                /** ProcessUserCommandAddReq userID */
-                userID?: (string|null);
-
-                /** ProcessUserCommandAddReq type */
-                type?: (number|null);
-
-                /** ProcessUserCommandAddReq uuid */
-                uuid?: (string|null);
-
-                /** ProcessUserCommandAddReq value */
-                value?: (string|null);
-
-                /** ProcessUserCommandAddReq ex */
-                ex?: (string|null);
-            }
-
-            /** Represents a ProcessUserCommandAddReq. */
-            class ProcessUserCommandAddReq implements IProcessUserCommandAddReq {
-
-                /**
-                 * Constructs a new ProcessUserCommandAddReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandAddReq);
-
-                /** ProcessUserCommandAddReq userID. */
-                public userID: string;
-
-                /** ProcessUserCommandAddReq type. */
-                public type: number;
-
-                /** ProcessUserCommandAddReq uuid. */
-                public uuid: string;
-
-                /** ProcessUserCommandAddReq value. */
-                public value?: (string|null);
-
-                /** ProcessUserCommandAddReq ex. */
-                public ex?: (string|null);
-
-                /**
-                 * Creates a new ProcessUserCommandAddReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandAddReq instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandAddReq): openim.sdk.user.ProcessUserCommandAddReq;
-
-                /**
-                 * Encodes the specified ProcessUserCommandAddReq message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandAddReq.verify|verify} messages.
-                 * @param message ProcessUserCommandAddReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandAddReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandAddReq message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandAddReq.verify|verify} messages.
-                 * @param message ProcessUserCommandAddReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandAddReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandAddReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandAddReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandAddReq;
-
-                /**
-                 * Decodes a ProcessUserCommandAddReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandAddReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandAddReq;
-
-                /**
-                 * Verifies a ProcessUserCommandAddReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandAddReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandAddReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandAddReq;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandAddReq message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandAddReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandAddReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandAddReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandAddReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandAddResp. */
-            interface IProcessUserCommandAddResp {
-            }
-
-            /** Represents a ProcessUserCommandAddResp. */
-            class ProcessUserCommandAddResp implements IProcessUserCommandAddResp {
-
-                /**
-                 * Constructs a new ProcessUserCommandAddResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandAddResp);
-
-                /**
-                 * Creates a new ProcessUserCommandAddResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandAddResp instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandAddResp): openim.sdk.user.ProcessUserCommandAddResp;
-
-                /**
-                 * Encodes the specified ProcessUserCommandAddResp message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandAddResp.verify|verify} messages.
-                 * @param message ProcessUserCommandAddResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandAddResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandAddResp message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandAddResp.verify|verify} messages.
-                 * @param message ProcessUserCommandAddResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandAddResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandAddResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandAddResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandAddResp;
-
-                /**
-                 * Decodes a ProcessUserCommandAddResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandAddResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandAddResp;
-
-                /**
-                 * Verifies a ProcessUserCommandAddResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandAddResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandAddResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandAddResp;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandAddResp message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandAddResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandAddResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandAddResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandAddResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandDeleteReq. */
-            interface IProcessUserCommandDeleteReq {
-
-                /** ProcessUserCommandDeleteReq userID */
-                userID?: (string|null);
-
-                /** ProcessUserCommandDeleteReq type */
-                type?: (number|null);
-
-                /** ProcessUserCommandDeleteReq uuid */
-                uuid?: (string|null);
-            }
-
-            /** Represents a ProcessUserCommandDeleteReq. */
-            class ProcessUserCommandDeleteReq implements IProcessUserCommandDeleteReq {
-
-                /**
-                 * Constructs a new ProcessUserCommandDeleteReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandDeleteReq);
-
-                /** ProcessUserCommandDeleteReq userID. */
-                public userID: string;
-
-                /** ProcessUserCommandDeleteReq type. */
-                public type: number;
-
-                /** ProcessUserCommandDeleteReq uuid. */
-                public uuid: string;
-
-                /**
-                 * Creates a new ProcessUserCommandDeleteReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandDeleteReq instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandDeleteReq): openim.sdk.user.ProcessUserCommandDeleteReq;
-
-                /**
-                 * Encodes the specified ProcessUserCommandDeleteReq message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandDeleteReq.verify|verify} messages.
-                 * @param message ProcessUserCommandDeleteReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandDeleteReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandDeleteReq message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandDeleteReq.verify|verify} messages.
-                 * @param message ProcessUserCommandDeleteReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandDeleteReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandDeleteReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandDeleteReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandDeleteReq;
-
-                /**
-                 * Decodes a ProcessUserCommandDeleteReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandDeleteReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandDeleteReq;
-
-                /**
-                 * Verifies a ProcessUserCommandDeleteReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandDeleteReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandDeleteReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandDeleteReq;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandDeleteReq message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandDeleteReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandDeleteReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandDeleteReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandDeleteReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandDeleteResp. */
-            interface IProcessUserCommandDeleteResp {
-            }
-
-            /** Represents a ProcessUserCommandDeleteResp. */
-            class ProcessUserCommandDeleteResp implements IProcessUserCommandDeleteResp {
-
-                /**
-                 * Constructs a new ProcessUserCommandDeleteResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandDeleteResp);
-
-                /**
-                 * Creates a new ProcessUserCommandDeleteResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandDeleteResp instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandDeleteResp): openim.sdk.user.ProcessUserCommandDeleteResp;
-
-                /**
-                 * Encodes the specified ProcessUserCommandDeleteResp message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandDeleteResp.verify|verify} messages.
-                 * @param message ProcessUserCommandDeleteResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandDeleteResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandDeleteResp message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandDeleteResp.verify|verify} messages.
-                 * @param message ProcessUserCommandDeleteResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandDeleteResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandDeleteResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandDeleteResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandDeleteResp;
-
-                /**
-                 * Decodes a ProcessUserCommandDeleteResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandDeleteResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandDeleteResp;
-
-                /**
-                 * Verifies a ProcessUserCommandDeleteResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandDeleteResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandDeleteResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandDeleteResp;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandDeleteResp message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandDeleteResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandDeleteResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandDeleteResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandDeleteResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandUpdateReq. */
-            interface IProcessUserCommandUpdateReq {
-
-                /** ProcessUserCommandUpdateReq userID */
-                userID?: (string|null);
-
-                /** ProcessUserCommandUpdateReq type */
-                type?: (number|null);
-
-                /** ProcessUserCommandUpdateReq uuid */
-                uuid?: (string|null);
-
-                /** ProcessUserCommandUpdateReq value */
-                value?: (string|null);
-
-                /** ProcessUserCommandUpdateReq ex */
-                ex?: (string|null);
-            }
-
-            /** Represents a ProcessUserCommandUpdateReq. */
-            class ProcessUserCommandUpdateReq implements IProcessUserCommandUpdateReq {
-
-                /**
-                 * Constructs a new ProcessUserCommandUpdateReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandUpdateReq);
-
-                /** ProcessUserCommandUpdateReq userID. */
-                public userID: string;
-
-                /** ProcessUserCommandUpdateReq type. */
-                public type: number;
-
-                /** ProcessUserCommandUpdateReq uuid. */
-                public uuid: string;
-
-                /** ProcessUserCommandUpdateReq value. */
-                public value?: (string|null);
-
-                /** ProcessUserCommandUpdateReq ex. */
-                public ex?: (string|null);
-
-                /**
-                 * Creates a new ProcessUserCommandUpdateReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandUpdateReq instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandUpdateReq): openim.sdk.user.ProcessUserCommandUpdateReq;
-
-                /**
-                 * Encodes the specified ProcessUserCommandUpdateReq message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandUpdateReq.verify|verify} messages.
-                 * @param message ProcessUserCommandUpdateReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandUpdateReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandUpdateReq message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandUpdateReq.verify|verify} messages.
-                 * @param message ProcessUserCommandUpdateReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandUpdateReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandUpdateReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandUpdateReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandUpdateReq;
-
-                /**
-                 * Decodes a ProcessUserCommandUpdateReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandUpdateReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandUpdateReq;
-
-                /**
-                 * Verifies a ProcessUserCommandUpdateReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandUpdateReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandUpdateReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandUpdateReq;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandUpdateReq message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandUpdateReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandUpdateReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandUpdateReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandUpdateReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandUpdateResp. */
-            interface IProcessUserCommandUpdateResp {
-            }
-
-            /** Represents a ProcessUserCommandUpdateResp. */
-            class ProcessUserCommandUpdateResp implements IProcessUserCommandUpdateResp {
-
-                /**
-                 * Constructs a new ProcessUserCommandUpdateResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandUpdateResp);
-
-                /**
-                 * Creates a new ProcessUserCommandUpdateResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandUpdateResp instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandUpdateResp): openim.sdk.user.ProcessUserCommandUpdateResp;
-
-                /**
-                 * Encodes the specified ProcessUserCommandUpdateResp message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandUpdateResp.verify|verify} messages.
-                 * @param message ProcessUserCommandUpdateResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandUpdateResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandUpdateResp message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandUpdateResp.verify|verify} messages.
-                 * @param message ProcessUserCommandUpdateResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandUpdateResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandUpdateResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandUpdateResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandUpdateResp;
-
-                /**
-                 * Decodes a ProcessUserCommandUpdateResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandUpdateResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandUpdateResp;
-
-                /**
-                 * Verifies a ProcessUserCommandUpdateResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandUpdateResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandUpdateResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandUpdateResp;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandUpdateResp message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandUpdateResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandUpdateResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandUpdateResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandUpdateResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandGetAllReq. */
-            interface IProcessUserCommandGetAllReq {
-            }
-
-            /** Represents a ProcessUserCommandGetAllReq. */
-            class ProcessUserCommandGetAllReq implements IProcessUserCommandGetAllReq {
-
-                /**
-                 * Constructs a new ProcessUserCommandGetAllReq.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandGetAllReq);
-
-                /**
-                 * Creates a new ProcessUserCommandGetAllReq instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandGetAllReq instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandGetAllReq): openim.sdk.user.ProcessUserCommandGetAllReq;
-
-                /**
-                 * Encodes the specified ProcessUserCommandGetAllReq message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandGetAllReq.verify|verify} messages.
-                 * @param message ProcessUserCommandGetAllReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandGetAllReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandGetAllReq message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandGetAllReq.verify|verify} messages.
-                 * @param message ProcessUserCommandGetAllReq message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandGetAllReq, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandGetAllReq message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandGetAllReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandGetAllReq;
-
-                /**
-                 * Decodes a ProcessUserCommandGetAllReq message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandGetAllReq
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandGetAllReq;
-
-                /**
-                 * Verifies a ProcessUserCommandGetAllReq message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandGetAllReq message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandGetAllReq
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandGetAllReq;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandGetAllReq message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandGetAllReq
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandGetAllReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandGetAllReq to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandGetAllReq
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
-            /** Properties of a ProcessUserCommandGetAllResp. */
-            interface IProcessUserCommandGetAllResp {
-
-                /** ProcessUserCommandGetAllResp commands */
-                commands?: (openim.sdk.shared.ICommandInfo[]|null);
-            }
-
-            /** Represents a ProcessUserCommandGetAllResp. */
-            class ProcessUserCommandGetAllResp implements IProcessUserCommandGetAllResp {
-
-                /**
-                 * Constructs a new ProcessUserCommandGetAllResp.
-                 * @param [properties] Properties to set
-                 */
-                constructor(properties?: openim.sdk.user.IProcessUserCommandGetAllResp);
-
-                /** ProcessUserCommandGetAllResp commands. */
-                public commands: openim.sdk.shared.ICommandInfo[];
-
-                /**
-                 * Creates a new ProcessUserCommandGetAllResp instance using the specified properties.
-                 * @param [properties] Properties to set
-                 * @returns ProcessUserCommandGetAllResp instance
-                 */
-                public static create(properties?: openim.sdk.user.IProcessUserCommandGetAllResp): openim.sdk.user.ProcessUserCommandGetAllResp;
-
-                /**
-                 * Encodes the specified ProcessUserCommandGetAllResp message. Does not implicitly {@link openim.sdk.user.ProcessUserCommandGetAllResp.verify|verify} messages.
-                 * @param message ProcessUserCommandGetAllResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encode(message: openim.sdk.user.IProcessUserCommandGetAllResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Encodes the specified ProcessUserCommandGetAllResp message, length delimited. Does not implicitly {@link openim.sdk.user.ProcessUserCommandGetAllResp.verify|verify} messages.
-                 * @param message ProcessUserCommandGetAllResp message or plain object to encode
-                 * @param [writer] Writer to encode to
-                 * @returns Writer
-                 */
-                public static encodeDelimited(message: openim.sdk.user.IProcessUserCommandGetAllResp, writer?: $protobuf.Writer): $protobuf.Writer;
-
-                /**
-                 * Decodes a ProcessUserCommandGetAllResp message from the specified reader or buffer.
-                 * @param reader Reader or buffer to decode from
-                 * @param [length] Message length if known beforehand
-                 * @returns ProcessUserCommandGetAllResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.sdk.user.ProcessUserCommandGetAllResp;
-
-                /**
-                 * Decodes a ProcessUserCommandGetAllResp message from the specified reader or buffer, length delimited.
-                 * @param reader Reader or buffer to decode from
-                 * @returns ProcessUserCommandGetAllResp
-                 * @throws {Error} If the payload is not a reader or valid buffer
-                 * @throws {$protobuf.util.ProtocolError} If required fields are missing
-                 */
-                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.sdk.user.ProcessUserCommandGetAllResp;
-
-                /**
-                 * Verifies a ProcessUserCommandGetAllResp message.
-                 * @param message Plain object to verify
-                 * @returns `null` if valid, otherwise the reason why it is not
-                 */
-                public static verify(message: { [k: string]: any }): (string|null);
-
-                /**
-                 * Creates a ProcessUserCommandGetAllResp message from a plain object. Also converts values to their respective internal types.
-                 * @param object Plain object
-                 * @returns ProcessUserCommandGetAllResp
-                 */
-                public static fromObject(object: { [k: string]: any }): openim.sdk.user.ProcessUserCommandGetAllResp;
-
-                /**
-                 * Creates a plain object from a ProcessUserCommandGetAllResp message. Also converts values to other types if specified.
-                 * @param message ProcessUserCommandGetAllResp
-                 * @param [options] Conversion options
-                 * @returns Plain object
-                 */
-                public static toObject(message: openim.sdk.user.ProcessUserCommandGetAllResp, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-                /**
-                 * Converts this ProcessUserCommandGetAllResp to JSON.
-                 * @returns JSON object
-                 */
-                public toJSON(): { [k: string]: any };
-
-                /**
-                 * Gets the default type url for ProcessUserCommandGetAllResp
-                 * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-                 * @returns The default type url
-                 */
-                public static getTypeUrl(typeUrlPrefix?: string): string;
-            }
-
             /** Properties of a GetUsersInfoReq. */
             interface IGetUsersInfoReq {
 
@@ -31724,62 +31543,6 @@ export namespace openim {
                  * @returns Promise
                  */
                 public unsubscribeUsersOnlineStatus(request: openim.sdk.user.IUnsubscribeUsersOnlineStatusReq): Promise<openim.sdk.user.UnsubscribeUsersOnlineStatusResp>;
-
-                /**
-                 * Calls ProcessUserCommandAdd.
-                 * @param request ProcessUserCommandAddReq message or plain object
-                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandAddResp
-                 */
-                public processUserCommandAdd(request: openim.sdk.user.IProcessUserCommandAddReq, callback: openim.sdk.user.UserService.ProcessUserCommandAddCallback): void;
-
-                /**
-                 * Calls ProcessUserCommandAdd.
-                 * @param request ProcessUserCommandAddReq message or plain object
-                 * @returns Promise
-                 */
-                public processUserCommandAdd(request: openim.sdk.user.IProcessUserCommandAddReq): Promise<openim.sdk.user.ProcessUserCommandAddResp>;
-
-                /**
-                 * Calls ProcessUserCommandDelete.
-                 * @param request ProcessUserCommandDeleteReq message or plain object
-                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandDeleteResp
-                 */
-                public processUserCommandDelete(request: openim.sdk.user.IProcessUserCommandDeleteReq, callback: openim.sdk.user.UserService.ProcessUserCommandDeleteCallback): void;
-
-                /**
-                 * Calls ProcessUserCommandDelete.
-                 * @param request ProcessUserCommandDeleteReq message or plain object
-                 * @returns Promise
-                 */
-                public processUserCommandDelete(request: openim.sdk.user.IProcessUserCommandDeleteReq): Promise<openim.sdk.user.ProcessUserCommandDeleteResp>;
-
-                /**
-                 * Calls ProcessUserCommandUpdate.
-                 * @param request ProcessUserCommandUpdateReq message or plain object
-                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandUpdateResp
-                 */
-                public processUserCommandUpdate(request: openim.sdk.user.IProcessUserCommandUpdateReq, callback: openim.sdk.user.UserService.ProcessUserCommandUpdateCallback): void;
-
-                /**
-                 * Calls ProcessUserCommandUpdate.
-                 * @param request ProcessUserCommandUpdateReq message or plain object
-                 * @returns Promise
-                 */
-                public processUserCommandUpdate(request: openim.sdk.user.IProcessUserCommandUpdateReq): Promise<openim.sdk.user.ProcessUserCommandUpdateResp>;
-
-                /**
-                 * Calls ProcessUserCommandGetAll.
-                 * @param request ProcessUserCommandGetAllReq message or plain object
-                 * @param callback Node-style callback called with the error, if any, and ProcessUserCommandGetAllResp
-                 */
-                public processUserCommandGetAll(request: openim.sdk.user.IProcessUserCommandGetAllReq, callback: openim.sdk.user.UserService.ProcessUserCommandGetAllCallback): void;
-
-                /**
-                 * Calls ProcessUserCommandGetAll.
-                 * @param request ProcessUserCommandGetAllReq message or plain object
-                 * @returns Promise
-                 */
-                public processUserCommandGetAll(request: openim.sdk.user.IProcessUserCommandGetAllReq): Promise<openim.sdk.user.ProcessUserCommandGetAllResp>;
             }
 
             namespace UserService {
@@ -31818,34 +31581,6 @@ export namespace openim {
                  * @param [response] UnsubscribeUsersOnlineStatusResp
                  */
                 type UnsubscribeUsersOnlineStatusCallback = (error: (Error|null), response?: openim.sdk.user.UnsubscribeUsersOnlineStatusResp) => void;
-
-                /**
-                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandAdd}.
-                 * @param error Error, if any
-                 * @param [response] ProcessUserCommandAddResp
-                 */
-                type ProcessUserCommandAddCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandAddResp) => void;
-
-                /**
-                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandDelete}.
-                 * @param error Error, if any
-                 * @param [response] ProcessUserCommandDeleteResp
-                 */
-                type ProcessUserCommandDeleteCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandDeleteResp) => void;
-
-                /**
-                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandUpdate}.
-                 * @param error Error, if any
-                 * @param [response] ProcessUserCommandUpdateResp
-                 */
-                type ProcessUserCommandUpdateCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandUpdateResp) => void;
-
-                /**
-                 * Callback as used by {@link openim.sdk.user.UserService#processUserCommandGetAll}.
-                 * @param error Error, if any
-                 * @param [response] ProcessUserCommandGetAllResp
-                 */
-                type ProcessUserCommandGetAllCallback = (error: (Error|null), response?: openim.sdk.user.ProcessUserCommandGetAllResp) => void;
             }
         }
     }
@@ -31864,14 +31599,14 @@ export namespace openim {
             GetLoginStatus = 109,
             Version = 110,
             SendMessage = 4,
-            UploadLogs = 5,
+            UploadSDKData = 5,
             UploadFile = 6,
             Log = 7,
             UpdateFcmToken = 10,
             SetAppBadge = 11,
             EventOnSendMsgProgress = 12,
             EventOnUploadFileProgress = 13,
-            EventOnUploadLogsProgress = 14,
+            EventOnUploadSDKDataProgress = 14,
             EventOnConnecting = 15,
             EventOnConnectSuccess = 16,
             EventOnConnectFailed = 17,
@@ -31916,9 +31651,6 @@ export namespace openim {
             EventOnRecvCustomBusinessMessage = 56,
             EventOnSelfInfoUpdated = 57,
             EventOnUserOnlineStatusChanged = 58,
-            EventOnUserCommandAdd = 59,
-            EventOnUserCommandDelete = 60,
-            EventOnUserCommandUpdate = 61,
             CreateGroup = 1000,
             JoinGroup = 1001,
             QuitGroup = 1002,
@@ -31999,12 +31731,8 @@ export namespace openim {
             CreateMergerMessage = 2041,
             CreateFaceMessage = 2042,
             CreateForwardMessage = 2043,
-            ProcessUserCommandGetAll = 2100,
             GetSelfUserInfo = 2101,
             SetSelfInfo = 2102,
-            ProcessUserCommandAdd = 2103,
-            ProcessUserCommandDelete = 2104,
-            ProcessUserCommandUpdate = 2105,
             GetUsersInfo = 2106,
             SubscribeUsersOnlineStatus = 2229,
             UnsubscribeUsersOnlineStatus = 2230,
@@ -32219,97 +31947,97 @@ export namespace openim {
             public static getTypeUrl(typeUrlPrefix?: string): string;
         }
 
-        /** Properties of an EventOnUploadLogsProgressData. */
-        interface IEventOnUploadLogsProgressData {
+        /** Properties of an EventOnUploadSDKDataProgressData. */
+        interface IEventOnUploadSDKDataProgressData {
 
-            /** EventOnUploadLogsProgressData progress */
+            /** EventOnUploadSDKDataProgressData progress */
             progress?: (number|null);
         }
 
-        /** Represents an EventOnUploadLogsProgressData. */
-        class EventOnUploadLogsProgressData implements IEventOnUploadLogsProgressData {
+        /** Represents an EventOnUploadSDKDataProgressData. */
+        class EventOnUploadSDKDataProgressData implements IEventOnUploadSDKDataProgressData {
 
             /**
-             * Constructs a new EventOnUploadLogsProgressData.
+             * Constructs a new EventOnUploadSDKDataProgressData.
              * @param [properties] Properties to set
              */
-            constructor(properties?: openim.event.IEventOnUploadLogsProgressData);
+            constructor(properties?: openim.event.IEventOnUploadSDKDataProgressData);
 
-            /** EventOnUploadLogsProgressData progress. */
+            /** EventOnUploadSDKDataProgressData progress. */
             public progress: number;
 
             /**
-             * Creates a new EventOnUploadLogsProgressData instance using the specified properties.
+             * Creates a new EventOnUploadSDKDataProgressData instance using the specified properties.
              * @param [properties] Properties to set
-             * @returns EventOnUploadLogsProgressData instance
+             * @returns EventOnUploadSDKDataProgressData instance
              */
-            public static create(properties?: openim.event.IEventOnUploadLogsProgressData): openim.event.EventOnUploadLogsProgressData;
+            public static create(properties?: openim.event.IEventOnUploadSDKDataProgressData): openim.event.EventOnUploadSDKDataProgressData;
 
             /**
-             * Encodes the specified EventOnUploadLogsProgressData message. Does not implicitly {@link openim.event.EventOnUploadLogsProgressData.verify|verify} messages.
-             * @param message EventOnUploadLogsProgressData message or plain object to encode
+             * Encodes the specified EventOnUploadSDKDataProgressData message. Does not implicitly {@link openim.event.EventOnUploadSDKDataProgressData.verify|verify} messages.
+             * @param message EventOnUploadSDKDataProgressData message or plain object to encode
              * @param [writer] Writer to encode to
              * @returns Writer
              */
-            public static encode(message: openim.event.IEventOnUploadLogsProgressData, writer?: $protobuf.Writer): $protobuf.Writer;
+            public static encode(message: openim.event.IEventOnUploadSDKDataProgressData, writer?: $protobuf.Writer): $protobuf.Writer;
 
             /**
-             * Encodes the specified EventOnUploadLogsProgressData message, length delimited. Does not implicitly {@link openim.event.EventOnUploadLogsProgressData.verify|verify} messages.
-             * @param message EventOnUploadLogsProgressData message or plain object to encode
+             * Encodes the specified EventOnUploadSDKDataProgressData message, length delimited. Does not implicitly {@link openim.event.EventOnUploadSDKDataProgressData.verify|verify} messages.
+             * @param message EventOnUploadSDKDataProgressData message or plain object to encode
              * @param [writer] Writer to encode to
              * @returns Writer
              */
-            public static encodeDelimited(message: openim.event.IEventOnUploadLogsProgressData, writer?: $protobuf.Writer): $protobuf.Writer;
+            public static encodeDelimited(message: openim.event.IEventOnUploadSDKDataProgressData, writer?: $protobuf.Writer): $protobuf.Writer;
 
             /**
-             * Decodes an EventOnUploadLogsProgressData message from the specified reader or buffer.
+             * Decodes an EventOnUploadSDKDataProgressData message from the specified reader or buffer.
              * @param reader Reader or buffer to decode from
              * @param [length] Message length if known beforehand
-             * @returns EventOnUploadLogsProgressData
+             * @returns EventOnUploadSDKDataProgressData
              * @throws {Error} If the payload is not a reader or valid buffer
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
-            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.event.EventOnUploadLogsProgressData;
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.event.EventOnUploadSDKDataProgressData;
 
             /**
-             * Decodes an EventOnUploadLogsProgressData message from the specified reader or buffer, length delimited.
+             * Decodes an EventOnUploadSDKDataProgressData message from the specified reader or buffer, length delimited.
              * @param reader Reader or buffer to decode from
-             * @returns EventOnUploadLogsProgressData
+             * @returns EventOnUploadSDKDataProgressData
              * @throws {Error} If the payload is not a reader or valid buffer
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
-            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.event.EventOnUploadLogsProgressData;
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.event.EventOnUploadSDKDataProgressData;
 
             /**
-             * Verifies an EventOnUploadLogsProgressData message.
+             * Verifies an EventOnUploadSDKDataProgressData message.
              * @param message Plain object to verify
              * @returns `null` if valid, otherwise the reason why it is not
              */
             public static verify(message: { [k: string]: any }): (string|null);
 
             /**
-             * Creates an EventOnUploadLogsProgressData message from a plain object. Also converts values to their respective internal types.
+             * Creates an EventOnUploadSDKDataProgressData message from a plain object. Also converts values to their respective internal types.
              * @param object Plain object
-             * @returns EventOnUploadLogsProgressData
+             * @returns EventOnUploadSDKDataProgressData
              */
-            public static fromObject(object: { [k: string]: any }): openim.event.EventOnUploadLogsProgressData;
+            public static fromObject(object: { [k: string]: any }): openim.event.EventOnUploadSDKDataProgressData;
 
             /**
-             * Creates a plain object from an EventOnUploadLogsProgressData message. Also converts values to other types if specified.
-             * @param message EventOnUploadLogsProgressData
+             * Creates a plain object from an EventOnUploadSDKDataProgressData message. Also converts values to other types if specified.
+             * @param message EventOnUploadSDKDataProgressData
              * @param [options] Conversion options
              * @returns Plain object
              */
-            public static toObject(message: openim.event.EventOnUploadLogsProgressData, options?: $protobuf.IConversionOptions): { [k: string]: any };
+            public static toObject(message: openim.event.EventOnUploadSDKDataProgressData, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
             /**
-             * Converts this EventOnUploadLogsProgressData to JSON.
+             * Converts this EventOnUploadSDKDataProgressData to JSON.
              * @returns JSON object
              */
             public toJSON(): { [k: string]: any };
 
             /**
-             * Gets the default type url for EventOnUploadLogsProgressData
+             * Gets the default type url for EventOnUploadSDKDataProgressData
              * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
              * @returns The default type url
              */
@@ -32502,7 +32230,7 @@ export namespace openim {
         interface IEventOnConnectFailedData {
 
             /** EventOnConnectFailedData errCode */
-            errCode?: (number|null);
+            errCode?: (openim.sdk.error.ErrorCode|null);
 
             /** EventOnConnectFailedData errMsg */
             errMsg?: (string|null);
@@ -32518,7 +32246,7 @@ export namespace openim {
             constructor(properties?: openim.event.IEventOnConnectFailedData);
 
             /** EventOnConnectFailedData errCode. */
-            public errCode: number;
+            public errCode: openim.sdk.error.ErrorCode;
 
             /** EventOnConnectFailedData errMsg. */
             public errMsg: string;
@@ -36758,297 +36486,6 @@ export namespace openim {
              */
             public static getTypeUrl(typeUrlPrefix?: string): string;
         }
-
-        /** Properties of an EventOnUserCommandAddData. */
-        interface IEventOnUserCommandAddData {
-
-            /** EventOnUserCommandAddData command */
-            command?: (openim.sdk.shared.ICommandInfo|null);
-        }
-
-        /** Represents an EventOnUserCommandAddData. */
-        class EventOnUserCommandAddData implements IEventOnUserCommandAddData {
-
-            /**
-             * Constructs a new EventOnUserCommandAddData.
-             * @param [properties] Properties to set
-             */
-            constructor(properties?: openim.event.IEventOnUserCommandAddData);
-
-            /** EventOnUserCommandAddData command. */
-            public command?: (openim.sdk.shared.ICommandInfo|null);
-
-            /**
-             * Creates a new EventOnUserCommandAddData instance using the specified properties.
-             * @param [properties] Properties to set
-             * @returns EventOnUserCommandAddData instance
-             */
-            public static create(properties?: openim.event.IEventOnUserCommandAddData): openim.event.EventOnUserCommandAddData;
-
-            /**
-             * Encodes the specified EventOnUserCommandAddData message. Does not implicitly {@link openim.event.EventOnUserCommandAddData.verify|verify} messages.
-             * @param message EventOnUserCommandAddData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encode(message: openim.event.IEventOnUserCommandAddData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Encodes the specified EventOnUserCommandAddData message, length delimited. Does not implicitly {@link openim.event.EventOnUserCommandAddData.verify|verify} messages.
-             * @param message EventOnUserCommandAddData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encodeDelimited(message: openim.event.IEventOnUserCommandAddData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Decodes an EventOnUserCommandAddData message from the specified reader or buffer.
-             * @param reader Reader or buffer to decode from
-             * @param [length] Message length if known beforehand
-             * @returns EventOnUserCommandAddData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.event.EventOnUserCommandAddData;
-
-            /**
-             * Decodes an EventOnUserCommandAddData message from the specified reader or buffer, length delimited.
-             * @param reader Reader or buffer to decode from
-             * @returns EventOnUserCommandAddData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.event.EventOnUserCommandAddData;
-
-            /**
-             * Verifies an EventOnUserCommandAddData message.
-             * @param message Plain object to verify
-             * @returns `null` if valid, otherwise the reason why it is not
-             */
-            public static verify(message: { [k: string]: any }): (string|null);
-
-            /**
-             * Creates an EventOnUserCommandAddData message from a plain object. Also converts values to their respective internal types.
-             * @param object Plain object
-             * @returns EventOnUserCommandAddData
-             */
-            public static fromObject(object: { [k: string]: any }): openim.event.EventOnUserCommandAddData;
-
-            /**
-             * Creates a plain object from an EventOnUserCommandAddData message. Also converts values to other types if specified.
-             * @param message EventOnUserCommandAddData
-             * @param [options] Conversion options
-             * @returns Plain object
-             */
-            public static toObject(message: openim.event.EventOnUserCommandAddData, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-            /**
-             * Converts this EventOnUserCommandAddData to JSON.
-             * @returns JSON object
-             */
-            public toJSON(): { [k: string]: any };
-
-            /**
-             * Gets the default type url for EventOnUserCommandAddData
-             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-             * @returns The default type url
-             */
-            public static getTypeUrl(typeUrlPrefix?: string): string;
-        }
-
-        /** Properties of an EventOnUserCommandDeleteData. */
-        interface IEventOnUserCommandDeleteData {
-
-            /** EventOnUserCommandDeleteData command */
-            command?: (openim.sdk.shared.ICommandInfo|null);
-        }
-
-        /** Represents an EventOnUserCommandDeleteData. */
-        class EventOnUserCommandDeleteData implements IEventOnUserCommandDeleteData {
-
-            /**
-             * Constructs a new EventOnUserCommandDeleteData.
-             * @param [properties] Properties to set
-             */
-            constructor(properties?: openim.event.IEventOnUserCommandDeleteData);
-
-            /** EventOnUserCommandDeleteData command. */
-            public command?: (openim.sdk.shared.ICommandInfo|null);
-
-            /**
-             * Creates a new EventOnUserCommandDeleteData instance using the specified properties.
-             * @param [properties] Properties to set
-             * @returns EventOnUserCommandDeleteData instance
-             */
-            public static create(properties?: openim.event.IEventOnUserCommandDeleteData): openim.event.EventOnUserCommandDeleteData;
-
-            /**
-             * Encodes the specified EventOnUserCommandDeleteData message. Does not implicitly {@link openim.event.EventOnUserCommandDeleteData.verify|verify} messages.
-             * @param message EventOnUserCommandDeleteData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encode(message: openim.event.IEventOnUserCommandDeleteData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Encodes the specified EventOnUserCommandDeleteData message, length delimited. Does not implicitly {@link openim.event.EventOnUserCommandDeleteData.verify|verify} messages.
-             * @param message EventOnUserCommandDeleteData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encodeDelimited(message: openim.event.IEventOnUserCommandDeleteData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Decodes an EventOnUserCommandDeleteData message from the specified reader or buffer.
-             * @param reader Reader or buffer to decode from
-             * @param [length] Message length if known beforehand
-             * @returns EventOnUserCommandDeleteData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.event.EventOnUserCommandDeleteData;
-
-            /**
-             * Decodes an EventOnUserCommandDeleteData message from the specified reader or buffer, length delimited.
-             * @param reader Reader or buffer to decode from
-             * @returns EventOnUserCommandDeleteData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.event.EventOnUserCommandDeleteData;
-
-            /**
-             * Verifies an EventOnUserCommandDeleteData message.
-             * @param message Plain object to verify
-             * @returns `null` if valid, otherwise the reason why it is not
-             */
-            public static verify(message: { [k: string]: any }): (string|null);
-
-            /**
-             * Creates an EventOnUserCommandDeleteData message from a plain object. Also converts values to their respective internal types.
-             * @param object Plain object
-             * @returns EventOnUserCommandDeleteData
-             */
-            public static fromObject(object: { [k: string]: any }): openim.event.EventOnUserCommandDeleteData;
-
-            /**
-             * Creates a plain object from an EventOnUserCommandDeleteData message. Also converts values to other types if specified.
-             * @param message EventOnUserCommandDeleteData
-             * @param [options] Conversion options
-             * @returns Plain object
-             */
-            public static toObject(message: openim.event.EventOnUserCommandDeleteData, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-            /**
-             * Converts this EventOnUserCommandDeleteData to JSON.
-             * @returns JSON object
-             */
-            public toJSON(): { [k: string]: any };
-
-            /**
-             * Gets the default type url for EventOnUserCommandDeleteData
-             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-             * @returns The default type url
-             */
-            public static getTypeUrl(typeUrlPrefix?: string): string;
-        }
-
-        /** Properties of an EventOnUserCommandUpdateData. */
-        interface IEventOnUserCommandUpdateData {
-
-            /** EventOnUserCommandUpdateData command */
-            command?: (openim.sdk.shared.ICommandInfo|null);
-        }
-
-        /** Represents an EventOnUserCommandUpdateData. */
-        class EventOnUserCommandUpdateData implements IEventOnUserCommandUpdateData {
-
-            /**
-             * Constructs a new EventOnUserCommandUpdateData.
-             * @param [properties] Properties to set
-             */
-            constructor(properties?: openim.event.IEventOnUserCommandUpdateData);
-
-            /** EventOnUserCommandUpdateData command. */
-            public command?: (openim.sdk.shared.ICommandInfo|null);
-
-            /**
-             * Creates a new EventOnUserCommandUpdateData instance using the specified properties.
-             * @param [properties] Properties to set
-             * @returns EventOnUserCommandUpdateData instance
-             */
-            public static create(properties?: openim.event.IEventOnUserCommandUpdateData): openim.event.EventOnUserCommandUpdateData;
-
-            /**
-             * Encodes the specified EventOnUserCommandUpdateData message. Does not implicitly {@link openim.event.EventOnUserCommandUpdateData.verify|verify} messages.
-             * @param message EventOnUserCommandUpdateData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encode(message: openim.event.IEventOnUserCommandUpdateData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Encodes the specified EventOnUserCommandUpdateData message, length delimited. Does not implicitly {@link openim.event.EventOnUserCommandUpdateData.verify|verify} messages.
-             * @param message EventOnUserCommandUpdateData message or plain object to encode
-             * @param [writer] Writer to encode to
-             * @returns Writer
-             */
-            public static encodeDelimited(message: openim.event.IEventOnUserCommandUpdateData, writer?: $protobuf.Writer): $protobuf.Writer;
-
-            /**
-             * Decodes an EventOnUserCommandUpdateData message from the specified reader or buffer.
-             * @param reader Reader or buffer to decode from
-             * @param [length] Message length if known beforehand
-             * @returns EventOnUserCommandUpdateData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): openim.event.EventOnUserCommandUpdateData;
-
-            /**
-             * Decodes an EventOnUserCommandUpdateData message from the specified reader or buffer, length delimited.
-             * @param reader Reader or buffer to decode from
-             * @returns EventOnUserCommandUpdateData
-             * @throws {Error} If the payload is not a reader or valid buffer
-             * @throws {$protobuf.util.ProtocolError} If required fields are missing
-             */
-            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): openim.event.EventOnUserCommandUpdateData;
-
-            /**
-             * Verifies an EventOnUserCommandUpdateData message.
-             * @param message Plain object to verify
-             * @returns `null` if valid, otherwise the reason why it is not
-             */
-            public static verify(message: { [k: string]: any }): (string|null);
-
-            /**
-             * Creates an EventOnUserCommandUpdateData message from a plain object. Also converts values to their respective internal types.
-             * @param object Plain object
-             * @returns EventOnUserCommandUpdateData
-             */
-            public static fromObject(object: { [k: string]: any }): openim.event.EventOnUserCommandUpdateData;
-
-            /**
-             * Creates a plain object from an EventOnUserCommandUpdateData message. Also converts values to other types if specified.
-             * @param message EventOnUserCommandUpdateData
-             * @param [options] Conversion options
-             * @returns Plain object
-             */
-            public static toObject(message: openim.event.EventOnUserCommandUpdateData, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-            /**
-             * Converts this EventOnUserCommandUpdateData to JSON.
-             * @returns JSON object
-             */
-            public toJSON(): { [k: string]: any };
-
-            /**
-             * Gets the default type url for EventOnUserCommandUpdateData
-             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-             * @returns The default type url
-             */
-            public static getTypeUrl(typeUrlPrefix?: string): string;
-        }
     }
 
     /** Namespace ffi. */
@@ -37173,7 +36610,7 @@ export namespace openim {
         interface IFfiResult {
 
             /** FfiResult errCode */
-            errCode?: (number|null);
+            errCode?: (openim.sdk.error.ErrorCode|null);
 
             /** FfiResult errMsg */
             errMsg?: (string|null);
@@ -37198,7 +36635,7 @@ export namespace openim {
             constructor(properties?: openim.ffi.IFfiResult);
 
             /** FfiResult errCode. */
-            public errCode: number;
+            public errCode: openim.sdk.error.ErrorCode;
 
             /** FfiResult errMsg. */
             public errMsg: string;
